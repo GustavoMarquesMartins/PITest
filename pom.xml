@@ -9,9 +9,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <exec.mainClass>br.com.faculdade.imepac.employeemangement.EmployeeMangement</exec.mainClass>
+        <exec.mainClass>br.com.faculdade.imepac.employeemangement.main</exec.mainClass>
     </properties>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -24,5 +24,13 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.28</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.32</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 </project>
