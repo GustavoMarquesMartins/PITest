@@ -2,6 +2,9 @@
 package br.com.faculdade.imepac.entidade.pessoa;
 
 public enum EstadoCivil {
+    SOLTEIRO,
     CASADO,
-    SOLTEIRO
+    SEPARADO,
+    DIVORCIADO,
+    VIUVO;
 }
