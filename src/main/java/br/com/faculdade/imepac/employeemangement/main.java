@@ -7,10 +7,9 @@ import br.com.faculdade.imepac.infraestrutura.JPAUtil;
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 public class main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         EntityManager em = JPAUtil.getEntityManager();
         Persistence persistence = new Persistence(em);
 
@@ -50,11 +49,11 @@ public class main {
 
         // Define os dados do funcionario
         funcionario.setNome("Roberto");
-        funcionario.setRg("1234567");
-        funcionario.setCpf("123.456.789-00");
+        funcionario.setRg("12345678910");
+        funcionario.setCpf("111111111"); // <- passar cpf valido
         funcionario.setDataNascimento(LocalDate.of(1980, 5, 10));
-        funcionario.setHabilitacao("");
-        funcionario.setMEI("123456789");
+        funcionario.setCnh("1234567891212121012");
+        funcionario.setMei("123456789");
         funcionario.setStatus(true);
         funcionario.setEstadoCivil(EstadoCivil.CASADO);
         funcionario.setCor(Cor.BRANCO);

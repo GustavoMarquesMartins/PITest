@@ -1,8 +1,11 @@
 package br.com.faculdade.imepac.entidade.pessoa;
 
 
-import br.com.faculdade.imepac.infraestrutura.DocumentValidator;
+import br.com.caelum.stella.bean.validation.CNPJ;
+import br.com.caelum.stella.bean.validation.CPF;
+import br.com.faculdade.imepac.infraestrutura.DataValidation;
 import br.com.faculdade.imepac.infraestrutura.ListaStringConverter;
+import br.com.faculdade.imepac.infraestrutura.Mask;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,9 +30,9 @@ public class Funcionario {
 
     private LocalDate dataNascimento;
 
-    private String habilitacao;
+    private String Cnh;
 
-    private String MEI;
+    private String Mei;
 
     private boolean status;
 
@@ -75,14 +78,24 @@ public class Funcionario {
         this.experienciaEducacional.add(experienciaEducacional);
     }
     public void setNome(String nome){
-        //Remove qualquer espacamento no inicio e fim de uma string ou caracter especial
-        var nomeSemEspacosNoInicioENoFim = nome.strip();
-        String nomeSemQualquerCaracterEspecial = nomeSemEspacosNoInicioENoFim.replaceAll("[^a-zA-Z]", "");
-        this.nome = nomeSemQualquerCaracterEspecial;
+        this.nome = Mask.mascaraNome(nome);
     }
 
-    public void setCpf(String cpf) {
-        // Atribui um cpf para a instancia
-        this.cpf = DocumentValidator.mascaraCpf(cpf);
+    public void setRg(String rg) throws Exception {
+       var valido = DataValidation.validaRg(rg);
+       if(!valido){
+           throw new Exception("RG inválido");
+       }
+       this.rg = Mask.mascaraRg(rg);
     }
+
+    public void setCpf(String cpf) throws Exception {
+        // Atribui um cpf para a instancia
+        var valido = DataValidation.validaCpf(cpf);
+        if (!valido){
+            throw new Exception("CPF inválido!");
+        }
+        this.cpf = Mask.mascaraCpf(cpf);
+    }
+
 }
