@@ -1,11 +1,9 @@
 package br.com.faculdade.imepac.entidade.pessoa;
 
 
-import br.com.caelum.stella.bean.validation.CNPJ;
-import br.com.caelum.stella.bean.validation.CPF;
-import br.com.faculdade.imepac.infraestrutura.DataValidation;
+import br.com.faculdade.imepac.data_utility.DataValidation;
 import br.com.faculdade.imepac.infraestrutura.ListaStringConverter;
-import br.com.faculdade.imepac.infraestrutura.Mask;
+import br.com.faculdade.imepac.data_utility.Mask;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -30,9 +28,9 @@ public class Funcionario {
 
     private LocalDate dataNascimento;
 
-    private String Cnh;
+    private String cnh;
 
-    private String Mei;
+    private String mei;
 
     private boolean status;
 
@@ -45,9 +43,9 @@ public class Funcionario {
     @Enumerated(EnumType.STRING)
     private Genero genero;
 
-    private String endereco;
+    private String cep;
 
-    private String telefone;
+    private String numeroCelular;
 
     private String email;
 
@@ -68,34 +66,80 @@ public class Funcionario {
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ExperienciaProfissional> experienciaProfissional = new ArrayList<>();
 
-    public void adicionarHabilidade(String habilidade){
+    public void adicionarHabilidade(String habilidade) {
         this.habilidades.add(habilidade);
     }
-    public void adicionarExperienciaProfissional(ExperienciaProfissional experienciaProfissional){
+
+    public void adicionarExperienciaProfissional(ExperienciaProfissional experienciaProfissional) {
         this.experienciaProfissional.add(experienciaProfissional);
     }
-    public void adicionarEducacional(ExperienciaEducacional experienciaEducacional){
+
+    public void adicionarEducacional(ExperienciaEducacional experienciaEducacional) {
         this.experienciaEducacional.add(experienciaEducacional);
     }
-    public void setNome(String nome){
+
+    /**
+     * Atribui um nome formatado ao objeto.
+     *
+     * @param nome O nome a ser atribuído ao objeto.
+     */
+    public void setNome(String nome) {
         this.nome = Mask.mascaraNome(nome);
     }
 
-    public void setRg(String rg) throws Exception {
-       var valido = DataValidation.validaRg(rg);
-       if(!valido){
-           throw new Exception("RG inválido");
-       }
-       this.rg = Mask.mascaraRg(rg);
-    }
-
+    /**
+     * Atribui um CPF formatado ao objeto.
+     *
+     * @param cpf O CPF a ser atribuído ao objeto.
+     * @throws Exception Se o CPF fornecido não for válido.
+     */
     public void setCpf(String cpf) throws Exception {
-        // Atribui um cpf para a instancia
         var valido = DataValidation.validaCpf(cpf);
-        if (!valido){
+        if (!valido) {
             throw new Exception("CPF inválido!");
         }
         this.cpf = Mask.mascaraCpf(cpf);
     }
 
+    /**
+     * Atribui um CEP formatado ao objeto.
+     *
+     * @param cep O CEP a ser atribuído ao objeto.
+     * @throws Exception Se o CEP fornecido não for válido.
+     */
+    public void setCep(String cep) throws Exception {
+        var valido = DataValidation.validaCep(cep);
+        if (!valido) {
+            throw new Exception("CEP inválido!");
+        }
+        this.cep = Mask.mascaraCep(cep);
+    }
+
+    /**
+     * Atribui um número de celular formatado ao objeto.
+     *
+     * @param numeroCelular O número de celular a ser atribuído ao objeto.
+     * @throws Exception Se o número de celular fornecido não for válido.
+     */
+    public void setnumeroCelular(String numeroCelular) throws Exception {
+        var valido = DataValidation.validaNumeroCelular(numeroCelular);
+        if (!valido) {
+            throw new Exception("CEP inválido!");
+        }
+        this.numeroCelular = Mask.mascaraNumeroCelular(numeroCelular);
+    }
+
+    /**
+     * Atribui um endereço de e-mail ao objeto.
+     *
+     * @param email O endereço de e-mail a ser atribuído ao objeto.
+     * @throws Exception Se o endereço de e-mail fornecido não for válido.
+     */
+    public void setEmail(String email) throws Exception {
+        var valido = DataValidation.validaEmail(email);
+        if (!valido) {
+            throw new Exception("Email inválido!");
+        }
+        this.email = email;
+    }
 }

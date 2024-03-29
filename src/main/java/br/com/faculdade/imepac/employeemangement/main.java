@@ -50,16 +50,16 @@ public class main {
         // Define os dados do funcionario
         funcionario.setNome("Roberto");
         funcionario.setRg("12345678910");
-        funcionario.setCpf("111111111"); // <- passar cpf valido
+        funcionario.setCpf("52998224725"); // <- passar cpf valido
         funcionario.setDataNascimento(LocalDate.of(1980, 5, 10));
-        funcionario.setCnh("1234567891212121012");
+        funcionario.setCnh("40584103720");
         funcionario.setMei("123456789");
         funcionario.setStatus(true);
         funcionario.setEstadoCivil(EstadoCivil.CASADO);
         funcionario.setCor(Cor.BRANCO);
         funcionario.setGenero(Genero.MASCULINO);
-        funcionario.setEndereco("Rua ABC, 123");
-        funcionario.setTelefone("(11) 98765-4321");
+        funcionario.setCep("Rua ABC, 123");
+        funcionario.setnumeroCelular("(11)98765-4321");
         funcionario.setEmail("roberto@example.com");
         funcionario.setPathCurriculo("");
         funcionario.setPathCarteiraDeTrabalho("");
