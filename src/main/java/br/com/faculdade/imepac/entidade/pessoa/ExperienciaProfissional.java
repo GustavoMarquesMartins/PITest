@@ -1,12 +1,10 @@
 package br.com.faculdade.imepac.entidade.pessoa;
 
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-
 
 @Entity(name = "experiencias_profissionais")
 @NoArgsConstructor
@@ -29,4 +27,16 @@ public class ExperienciaProfissional {
     @ManyToOne
     @JoinColumn(name = "funcionario_id")
     private Funcionario funcionario;
+
+    @Override
+    public String toString() {
+        return "ExperienciaProfissional{" +
+                "id=" + id +
+                ", cargo='" + cargo + '\'' +
+                ", empresa='" + empresa + '\'' +
+                ", periodoInicio=" + periodoInicio +
+                ", periodoFim=" + periodoFim +
+                ", descricao='" + descricao + '\'' +
+                '}';
+    }
 }

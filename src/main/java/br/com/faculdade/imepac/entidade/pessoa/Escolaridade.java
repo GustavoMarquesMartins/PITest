@@ -6,10 +6,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity(name = "experiencias_educacionais")
+@Entity(name = "escolaridades")
 @NoArgsConstructor
 @Data
-public class ExperienciaEducacional {
+public class Escolaridade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -29,4 +29,17 @@ public class ExperienciaEducacional {
     @ManyToOne
     @JoinColumn(name = "funcionario_id")
     private Funcionario funcionario;
+
+    @Override
+    public String toString() {
+        return "ExperienciaEducacional{" +
+                "id=" + id +
+                ", instituicao='" + instituicao + '\'' +
+                ", curso='" + curso + '\'' +
+                ", graduacao=" + graduacao +
+                ", periodoInicio=" + periodoInicio +
+                ", periodoFim=" + periodoFim +
+                ", descricao='" + descricao + '\'' +
+                '}';
+    }
 }

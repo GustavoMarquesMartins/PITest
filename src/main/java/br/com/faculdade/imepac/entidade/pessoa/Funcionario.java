@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,39 +23,52 @@ public class Funcionario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank
     private String nome;
 
+    @NotBlank
     private String rg;
 
+    @NotBlank
     private String cpf;
 
+    @NotNull
     private LocalDate dataNascimento;
 
     private String cnh;
 
     private String mei;
 
+    @NotNull
     private boolean status;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private EstadoCivil estadoCivil;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Cor cor;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Genero genero;
 
+    @NotBlank
     private String cep;
 
+    @NotBlank
     private String numeroCelular;
 
+    @NotBlank
     private String email;
 
+    @NotBlank
     private String pathCurriculo;
 
     private String pathCarteiraDeTrabalho;
 
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private DadosProfissao dadosProfissao;
@@ -61,8 +76,9 @@ public class Funcionario {
     @Convert(converter = ListaStringConverter.class)
     private List<String> habilidades = new ArrayList<>();
 
+
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ExperienciaEducacional> experienciaEducacional = new ArrayList<>();
+    private List<Escolaridade> escolaridade = new ArrayList<>();
 
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ExperienciaProfissional> experienciaProfissional = new ArrayList<>();
@@ -75,8 +91,8 @@ public class Funcionario {
         this.experienciaProfissional.add(experienciaProfissional);
     }
 
-    public void adicionarEducacional(ExperienciaEducacional experienciaEducacional) {
-        this.experienciaEducacional.add(experienciaEducacional);
+    public void adicionarEducacional(Escolaridade experienciaEducacional) {
+        this.escolaridade.add(experienciaEducacional);
     }
 
     @ManyToOne

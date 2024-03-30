@@ -27,7 +27,7 @@ public class main {
         experienciaProfissional.setFuncionario(funcionario);
 
         //Gera instancia de experiencia educacional
-        var experienciaEducacional = new ExperienciaEducacional();
+        var experienciaEducacional = new Escolaridade();
         //Define dados da experiencia educacional
         experienciaEducacional.setInstituicao("Universidade XYZ");
         experienciaEducacional.setCurso("Ciência da Computação");

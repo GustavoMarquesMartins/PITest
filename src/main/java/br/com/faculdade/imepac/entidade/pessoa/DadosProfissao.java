@@ -1,4 +1,3 @@
-
 package br.com.faculdade.imepac.entidade.pessoa;
 
 import lombok.Data;
@@ -26,5 +25,16 @@ public class DadosProfissao {
 
     @OneToOne(mappedBy = "dadosProfissao")
     private Funcionario funcionario;
-}
 
+    @Override
+    public String toString() {
+        return "DadosProfissao{" +
+                "id=" + id +
+                ", periodo=" + periodo +
+                ", cargo='" + cargo + '\'' +
+                ", salario=" + salario +
+                ", cargaHoraria=" + cargaHoraria +
+                ", acolhido=" + acolhido +
+                '}';
+    }
+}

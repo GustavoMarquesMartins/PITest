@@ -12,8 +12,8 @@ public class Mask {
     public static String mascaraNome(String nome) {
         // Remove espaços em branco do início e do final da string e converte todos os caracteres para maiúsculas
         var nomeSemEspacosNoInicioENoFim = nome.strip().toUpperCase();
-        // Remove todos os caracteres que não sejam letras (A-Z, a-z)
-        return nomeSemEspacosNoInicioENoFim.replaceAll("[^a-zA-Z]", "");
+        // Remove todos os caracteres que não sejam letras (A-Z, a-z, " ")
+        return nomeSemEspacosNoInicioENoFim.replaceAll("[^a-zA-Z ]", "");
     }
 
     /**
