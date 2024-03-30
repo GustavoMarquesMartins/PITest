@@ -1,4 +1,4 @@
-package br.com.faculdade.imepac.employeemangement;
+package br.com.faculdade.imepac.employeemanagement;
 
 import br.com.faculdade.imepac.dao.Persistence;
 import br.com.faculdade.imepac.entidade.pessoa.*;
@@ -58,8 +58,8 @@ public class main {
         funcionario.setEstadoCivil(EstadoCivil.CASADO);
         funcionario.setCor(Cor.BRANCO);
         funcionario.setGenero(Genero.MASCULINO);
-        funcionario.setCep("Rua ABC, 123");
-        funcionario.setnumeroCelular("(11)98765-4321");
+        funcionario.setCep("38446213");
+        funcionario.setnumeroCelular("34991841164");
         funcionario.setEmail("roberto@example.com");
         funcionario.setPathCurriculo("");
         funcionario.setPathCarteiraDeTrabalho("");
@@ -69,7 +69,7 @@ public class main {
         funcionario.adicionarEducacional(experienciaEducacional); // <- experincia profissional
 
         em.getTransaction().begin();
-        persistence.salvar(funcionario);
+        persistence.save(funcionario);
         em.getTransaction().commit();
 
     }

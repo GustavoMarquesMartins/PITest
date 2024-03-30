@@ -2,6 +2,7 @@ package br.com.faculdade.imepac.entidade.pessoa;
 
 
 import br.com.faculdade.imepac.data_utility.DataValidation;
+import br.com.faculdade.imepac.entidade.projeto.Projeto;
 import br.com.faculdade.imepac.infraestrutura.ListaStringConverter;
 import br.com.faculdade.imepac.data_utility.Mask;
 import lombok.Data;
@@ -78,6 +79,9 @@ public class Funcionario {
         this.experienciaEducacional.add(experienciaEducacional);
     }
 
+    @ManyToOne
+    private Projeto projeto;
+
     /**
      * Atribui um nome formatado ao objeto.
      *
@@ -124,7 +128,7 @@ public class Funcionario {
     public void setnumeroCelular(String numeroCelular) throws Exception {
         var valido = DataValidation.validaNumeroCelular(numeroCelular);
         if (!valido) {
-            throw new Exception("CEP inválido!");
+            throw new Exception("Número de celular inválido!");
         }
         this.numeroCelular = Mask.mascaraNumeroCelular(numeroCelular);
     }
