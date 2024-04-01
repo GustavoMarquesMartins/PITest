@@ -11,7 +11,7 @@ public class MaskTest {
     @Test
     public void deveRetornarNomeComMascara() {
         var nomeSemMascara = " teste123 ";
-        assertEquals("TESTE", Mask.mascaraNome(nomeSemMascara));
+        assertEquals("TESTE", Mask.formataNome(nomeSemMascara));
     }
 
     /**

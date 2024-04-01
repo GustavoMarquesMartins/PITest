@@ -36,7 +36,7 @@ public class Projeto {
      * @param nome O nome a ser atribuído ao objeto.
      */
     public void setNome(String nome) {
-        this.nome = Mask.mascaraNome(nome);
+        this.nome = Mask.formataNome(nome);
     }
 
     /**

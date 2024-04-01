@@ -27,9 +27,11 @@ public class Funcionario {
     private String nome;
 
     @NotBlank
+    @Column(unique = true)
     private String rg;
 
     @NotBlank
+    @Column(unique = true)
     private String cpf;
 
     @NotNull
@@ -104,7 +106,7 @@ public class Funcionario {
      * @param nome O nome a ser atribuído ao objeto.
      */
     public void setNome(String nome) {
-        this.nome = Mask.mascaraNome(nome);
+        this.nome = Mask.formataNome(nome);
     }
 
     /**
@@ -118,7 +120,7 @@ public class Funcionario {
         if (!valido) {
             throw new Exception("CPF inválido!");
         }
-        this.cpf = Mask.mascaraCpf(cpf);
+        this.cpf = cpf;
     }
 
     /**
@@ -132,7 +134,7 @@ public class Funcionario {
         if (!valido) {
             throw new Exception("CEP inválido!");
         }
-        this.cep = Mask.mascaraCep(cep);
+        this.cep = cep;
     }
 
     /**
@@ -146,7 +148,7 @@ public class Funcionario {
         if (!valido) {
             throw new Exception("Número de celular inválido!");
         }
-        this.numeroCelular = Mask.mascaraNumeroCelular(numeroCelular);
+        this.numeroCelular = numeroCelular;
     }
 
     /**

@@ -9,13 +9,13 @@ public class Mask {
      * @param nome O nome a ser formatado.
      * @return O nome formatado sem espaços, em maiúsculas e apenas com letras.
      */
-    public static String mascaraNome(String nome) {
+    public static String formataNome(String nome) {
         // Remove espaços em branco do início e do final da string e converte todos os caracteres para maiúsculas
         var nomeSemEspacosNoInicioENoFim = nome.strip().toUpperCase();
         // Remove todos os caracteres que não sejam letras (A-Z, a-z, " ")
         return nomeSemEspacosNoInicioENoFim.replaceAll("[^a-zA-Z ]", "");
     }
-
+    
     /**
      * Aplica uma máscara ao CPF fornecido.
      *
