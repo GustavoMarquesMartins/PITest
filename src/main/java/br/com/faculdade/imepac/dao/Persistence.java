@@ -9,9 +9,12 @@ import javax.xml.bind.JAXB;
 import java.util.List;
 
 /**
- * Classe responsável por fornecer métodos genéricos para operações de persistência.
+ * Classe responsável por fornecer métodos genéricos para operações de
+ * persistência.
  */
+@NoArgsConstructor
 public class Persistence {
+
     private EntityManager em;
 
     /**
@@ -27,7 +30,7 @@ public class Persistence {
      * Método para salvar uma entidade no banco de dados.
      *
      * @param entity A entidade a ser salva.
-     * @param <T>    O tipo da entidade.
+     * @param <T> O tipo da entidade.
      */
     public <T> void save(T entity) {
         em.persist(entity);
@@ -37,8 +40,8 @@ public class Persistence {
      * Método para obter uma entidade do banco de dados pelo seu ID.
      *
      * @param entityClass A classe da entidade.
-     * @param id          O ID da entidade.
-     * @param <T>         O tipo da entidade.
+     * @param id O ID da entidade.
+     * @param <T> O tipo da entidade.
      * @return A entidade encontrada ou null se não for encontrada.
      */
     public <T> T getEntity(Class<T> entityClass, Long id) {
@@ -49,7 +52,7 @@ public class Persistence {
      * Método para atualizar uma entidade no banco de dados.
      *
      * @param entity A entidade a ser atualizada.
-     * @param <T>    O tipo da entidade.
+     * @param <T> O tipo da entidade.
      */
     public <T> void updateEntity(T entity) {
         this.em.merge(entity);
@@ -59,7 +62,7 @@ public class Persistence {
      * Método para excluir uma entidade do banco de dados.
      *
      * @param entity A entidade a ser excluída.
-     * @param <T>    O tipo da entidade.
+     * @param <T> O tipo da entidade.
      */
     public <T> void delete(T entity) {
         entity = em.merge(entity);
@@ -67,10 +70,11 @@ public class Persistence {
     }
 
     /**
-     * Método para obter uma lista de todas as entidades de um determinado tipo do banco de dados.
+     * Método para obter uma lista de todas as entidades de um determinado tipo
+     * do banco de dados.
      *
      * @param entityClass A classe da entidade.
-     * @param <T>         O tipo da entidade.
+     * @param <T> O tipo da entidade.
      * @return Uma lista contendo todas as entidades do tipo especificado.
      */
     public <T> List<T> getListEntity(Class<T> entityClass) {
