@@ -10,15 +10,6 @@ import javax.swing.JTextField;
 public class CommonMethods {
 
     /**
-     * Limpa o conteúdo de um campo de texto.
-     *
-     * @param field O campo de texto a ser limpo.
-     */
-    public static void clearFields(JTextField field) {
-        field.setText("");
-    }
-
-    /**
      * Remove caracteres especiais de uma string.
      *
      * @param originalText A string da qual os caracteres especiais serão removidos.

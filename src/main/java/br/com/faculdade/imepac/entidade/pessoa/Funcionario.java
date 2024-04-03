@@ -1,9 +1,7 @@
 package br.com.faculdade.imepac.entidade.pessoa;
 
-
 import br.com.faculdade.imepac.data_utility.DataValidation;
 import br.com.faculdade.imepac.entidade.projeto.Projeto;
-import br.com.faculdade.imepac.infraestrutura.ListaStringConverter;
 import br.com.faculdade.imepac.data_utility.Mask;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,22 +17,20 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class Funcionario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank
     private String nome;
 
-    @NotBlank
     @Column(unique = true)
     private String rg;
 
-    @NotBlank
     @Column(unique = true)
     private String cpf;
 
-    @NotNull
+    @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
 
     private String cnh;
@@ -44,50 +40,40 @@ public class Funcionario {
     @NotNull
     private boolean status;
 
-    @NotNull
+    @Column(name = "estado_civil")
     @Enumerated(EnumType.STRING)
     private EstadoCivil estadoCivil;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     private Cor cor;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     private Genero genero;
 
-    @NotBlank
     private String cep;
 
-    @NotBlank
+    @Column(name = "numero_celular")
     private String numeroCelular;
 
-    @NotBlank
     private String email;
 
-    @NotBlank
+    @Column(name = "curriculo")
     private String pathCurriculo;
 
+    @Column(name = "carteira_de_trabalho")
     private String pathCarteiraDeTrabalho;
 
-    @NotNull
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "endereco_id", referencedColumnName = "id")
+    @JoinColumn(name = "dados_profissao_id", referencedColumnName = "id")
     private DadosProfissao dadosProfissao;
 
-    @Convert(converter = ListaStringConverter.class)
-    private List<String> habilidades = new ArrayList<>();
-
+    private String habilidade;
 
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Escolaridade> escolaridade = new ArrayList<>();
 
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ExperienciaProfissional> experienciaProfissional = new ArrayList<>();
-
-    public void adicionarHabilidade(String habilidade) {
-        this.habilidades.add(habilidade);
-    }
 
     public void adicionarExperienciaProfissional(ExperienciaProfissional experienciaProfissional) {
         this.experienciaProfissional.add(experienciaProfissional);
@@ -117,7 +103,7 @@ public class Funcionario {
      */
     public void setCpf(String cpf) throws Exception {
         var valido = DataValidation.validaCpf(cpf);
-        if (!valido) {
+        if (valido) {
             throw new Exception("CPF inválido!");
         }
         this.cpf = cpf;
@@ -131,7 +117,7 @@ public class Funcionario {
      */
     public void setCep(String cep) throws Exception {
         var valido = DataValidation.validaCep(cep);
-        if (!valido) {
+        if (valido) {
             throw new Exception("CEP inválido!");
         }
         this.cep = cep;
@@ -145,7 +131,7 @@ public class Funcionario {
      */
     public void setnumeroCelular(String numeroCelular) throws Exception {
         var valido = DataValidation.validaNumeroCelular(numeroCelular);
-        if (!valido) {
+        if (valido) {
             throw new Exception("Número de celular inválido!");
         }
         this.numeroCelular = numeroCelular;
@@ -159,7 +145,7 @@ public class Funcionario {
      */
     public void setEmail(String email) throws Exception {
         var valido = DataValidation.validaEmail(email);
-        if (!valido) {
+        if (valido) {
             throw new Exception("Email inválido!");
         }
         this.email = email;

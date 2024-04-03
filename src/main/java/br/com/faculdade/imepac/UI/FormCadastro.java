@@ -8,7 +8,7 @@ import br.com.caelum.stella.type.Estado;
 import br.com.faculdade.imepac.UI.commons.ActionManager;
 import br.com.faculdade.imepac.UI.commons.CommonMethods;
 import br.com.faculdade.imepac.UI.commons.InitializeFields;
-import br.com.faculdade.imepac.UI.commons.InitializeFields.MaskFormatterFilter;
+import br.com.faculdade.imepac.UI.commons.MaskFormatterFilter;
 import br.com.faculdade.imepac.dao.Persistence;
 import br.com.faculdade.imepac.entidade.pessoa.Cor;
 import br.com.faculdade.imepac.entidade.pessoa.EstadoCivil;
@@ -21,6 +21,8 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -36,27 +38,35 @@ import javax.swing.text.MaskFormatter;
  */
 public class FormCadastro extends javax.swing.JPanel {
 
-    private JFrame frame;
-    private Funcionario funcionario;
+    private Funcionario funcionario; // Representa o funcionário a ser cadastrado
+    private JFrame frame; // Referência ao frame que contém o formulário
 
     /**
-     * Creates new form FormCadastro
+     * Construtor da classe FormCadastro.
+     *
+     * @param frame Referência ao JFrame que contém o formulário.
      */
     public FormCadastro(JFrame frame) {
         this.frame = frame;
-        initComponents();
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.inicializaFormulario();
+        initComponents(); // Inicializa os componentes do formulário
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximiza o frame
+        this.inicializaFormulario(); // Inicializa o formulário
     }
 
+    /**
+     * Inicializa o formulário.
+     */
     private void inicializaFormulario() {
-        this.funcionario = new Funcionario();
-        this.addActions();
-        this.formatajFormattedTextFields();
-        this.initializeComboBoxOptions();
-        this.saveFuncionario();
+        this.funcionario = new Funcionario(); // Inicializa um novo funcionário
+        this.addActions(); // Adiciona ações aos botões
+        this.formatajFormattedTextFields(); // Formata os campos de texto formatados
+        this.initializeComboBoxOptions(); // Inicializa as opções dos ComboBox
+        this.saveFuncionario(); // Configura a ação do botão salvar
     }
 
+    /**
+     * Formata os campos de texto formatados.
+     */
     private void formatajFormattedTextFields() {
         MaskFormatterFilter.formatTextField(jFormattedTextFieldCpf, "###.###.###-##");
         MaskFormatterFilter.formatTextField(jFormattedTextFieldDataNascimento, "##/##/####");
@@ -64,6 +74,9 @@ public class FormCadastro extends javax.swing.JPanel {
         MaskFormatterFilter.formatTextField(jFormattedTextFieldNumeroCelular, "(##) #######-##");
     }
 
+    /**
+     * Inicializa as opções dos ComboBox.
+     */
     private void initializeComboBoxOptions() {
         var initializeComboBox = new InitializeFields();
         initializeComboBox.addEnumValuesToComboBox(jComboBoxEstadoCivil, EstadoCivil.class);
@@ -71,15 +84,21 @@ public class FormCadastro extends javax.swing.JPanel {
         initializeComboBox.addEnumValuesToComboBox(jComboBoxGenero, Genero.class);
     }
 
+    /**
+     * Adiciona ações aos botões.
+     */
     private void addActions() {
         ActionManager actionManager = new ActionManager(funcionario);
-        actionManager.addSkillButton(jButtonHabilidade, jTextArea);
         actionManager.addCurriculumButtom(jButtonCurriculo);
         actionManager.addWorkcardButtom(jButtonCarteiraDeTrabalho);
     }
 
-    public void getValues() {
+    /**
+     * Define os valores do funcionário com base nos campos do formulário.
+     */
+    public void setValues() {
         try {
+            // Obtém os valores dos campos do formulário
             String nome = jTextFieldNome.getText();
             String rg = jTextFieldRg.getText();
             String cpf = CommonMethods.removeSpecialCharacters(jFormattedTextFieldCpf.getText());
@@ -89,10 +108,13 @@ public class FormCadastro extends javax.swing.JPanel {
             boolean status = jCheckBoxStatus.isSelected();
             EstadoCivil estadoCivil = (EstadoCivil) jComboBoxEstadoCivil.getSelectedItem();
             Cor cor = (Cor) jComboBoxCor.getSelectedItem();
+            Genero genero = (Genero) jComboBoxGenero.getSelectedItem();
             String cep = jFormattedTextFieldCep.getText();
             String numeroCelular = jFormattedTextFieldNumeroCelular.getText();
             String email = jTextFieldEmail.getText();
+            String habilidade = jTextAreaHabilidade.getText();
 
+            // Define os valores do funcionário
             this.funcionario.setNome(nome);
             this.funcionario.setRg(rg);
             this.funcionario.setCpf(cpf);
@@ -100,23 +122,56 @@ public class FormCadastro extends javax.swing.JPanel {
             this.funcionario.setCnh(cnh);
             this.funcionario.setStatus(status);
             this.funcionario.setEstadoCivil(estadoCivil);
+            this.funcionario.setMei(mei);
+            this.funcionario.setCor(cor);
+            this.funcionario.setCep(cep);
+            this.funcionario.setnumeroCelular(numeroCelular);
+            this.funcionario.setEmail(email);
+            this.funcionario.setHabilidade(habilidade);
+            this.funcionario.setGenero(genero);
 
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
+    /**
+     * Limpa todos os campos do formulário.
+     */
+    public void clearFields() {
+        jTextFieldNome.setText("");
+        jTextFieldRg.setText("");
+        jFormattedTextFieldCpf.setText("");
+        jFormattedTextFieldDataNascimento.setText("");
+        jTextFieldCnh.setText("");
+        jTextFieldMei.setText("");
+        jCheckBoxStatus.setSelected(false);
+        jComboBoxEstadoCivil.setSelectedIndex(0);
+        jComboBoxCor.setSelectedIndex(0);
+        jComboBoxGenero.setSelectedIndex(0);
+        jFormattedTextFieldCep.setText("");
+        jFormattedTextFieldNumeroCelular.setText("");
+        jTextFieldEmail.setText("");
+        jTextAreaHabilidade.setText("");
+    }
+
+    /**
+     * Salva as informações do funcionário no banco de dados.
+     */
     public void saveFuncionario() {
         jButtonSalvar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                getValues();
+                setValues(); // Define os valores do funcionário
+
                 EntityManager em = JPAUtil.getEntityManager();
                 var persistence = new Persistence(em);
+
                 em.getTransaction().begin();
-                persistence.save(funcionario);
+                persistence.save(funcionario); // Salva o funcionário no banco de dados
                 em.getTransaction().commit();
-                funcionario = new Funcionario();
+                clearFields(); // Limpa os campos do formulário
+                funcionario = new Funcionario(); // Cria um novo objeto Funcionario
                 System.out.println("Funcionario Salvo com sucesso");
             }
         });
@@ -182,7 +237,6 @@ public class FormCadastro extends javax.swing.JPanel {
         jFormattedTextFieldDataNascimento = new javax.swing.JFormattedTextField();
         jCheckBoxStatus = new javax.swing.JCheckBox();
         jComboBoxEstadoCivil = new javax.swing.JComboBox<>();
-        jButtonHabilidade = new javax.swing.JButton();
         jComboBoxCor = new javax.swing.JComboBox<>();
         jComboBoxGenero = new javax.swing.JComboBox<>();
         jFormattedTextFieldCep = new javax.swing.JFormattedTextField();
@@ -191,7 +245,7 @@ public class FormCadastro extends javax.swing.JPanel {
         jButtonCarteiraDeTrabalho = new javax.swing.JButton();
         jLabelCadastroDeFuncionario = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea = new javax.swing.JTextArea();
+        jTextAreaHabilidade = new javax.swing.JTextArea();
         jButtonSalvar = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
@@ -341,8 +395,6 @@ public class FormCadastro extends javax.swing.JPanel {
             }
         });
 
-        jButtonHabilidade.setText("Adicionar");
-
         jComboBoxCor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jComboBoxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -360,9 +412,9 @@ public class FormCadastro extends javax.swing.JPanel {
         jLabelCadastroDeFuncionario.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
         jLabelCadastroDeFuncionario.setText("Cadastro de Funcionário");
 
-        jTextArea.setColumns(20);
-        jTextArea.setRows(5);
-        jScrollPane2.setViewportView(jTextArea);
+        jTextAreaHabilidade.setColumns(20);
+        jTextAreaHabilidade.setRows(5);
+        jScrollPane2.setViewportView(jTextAreaHabilidade);
 
         jButtonSalvar.setText("Salvar");
         jButtonSalvar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -398,7 +450,6 @@ public class FormCadastro extends javax.swing.JPanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(186, 186, 186)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButtonHabilidade)
                                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabelHabilidade)
                                             .addComponent(jCheckBoxStatus)))
@@ -537,11 +588,9 @@ public class FormCadastro extends javax.swing.JPanel {
                                 .addComponent(jTextFieldMei, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabelHabilidade)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonHabilidade)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(jButtonSalvar)
                 .addGap(26, 26, 26))
         );
@@ -616,7 +665,6 @@ public class FormCadastro extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCarteiraDeTrabalho;
     private javax.swing.JButton jButtonCurriculo;
-    private javax.swing.JButton jButtonHabilidade;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JCheckBox jCheckBoxStatus;
     private javax.swing.JComboBox<String> jComboBoxCor;
@@ -658,7 +706,7 @@ public class FormCadastro extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelRg;
     private javax.swing.JLabel jLabelStatus;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea;
+    private javax.swing.JTextArea jTextAreaHabilidade;
     private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField23;
