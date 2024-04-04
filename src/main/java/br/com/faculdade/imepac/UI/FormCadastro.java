@@ -10,7 +10,7 @@ import br.com.faculdade.imepac.UI.commons.CommonMethods;
 import br.com.faculdade.imepac.UI.commons.InitializeFields;
 import br.com.faculdade.imepac.UI.commons.MaskFormatterFilter;
 import br.com.faculdade.imepac.dao.Persistence;
-import br.com.faculdade.imepac.entidade.pessoa.Cor;
+import br.com.faculdade.imepac.entidade.pessoa.Raca;
 import br.com.faculdade.imepac.entidade.pessoa.EstadoCivil;
 import br.com.faculdade.imepac.entidade.pessoa.Funcionario;
 import br.com.faculdade.imepac.entidade.pessoa.Genero;
@@ -80,7 +80,7 @@ public class FormCadastro extends javax.swing.JPanel {
     private void initializeComboBoxOptions() {
         var initializeComboBox = new InitializeFields();
         initializeComboBox.addEnumValuesToComboBox(jComboBoxEstadoCivil, EstadoCivil.class);
-        initializeComboBox.addEnumValuesToComboBox(jComboBoxCor, Cor.class);
+        initializeComboBox.addEnumValuesToComboBox(jComboBoxCor, Raca.class);
         initializeComboBox.addEnumValuesToComboBox(jComboBoxGenero, Genero.class);
     }
 
@@ -89,8 +89,9 @@ public class FormCadastro extends javax.swing.JPanel {
      */
     private void addActions() {
         ActionManager actionManager = new ActionManager(funcionario);
-        actionManager.addCurriculumButtom(jButtonCurriculo);
-        actionManager.addWorkcardButtom(jButtonCarteiraDeTrabalho);
+        actionManager.addCurriculumButton(jButtonCurriculo);
+        actionManager.addWorkcardButton(jButtonCarteiraDeTrabalho);
+        actionManager.addSkillButton(jButtonHabilidade, jTextFieldHabilidade);
     }
 
     /**
@@ -107,12 +108,11 @@ public class FormCadastro extends javax.swing.JPanel {
             String mei = jTextFieldMei.getText();
             boolean status = jCheckBoxStatus.isSelected();
             EstadoCivil estadoCivil = (EstadoCivil) jComboBoxEstadoCivil.getSelectedItem();
-            Cor cor = (Cor) jComboBoxCor.getSelectedItem();
+            Raca raca = (Raca) jComboBoxCor.getSelectedItem();
             Genero genero = (Genero) jComboBoxGenero.getSelectedItem();
             String cep = jFormattedTextFieldCep.getText();
             String numeroCelular = jFormattedTextFieldNumeroCelular.getText();
             String email = jTextFieldEmail.getText();
-            String habilidade = jTextAreaHabilidade.getText();
 
             // Define os valores do funcionário
             this.funcionario.setNome(nome);
@@ -123,11 +123,10 @@ public class FormCadastro extends javax.swing.JPanel {
             this.funcionario.setStatus(status);
             this.funcionario.setEstadoCivil(estadoCivil);
             this.funcionario.setMei(mei);
-            this.funcionario.setCor(cor);
+            this.funcionario.setRaca(raca);
             this.funcionario.setCep(cep);
             this.funcionario.setnumeroCelular(numeroCelular);
             this.funcionario.setEmail(email);
-            this.funcionario.setHabilidade(habilidade);
             this.funcionario.setGenero(genero);
 
         } catch (Exception e) {
@@ -152,7 +151,6 @@ public class FormCadastro extends javax.swing.JPanel {
         jFormattedTextFieldCep.setText("");
         jFormattedTextFieldNumeroCelular.setText("");
         jTextFieldEmail.setText("");
-        jTextAreaHabilidade.setText("");
     }
 
     /**
@@ -170,6 +168,7 @@ public class FormCadastro extends javax.swing.JPanel {
                 em.getTransaction().begin();
                 persistence.save(funcionario); // Salva o funcionário no banco de dados
                 em.getTransaction().commit();
+                System.out.println(funcionario.getHabilidade());
                 clearFields(); // Limpa os campos do formulário
                 funcionario = new Funcionario(); // Cria um novo objeto Funcionario
                 System.out.println("Funcionario Salvo com sucesso");
@@ -244,9 +243,9 @@ public class FormCadastro extends javax.swing.JPanel {
         jButtonCurriculo = new javax.swing.JButton();
         jButtonCarteiraDeTrabalho = new javax.swing.JButton();
         jLabelCadastroDeFuncionario = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextAreaHabilidade = new javax.swing.JTextArea();
         jButtonSalvar = new javax.swing.JButton();
+        jButtonHabilidade = new javax.swing.JButton();
+        jTextFieldHabilidade = new javax.swing.JTextField();
 
         jLabel2.setText("jLabel2");
 
@@ -412,15 +411,19 @@ public class FormCadastro extends javax.swing.JPanel {
         jLabelCadastroDeFuncionario.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
         jLabelCadastroDeFuncionario.setText("Cadastro de Funcionário");
 
-        jTextAreaHabilidade.setColumns(20);
-        jTextAreaHabilidade.setRows(5);
-        jScrollPane2.setViewportView(jTextAreaHabilidade);
-
         jButtonSalvar.setText("Salvar");
         jButtonSalvar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSalvarActionPerformed(evt);
+            }
+        });
+
+        jButtonHabilidade.setText("Adicionar");
+
+        jTextFieldHabilidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldHabilidadeActionPerformed(evt);
             }
         });
 
@@ -444,19 +447,20 @@ public class FormCadastro extends javax.swing.JPanel {
                                     .addComponent(jLabelNome, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelDataNascimento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(153, 153, 153))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(189, 189, 189)
                                         .addComponent(jLabelStatus))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(186, 186, 186)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabelHabilidade)
-                                            .addComponent(jCheckBoxStatus)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(153, 153, 153))))
+                                            .addComponent(jCheckBoxStatus)
+                                            .addComponent(jButtonHabilidade)
+                                            .addComponent(jTextFieldHabilidade, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addComponent(jLabelCnh)
                             .addComponent(jTextFieldCnh, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
@@ -476,15 +480,6 @@ public class FormCadastro extends javax.swing.JPanel {
                                 .addGap(29, 29, 29)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelEmail)
-                                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButtonCurriculo)
-                                            .addComponent(jLabelCurriculo))
-                                        .addGap(27, 27, 27)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelCarteiraDeTrabalho)
-                                            .addComponent(jButtonCarteiraDeTrabalho)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jComboBoxCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -496,7 +491,16 @@ public class FormCadastro extends javax.swing.JPanel {
                                         .addGap(27, 27, 27)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jComboBoxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabelEstadoCivil)))))
+                                            .addComponent(jLabelEstadoCivil)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jButtonCurriculo)
+                                            .addComponent(jLabelCurriculo))
+                                        .addGap(27, 27, 27)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabelCarteiraDeTrabalho)
+                                            .addComponent(jButtonCarteiraDeTrabalho)))
+                                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabelCadastroDeFuncionario))))
                 .addGap(90, 90, 90))
         );
@@ -588,9 +592,11 @@ public class FormCadastro extends javax.swing.JPanel {
                                 .addComponent(jTextFieldMei, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabelHabilidade)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldHabilidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(8, 8, 8)
+                .addComponent(jButtonHabilidade)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jButtonSalvar)
                 .addGap(26, 26, 26))
         );
@@ -661,10 +667,15 @@ public class FormCadastro extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
+    private void jTextFieldHabilidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldHabilidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldHabilidadeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCarteiraDeTrabalho;
     private javax.swing.JButton jButtonCurriculo;
+    private javax.swing.JButton jButtonHabilidade;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JCheckBox jCheckBoxStatus;
     private javax.swing.JComboBox<String> jComboBoxCor;
@@ -705,8 +716,6 @@ public class FormCadastro extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelNumeroCelular;
     private javax.swing.JLabel jLabelRg;
     private javax.swing.JLabel jLabelStatus;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextAreaHabilidade;
     private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField23;
@@ -721,6 +730,7 @@ public class FormCadastro extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextFieldCnh;
     private javax.swing.JTextField jTextFieldEmail;
+    private javax.swing.JTextField jTextFieldHabilidade;
     private javax.swing.JTextField jTextFieldMei;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldRg;

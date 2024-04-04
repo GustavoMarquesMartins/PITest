@@ -1,7 +1,7 @@
  
 package br.com.faculdade.imepac.entidade.pessoa;
  
-public enum Cor {
+public enum Raca {
     BRANCO,
     PARDO,
     PRETO,

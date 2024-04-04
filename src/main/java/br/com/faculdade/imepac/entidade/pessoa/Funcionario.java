@@ -45,7 +45,7 @@ public class Funcionario {
     private EstadoCivil estadoCivil;
 
     @Enumerated(EnumType.STRING)
-    private Cor cor;
+    private Raca raca;
 
     @Enumerated(EnumType.STRING)
     private Genero genero;
@@ -64,16 +64,20 @@ public class Funcionario {
     private String pathCarteiraDeTrabalho;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "dados_profissao_id", referencedColumnName = "id")
+    @JoinColumn(name = "dado_profissao_id", referencedColumnName = "id")
     private DadosProfissao dadosProfissao;
 
-    private String habilidade;
+    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Habilidade> habilidade = new ArrayList<>();
 
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Escolaridade> escolaridade = new ArrayList<>();
 
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ExperienciaProfissional> experienciaProfissional = new ArrayList<>();
+
+    @ManyToOne
+    private Projeto projeto;
 
     public void adicionarExperienciaProfissional(ExperienciaProfissional experienciaProfissional) {
         this.experienciaProfissional.add(experienciaProfissional);
@@ -83,8 +87,9 @@ public class Funcionario {
         this.escolaridade.add(experienciaEducacional);
     }
 
-    @ManyToOne
-    private Projeto projeto;
+    public void adicionarHabilidade(Habilidade habilidade) {
+        this.habilidade.add(habilidade);
+    }
 
     /**
      * Atribui um nome formatado ao objeto.

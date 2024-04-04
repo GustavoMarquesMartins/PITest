@@ -2,6 +2,7 @@ package br.com.faculdade.imepac.UI.commons;
 
 import br.com.faculdade.imepac.dao.Persistence;
 import br.com.faculdade.imepac.entidade.pessoa.Funcionario;
+import br.com.faculdade.imepac.entidade.pessoa.Habilidade;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +31,7 @@ public class ActionManager {
      * @param curriculumButton O botão ao qual a ação será associada.
      * @return O funcionário atualizado com o novo currículo adicionado.
      */
-    public void addCurriculumButtom(JButton curriculumButton) {
+    public void addCurriculumButton(JButton curriculumButton) {
         curriculumButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,6 +45,21 @@ public class ActionManager {
         });
     }
 
+    public void addSkillButton(JButton skillButton, JTextField jTextFieldSkill) {
+        skillButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Habilidade skill = new Habilidade();
+                skill.setHabilidade(jTextFieldSkill.getText());
+                skill.setFuncionario(funcionario);
+
+                jTextFieldSkill.setText("");
+
+                funcionario.adicionarHabilidade(skill);
+            }
+        });
+    }
+
     /**
      * Associa uma ação ao botão para adicionar uma carteira de trabalho ao
      * funcionário quando clicado.
@@ -52,7 +68,7 @@ public class ActionManager {
      * @return O funcionário atualizado com a nova carteira de trabalho
      * adicionada.
      */
-    public void addWorkcardButtom(JButton workcardButton) {
+    public void addWorkcardButton(JButton workcardButton) {
         workcardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
