@@ -40,7 +40,7 @@ public class MaskTest {
      */
     @Test
     public void deveRetornarNumeroCelularComMascara() {
-        var cepSemMascara = "34991671190";
-        assertEquals("(34) 99167-1190", Mask.mascaraNumeroCelular(cepSemMascara));
+        var numeroCelularSemMascara = "34991671190";
+        assertEquals("(34) 99167-1190", Mask.mascaraNumeroCelular(numeroCelularSemMascara));
     }
 }

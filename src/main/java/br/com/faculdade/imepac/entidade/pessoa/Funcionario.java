@@ -24,10 +24,8 @@ public class Funcionario {
 
     private String nome;
 
-    @Column(unique = true)
     private String rg;
 
-    @Column(unique = true)
     private String cpf;
 
     @Column(name = "data_nascimento")
@@ -122,7 +120,7 @@ public class Funcionario {
      */
     public void setCep(String cep) throws Exception {
         var valido = DataValidation.validaCep(cep);
-        if (valido) {
+        if (!valido) {
             throw new Exception("CEP inválido!");
         }
         this.cep = cep;

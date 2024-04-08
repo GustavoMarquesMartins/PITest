@@ -1,7 +1,7 @@
 package br.com.faculdade.imepac.UI.commons;
 
 import java.time.LocalDate;
-import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 
 /**
  * Esta classe fornece métodos utilitários comuns para interações com
@@ -12,7 +12,8 @@ public class CommonMethods {
     /**
      * Remove caracteres especiais de uma string.
      *
-     * @param originalText A string da qual os caracteres especiais serão removidos.
+     * @param originalText A string da qual os caracteres especiais serão
+     * removidos.
      * @return A string sem caracteres especiais.
      */
     public static String removeSpecialCharacters(String originalText) {
@@ -20,22 +21,25 @@ public class CommonMethods {
         return string;
     }
 
-    /**
-     * Converte uma string no formato "DDMMYYYY" em um objeto LocalDate.
-     *
-     * @param dataString A string que representa a data no formato "DDMMYYYY".
-     * @return Um objeto LocalDate representando a data especificada.
-     * @throws Exception Se a string não estiver no formato correto ou se a data for inválida.
-     */
-    public static LocalDate parseStringToLocalDate(String dataString) throws Exception {
-        String dataNascimento = CommonMethods.removeSpecialCharacters(dataString);
-        if (dataNascimento.length() != 8) {
-            throw new Exception("Data inválida");
-        }
-        int dia = Integer.parseInt(dataNascimento.substring(0, 2));
-        int mes = Integer.parseInt(dataNascimento.substring(2, 4));
-        int ano = Integer.parseInt(dataNascimento.substring(4, 8));
-        return LocalDate.of(ano, mes, dia);
-    }
+    public static LocalDate parseStringToLocalDate(String dateString) throws Exception {
+        String date = CommonMethods.removeSpecialCharacters(dateString);
 
+        if (dateString == null || dateString.isEmpty()) {
+            throw new IllegalArgumentException("Data é um campo obrigatório!");
+        }
+
+        if (date.length() != 8) {
+            throw new IllegalArgumentException("Formato de data inválido! Use DD/MM/AAAA");
+        }
+
+        int dia = Integer.parseInt(date.substring(0, 2));
+        int mes = Integer.parseInt(date.substring(2, 4));
+        int ano = Integer.parseInt(date.substring(4, 8));
+
+        try {
+            return LocalDate.of(ano, mes, dia);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Data inválida! Verifique os valores de dia, mês e ano.");
+        }
+    }
 }

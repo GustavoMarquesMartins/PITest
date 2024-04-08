@@ -28,13 +28,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
 /**
- *
- * @author gusta
+ * FormCadastro é uma classe que representa o formulário de cadastro de
+ * funcionários.
  */
 public class FormCadastro extends javax.swing.JPanel {
 
@@ -71,7 +72,7 @@ public class FormCadastro extends javax.swing.JPanel {
         MaskFormatterFilter.formatTextField(jFormattedTextFieldCpf, "###.###.###-##");
         MaskFormatterFilter.formatTextField(jFormattedTextFieldDataNascimento, "##/##/####");
         MaskFormatterFilter.formatTextField(jFormattedTextFieldCep, "#####-###");
-        MaskFormatterFilter.formatTextField(jFormattedTextFieldNumeroCelular, "(##) #######-##");
+        MaskFormatterFilter.formatTextField(jFormattedTextFieldNumeroCelular, "(##) #####-####");
     }
 
     /**
@@ -97,41 +98,36 @@ public class FormCadastro extends javax.swing.JPanel {
     /**
      * Define os valores do funcionário com base nos campos do formulário.
      */
-    public void setValues() {
-        try {
-            // Obtém os valores dos campos do formulário
-            String nome = jTextFieldNome.getText();
-            String rg = jTextFieldRg.getText();
-            String cpf = CommonMethods.removeSpecialCharacters(jFormattedTextFieldCpf.getText());
-            LocalDate dataNascimento = CommonMethods.parseStringToLocalDate(jFormattedTextFieldDataNascimento.getText());
-            String cnh = jTextFieldCnh.getText();
-            String mei = jTextFieldMei.getText();
-            boolean status = jCheckBoxStatus.isSelected();
-            EstadoCivil estadoCivil = (EstadoCivil) jComboBoxEstadoCivil.getSelectedItem();
-            Raca raca = (Raca) jComboBoxCor.getSelectedItem();
-            Genero genero = (Genero) jComboBoxGenero.getSelectedItem();
-            String cep = jFormattedTextFieldCep.getText();
-            String numeroCelular = jFormattedTextFieldNumeroCelular.getText();
-            String email = jTextFieldEmail.getText();
+    public void setValues() throws Exception {
+        // Obtém os valores dos campos do formulário
+        String nome = jTextFieldNome.getText();
+        String rg = jTextFieldRg.getText();
+        String cpf = CommonMethods.removeSpecialCharacters(jFormattedTextFieldCpf.getText());
+        LocalDate dataNascimento = CommonMethods.parseStringToLocalDate(jFormattedTextFieldDataNascimento.getText());
+        String cnh = jTextFieldCnh.getText();
+        String mei = jTextFieldMei.getText();
+        boolean status = jCheckBoxStatus.isSelected();
+        EstadoCivil estadoCivil = (EstadoCivil) jComboBoxEstadoCivil.getSelectedItem();
+        Raca raca = (Raca) jComboBoxCor.getSelectedItem();
+        Genero genero = (Genero) jComboBoxGenero.getSelectedItem();
+        String cep = CommonMethods.removeSpecialCharacters(jFormattedTextFieldCep.getText());
+        String numeroCelular = CommonMethods.removeSpecialCharacters(jFormattedTextFieldNumeroCelular.getText());
+        String email = jTextFieldEmail.getText();
 
-            // Define os valores do funcionário
-            this.funcionario.setNome(nome);
-            this.funcionario.setRg(rg);
-            this.funcionario.setCpf(cpf);
-            this.funcionario.setDataNascimento(dataNascimento);
-            this.funcionario.setCnh(cnh);
-            this.funcionario.setStatus(status);
-            this.funcionario.setEstadoCivil(estadoCivil);
-            this.funcionario.setMei(mei);
-            this.funcionario.setRaca(raca);
-            this.funcionario.setCep(cep);
-            this.funcionario.setnumeroCelular(numeroCelular);
-            this.funcionario.setEmail(email);
-            this.funcionario.setGenero(genero);
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        // Define os valores do funcionário
+        this.funcionario.setNome(nome);
+        this.funcionario.setRg(rg);
+        this.funcionario.setCpf(cpf);
+        this.funcionario.setDataNascimento(dataNascimento);
+        this.funcionario.setCnh(cnh);
+        this.funcionario.setStatus(status);
+        this.funcionario.setEstadoCivil(estadoCivil);
+        this.funcionario.setMei(mei);
+        this.funcionario.setRaca(raca);
+        this.funcionario.setCep(cep);
+        this.funcionario.setnumeroCelular(numeroCelular);
+        this.funcionario.setEmail(email);
+        this.funcionario.setGenero(genero);
     }
 
     /**
@@ -154,24 +150,35 @@ public class FormCadastro extends javax.swing.JPanel {
     }
 
     /**
-     * Salva as informações do funcionário no banco de dados.
+     * Configura a ação do botão salvar.
      */
     public void saveFuncionario() {
         jButtonSalvar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setValues(); // Define os valores do funcionário
 
-                EntityManager em = JPAUtil.getEntityManager();
-                var persistence = new Persistence(em);
+                try {
+                    setValues(); // Define os valores do funcionário
 
-                em.getTransaction().begin();
-                persistence.save(funcionario); // Salva o funcionário no banco de dados
-                em.getTransaction().commit();
-                System.out.println(funcionario.getHabilidade());
-                clearFields(); // Limpa os campos do formulário
-                funcionario = new Funcionario(); // Cria um novo objeto Funcionario
-                System.out.println("Funcionario Salvo com sucesso");
+                    EntityManager em = JPAUtil.getEntityManager();
+                    Persistence persistence = new Persistence(em); // Corrigindo a declaração da variável
+
+                    em.getTransaction().begin();
+                    persistence.save(funcionario); // Salva o funcionário no banco de dados
+                    em.getTransaction().commit();
+                    em.close();
+
+                    funcionario = new Funcionario();
+
+                    clearFields(); // Limpa os campos do formulário
+
+                    JOptionPane.showMessageDialog(null, "Funcionário salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Ocorreu um erro! " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+
+                }
+
             }
         });
     }
