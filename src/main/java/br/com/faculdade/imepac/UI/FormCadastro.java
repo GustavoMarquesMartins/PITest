@@ -42,198 +42,14 @@ import javax.swing.text.MaskFormatter;
  */
 public class FormCadastro extends javax.swing.JPanel {
 
-    private Funcionario funcionario; // Representa o funcionário a ser cadastrado
-    private JFrame frame; // Referência ao frame que contém o formulário
+    private JFrame frame;
+    private Funcionario funcionario;
 
-    /**
-     * Construtor da classe FormCadastro.
-     *
-     * @param frame Referência ao JFrame que contém o formulário.
-     */
     public FormCadastro(JFrame frame) {
         this.frame = frame;
         initComponents(); // Inicializa os componentes do formulário
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximiza o frame
         this.inicializaFormulario(); // Inicializa o formulário
-    }
-
-    /**
-     * Inicializa o formulário.
-     */
-    private void inicializaFormulario() {
-        this.funcionario = new Funcionario(); // Inicializa um novo funcionário
-        this.addActions(); // Adiciona ações aos botões
-        this.formatajFormattedTextFields(); // Formata os campos de texto formatados
-        this.initializeComboBoxOptions(); // Inicializa as opções dos ComboBox
-        this.saveFuncionario(); // Configura a ação do botão salvar
-    }
-
-    /**
-     * Formata os campos de texto formatados.
-     */
-    private void formatajFormattedTextFields() {
-        MaskFormatterFilter.formatTextField(jFormattedTextFieldCpf, "###.###.###-##");
-        MaskFormatterFilter.formatTextField(jFormattedTextFieldDataNascimento, "##/##/####");
-        MaskFormatterFilter.formatTextField(jFormattedTextFieldDataInicioEscolaridade, "##/##/####");
-        MaskFormatterFilter.formatTextField(jFormattedTextFieldDataFimEscolaridade, "##/##/####");
-
-        MaskFormatterFilter.formatTextField(jFormattedTextFieldCep, "#####-###");
-        MaskFormatterFilter.formatTextField(jFormattedTextFieldNumeroCelular, "(##) #####-####");
-    }
-
-    /**
-     * Inicializa as opções dos ComboBox.
-     */
-    private void initializeComboBoxOptions() {
-        var initializeComboBox = new InitializeFields();
-        initializeComboBox.addEnumValuesToComboBox(jComboBoxEstadoCivil, EstadoCivil.class);
-        initializeComboBox.addEnumValuesToComboBox(jComboBoxCor, Raca.class);
-        initializeComboBox.addEnumValuesToComboBox(jComboBoxGenero, Genero.class);
-    }
-
-    /**
-     * Adiciona ações aos botões.
-     */
-    private void addActions() {
-        ActionManager actionManager = new ActionManager(funcionario);
-        actionManager.addCurriculumButton(jButtonCurriculo);
-        actionManager.addWorkcardButton(jButtonCarteiraDeTrabalho);
-        actionManager.addSkillButton(jButtonHabilidade, jTextFieldHabilidade);
-
-        //Local
-        addEducationButton();
-    }
-
-    /**
-     * Define os valores do funcionário com base nos campos do formulário.
-     */
-    public void setValues() throws Exception {
-        // Obtém os valores dos campos do formulário
-        String nome = jTextFieldNome.getText();
-        String rg = jTextFieldRg.getText();
-        String cpf = CommonMethods.removeSpecialCharacters(jFormattedTextFieldCpf.getText());
-        LocalDate dataNascimento = CommonMethods.parseStringToLocalDate(jFormattedTextFieldDataNascimento.getText());
-        String cnh = jTextFieldCnh.getText();
-        String mei = jTextFieldMei.getText();
-        boolean status = jCheckBoxStatus.isSelected();
-        EstadoCivil estadoCivil = (EstadoCivil) jComboBoxEstadoCivil.getSelectedItem();
-        Raca raca = (Raca) jComboBoxCor.getSelectedItem();
-        Genero genero = (Genero) jComboBoxGenero.getSelectedItem();
-        String cep = CommonMethods.removeSpecialCharacters(jFormattedTextFieldCep.getText());
-        String numeroCelular = CommonMethods.removeSpecialCharacters(jFormattedTextFieldNumeroCelular.getText());
-        String email = jTextFieldEmail.getText();
-
-        // Define os valores do funcionário
-        this.funcionario.setNome(nome);
-        this.funcionario.setRg(rg);
-        this.funcionario.setCpf(cpf);
-        this.funcionario.setDataNascimento(dataNascimento);
-        this.funcionario.setCnh(cnh);
-        this.funcionario.setStatus(status);
-        this.funcionario.setEstadoCivil(estadoCivil);
-        this.funcionario.setMei(mei);
-        this.funcionario.setRaca(raca);
-        this.funcionario.setCep(cep);
-        this.funcionario.setnumeroCelular(numeroCelular);
-        this.funcionario.setEmail(email);
-        this.funcionario.setGenero(genero);
-    }
-
-    /**
-     * Limpa todos os campos de funcionario.
-     */
-    public void clearFieldsFuncionario() {
-        jTextFieldNome.setText("");
-        jTextFieldRg.setText("");
-        jFormattedTextFieldCpf.setText("");
-        jFormattedTextFieldDataNascimento.setText("");
-        jTextFieldCnh.setText("");
-        jTextFieldMei.setText("");
-        jCheckBoxStatus.setSelected(false);
-        jComboBoxEstadoCivil.setSelectedIndex(0);
-        jComboBoxCor.setSelectedIndex(0);
-        jComboBoxGenero.setSelectedIndex(0);
-        jFormattedTextFieldCep.setText("");
-        jFormattedTextFieldNumeroCelular.setText("");
-        jTextFieldEmail.setText("");
-    }
-
-    /**
-     * Limpa todos os campos de escolaridade.
-     */
-    public void clearFieldsEscolaridade() {
-        jTextFieldInstituicao.setText("");
-        jTextFieldCurso.setText("");
-        jCheckBoxGraduacao.setSelected(false);
-        jFormattedTextFieldDataInicioEscolaridade.setText("");
-        jFormattedTextFieldDataFimEscolaridade.setText("");
-        jTextAreaDescricao.setText("");
-    }
-
-    public void addEducationButton() {
-        jButtonEducation.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    var escolaridade = new Escolaridade();
-                    var instituicao = jTextFieldInstituicao.getText();
-                    var curso = jTextFieldCurso.getText();
-                    var graduacao = jCheckBoxGraduacao.isSelected();
-                    LocalDate dataInicio = CommonMethods.parseStringToLocalDate(jFormattedTextFieldDataInicioEscolaridade.getText());
-                    LocalDate dataFim = CommonMethods.parseStringToLocalDate(jFormattedTextFieldDataFimEscolaridade.getText());
-                    var descricao = jTextAreaDescricao.getText();
-
-                    escolaridade.setInstituicao(instituicao);
-                    escolaridade.setCurso(curso);
-                    escolaridade.setGraduacao(graduacao);
-                    escolaridade.setPeriodoInicio(dataInicio);
-                    escolaridade.setPeriodoFim(dataFim);
-                    escolaridade.setDescricao(descricao);
-                    escolaridade.setFuncionario(funcionario);
-
-                    funcionario.adicionarEscolaridade(escolaridade);
-                    
-                    clearFieldsEscolaridade();
-
-                } catch (Exception error) {
-                    JOptionPane.showMessageDialog(null, "Ocorreu um erro! " + error.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-    }
-
-    /**
-     * Configura a ação do botão salvar.
-     */
-    public void saveFuncionario() {
-        jButtonSalvar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                try {
-                    setValues(); // Define os valores do funcionário
-
-                    EntityManager em = JPAUtil.getEntityManager();
-                    Persistence persistence = new Persistence(em); // Corrigindo a declaração da variável
-
-                    em.getTransaction().begin();
-                    persistence.save(funcionario); // Salva o funcionário no banco de dados
-                    em.getTransaction().commit();
-                    em.close();
-
-                    funcionario = new Funcionario();
-
-                    clearFieldsFuncionario(); // Limpa os campos do formulário
-
-                    JOptionPane.showMessageDialog(null, "Funcionário salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Ocorreu um erro! " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-
-                }
-
-            }
-        });
     }
 
     /**
@@ -301,37 +117,11 @@ public class FormCadastro extends javax.swing.JPanel {
         jFormattedTextFieldNumeroCelular = new javax.swing.JFormattedTextField();
         jButtonCurriculo = new javax.swing.JButton();
         jButtonCarteiraDeTrabalho = new javax.swing.JButton();
-        jLabelEscolaridade = new javax.swing.JLabel();
         jButtonSalvar = new javax.swing.JButton();
         jButtonHabilidade = new javax.swing.JButton();
         jTextFieldHabilidade = new javax.swing.JTextField();
         jLabelCadastroDeFuncionario1 = new javax.swing.JLabel();
-        jTextFieldCurso = new javax.swing.JTextField();
-        jLabelInstituicao = new javax.swing.JLabel();
-        jLabelInstituicao1 = new javax.swing.JLabel();
-        jLabelDataInicioEscolaridade = new javax.swing.JLabel();
-        jLabelDataFimEscolaridade = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaDescricao = new javax.swing.JTextArea();
-        jLabelDescricao = new javax.swing.JLabel();
-        jButtonEducation = new javax.swing.JButton();
-        jLabelEscolaridade1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextFieldGraduacao1 = new javax.swing.JTextField();
-        jTextFieldGraduacao2 = new javax.swing.JTextField();
-        jFormattedTextFieldDataInicioExperienciaProfissional = new javax.swing.JFormattedTextField();
-        jLabelDataInicioExperienciaProfissional = new javax.swing.JLabel();
-        jFormattedTextFieldDataTerminoExperienciaProfissional = new javax.swing.JFormattedTextField();
-        jLabelDataTerminoExperienciaProfissional = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextAreaDescricao1 = new javax.swing.JTextArea();
-        jLabelDescricao1 = new javax.swing.JLabel();
-        jButtonSalvar2 = new javax.swing.JButton();
-        jTextFieldInstituicao = new javax.swing.JTextField();
-        jCheckBoxGraduacao = new javax.swing.JCheckBox();
-        jFormattedTextFieldDataInicioEscolaridade = new javax.swing.JFormattedTextField();
-        jFormattedTextFieldDataFimEscolaridade = new javax.swing.JFormattedTextField();
+        jButtonProximo = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
@@ -492,9 +282,6 @@ public class FormCadastro extends javax.swing.JPanel {
 
         jButtonCarteiraDeTrabalho.setText("Buscar");
 
-        jLabelEscolaridade.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
-        jLabelEscolaridade.setText("Experiência Profissional");
-
         jButtonSalvar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jButtonSalvar.setText("Salvar");
         jButtonSalvar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -515,83 +302,7 @@ public class FormCadastro extends javax.swing.JPanel {
         jLabelCadastroDeFuncionario1.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
         jLabelCadastroDeFuncionario1.setText("Cadastro de Funcionário");
 
-        jLabelInstituicao.setText("Curso");
-
-        jLabelInstituicao1.setText("Instituição");
-
-        jLabelDataInicioEscolaridade.setText("Data de início");
-
-        jLabelDataFimEscolaridade.setText("Data de encerramento");
-
-        jTextAreaDescricao.setColumns(20);
-        jTextAreaDescricao.setRows(5);
-        jScrollPane1.setViewportView(jTextAreaDescricao);
-
-        jLabelDescricao.setText("Descrição");
-
-        jButtonEducation.setText("Adicionar");
-        jButtonEducation.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jButtonEducation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEducationActionPerformed(evt);
-            }
-        });
-
-        jLabelEscolaridade1.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
-        jLabelEscolaridade1.setText("Escolaridade");
-
-        jLabel3.setText("Cargo");
-
-        jLabel4.setText("Empresa");
-
-        jFormattedTextFieldDataInicioExperienciaProfissional.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextFieldDataInicioExperienciaProfissionalActionPerformed(evt);
-            }
-        });
-
-        jLabelDataInicioExperienciaProfissional.setText("Data de início");
-
-        jFormattedTextFieldDataTerminoExperienciaProfissional.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextFieldDataTerminoExperienciaProfissionalActionPerformed(evt);
-            }
-        });
-
-        jLabelDataTerminoExperienciaProfissional.setText("Data de encerramento");
-
-        jTextAreaDescricao1.setColumns(20);
-        jTextAreaDescricao1.setRows(5);
-        jScrollPane2.setViewportView(jTextAreaDescricao1);
-
-        jLabelDescricao1.setText("Descrição");
-
-        jButtonSalvar2.setText("Adicionar");
-        jButtonSalvar2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jButtonSalvar2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSalvar2ActionPerformed(evt);
-            }
-        });
-
-        jCheckBoxGraduacao.setText("Graduação");
-        jCheckBoxGraduacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxGraduacaoActionPerformed(evt);
-            }
-        });
-
-        jFormattedTextFieldDataInicioEscolaridade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextFieldDataInicioEscolaridadeActionPerformed(evt);
-            }
-        });
-
-        jFormattedTextFieldDataFimEscolaridade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextFieldDataFimEscolaridadeActionPerformed(evt);
-            }
-        });
+        jButtonProximo.setText("Próximo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -616,7 +327,7 @@ public class FormCadastro extends javax.swing.JPanel {
                                         .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabelRg)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jTextFieldRg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                                        .addComponent(jTextFieldRg, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.Alignment.LEADING))
                                     .addComponent(jLabelCpf))
                                 .addGap(29, 29, 29)
@@ -655,75 +366,30 @@ public class FormCadastro extends javax.swing.JPanel {
                                 .addGap(199, 199, 199)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButtonHabilidade)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelHabilidade)
-                                            .addComponent(jTextFieldHabilidade, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(210, 210, 210)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelEscolaridade)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel3)
-                                                    .addComponent(jLabel4)
-                                                    .addComponent(jTextFieldGraduacao2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jTextFieldGraduacao1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(103, 103, 103)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabelDescricao1)
-                                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                            .addComponent(jLabelDataInicioExperienciaProfissional, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                            .addComponent(jFormattedTextFieldDataInicioExperienciaProfissional, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(jLabelDataTerminoExperienciaProfissional)
-                                                            .addComponent(jFormattedTextFieldDataTerminoExperienciaProfissional, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabelInstituicao)
-                                                    .addComponent(jTextFieldCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jCheckBoxGraduacao))
-                                                .addGap(101, 101, 101)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabelDescricao)
-                                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabelInstituicao1)
-                                                    .addComponent(jTextFieldInstituicao, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addGap(102, 102, 102)
-                                                        .addComponent(jLabelDataInicioEscolaridade))
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                        .addGap(101, 101, 101)
-                                                        .addComponent(jFormattedTextFieldDataInicioEscolaridade, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabelDataFimEscolaridade)
-                                                    .addComponent(jFormattedTextFieldDataFimEscolaridade, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addComponent(jLabelEscolaridade1)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(134, 134, 134)
-                                                .addComponent(jButtonEducation, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                                    .addComponent(jLabelHabilidade)
+                                    .addComponent(jTextFieldHabilidade, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(278, 278, 278)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(345, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButtonSalvar2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(720, 720, 720))
+                        .addComponent(jLabel1)))
+                .addContainerGap(74, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonProximo)
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(455, 455, 455)
+                        .addComponent(jLabelHabilidade)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldHabilidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonHabilidade))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1)
@@ -800,84 +466,11 @@ public class FormCadastro extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jLabelMei)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldMei, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(144, 144, 144)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelHabilidade)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelEscolaridade1)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(94, 94, 94)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabelDataInicioEscolaridade)
-                                                .addGap(44, 44, 44))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                        .addComponent(jLabelInstituicao1)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                            .addComponent(jTextFieldInstituicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(jFormattedTextFieldDataInicioEscolaridade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(jFormattedTextFieldDataFimEscolaridade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                        .addComponent(jLabelDataFimEscolaridade)
-                                                        .addGap(26, 26, 26)))
-                                                .addGap(18, 18, 18)))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabelDescricao)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(12, 12, 12)
-                                                .addComponent(jLabelInstituicao)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextFieldCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jCheckBoxGraduacao)))))
-                                .addGap(35, 35, 35)
-                                .addComponent(jButtonEducation, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextFieldHabilidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonHabilidade))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabelEscolaridade)
-                                .addGap(35, 35, 35)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldGraduacao2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(26, 26, 26)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabelDescricao1)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel4)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextFieldGraduacao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addComponent(jLabelDataTerminoExperienciaProfissional)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(22, 22, 22)
-                                        .addComponent(jFormattedTextFieldDataTerminoExperienciaProfissional, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(jLabelDataInicioExperienciaProfissional)
-                                            .addGap(26, 26, 26))
-                                        .addComponent(jFormattedTextFieldDataInicioExperienciaProfissional, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addComponent(jButtonSalvar2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
-                .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldMei, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonProximo))
                 .addContainerGap())
         );
 
@@ -951,54 +544,20 @@ public class FormCadastro extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldHabilidadeActionPerformed
 
-    private void jButtonEducationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEducationActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonEducationActionPerformed
-
-    private void jFormattedTextFieldDataInicioExperienciaProfissionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDataInicioExperienciaProfissionalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextFieldDataInicioExperienciaProfissionalActionPerformed
-
-    private void jFormattedTextFieldDataTerminoExperienciaProfissionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDataTerminoExperienciaProfissionalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextFieldDataTerminoExperienciaProfissionalActionPerformed
-
-    private void jButtonSalvar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvar2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonSalvar2ActionPerformed
-
-    private void jCheckBoxGraduacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxGraduacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBoxGraduacaoActionPerformed
-
-    private void jFormattedTextFieldDataInicioEscolaridadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDataInicioEscolaridadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextFieldDataInicioEscolaridadeActionPerformed
-
-    private void jFormattedTextFieldDataFimEscolaridadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDataFimEscolaridadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextFieldDataFimEscolaridadeActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCarteiraDeTrabalho;
     private javax.swing.JButton jButtonCurriculo;
-    private javax.swing.JButton jButtonEducation;
     private javax.swing.JButton jButtonHabilidade;
+    private javax.swing.JButton jButtonProximo;
     private javax.swing.JButton jButtonSalvar;
-    private javax.swing.JButton jButtonSalvar2;
-    private javax.swing.JCheckBox jCheckBoxGraduacao;
     private javax.swing.JCheckBox jCheckBoxStatus;
     private javax.swing.JComboBox<String> jComboBoxCor;
     private javax.swing.JComboBox<String> jComboBoxEstadoCivil;
     private javax.swing.JComboBox<String> jComboBoxGenero;
     private javax.swing.JFormattedTextField jFormattedTextFieldCep;
     private javax.swing.JFormattedTextField jFormattedTextFieldCpf;
-    private javax.swing.JFormattedTextField jFormattedTextFieldDataFimEscolaridade;
-    private javax.swing.JFormattedTextField jFormattedTextFieldDataInicioEscolaridade;
-    private javax.swing.JFormattedTextField jFormattedTextFieldDataInicioExperienciaProfissional;
     private javax.swing.JFormattedTextField jFormattedTextFieldDataNascimento;
-    private javax.swing.JFormattedTextField jFormattedTextFieldDataTerminoExperienciaProfissional;
     private javax.swing.JFormattedTextField jFormattedTextFieldNumeroCelular;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1010,9 +569,7 @@ public class FormCadastro extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1023,29 +580,15 @@ public class FormCadastro extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelCor;
     private javax.swing.JLabel jLabelCpf;
     private javax.swing.JLabel jLabelCurriculo;
-    private javax.swing.JLabel jLabelDataFimEscolaridade;
-    private javax.swing.JLabel jLabelDataInicioEscolaridade;
-    private javax.swing.JLabel jLabelDataInicioExperienciaProfissional;
     private javax.swing.JLabel jLabelDataNascimento;
-    private javax.swing.JLabel jLabelDataTerminoExperienciaProfissional;
-    private javax.swing.JLabel jLabelDescricao;
-    private javax.swing.JLabel jLabelDescricao1;
     private javax.swing.JLabel jLabelEmail;
-    private javax.swing.JLabel jLabelEscolaridade;
-    private javax.swing.JLabel jLabelEscolaridade1;
     private javax.swing.JLabel jLabelEstadoCivil;
     private javax.swing.JLabel jLabelGenero;
     private javax.swing.JLabel jLabelHabilidade;
-    private javax.swing.JLabel jLabelInstituicao;
-    private javax.swing.JLabel jLabelInstituicao1;
     private javax.swing.JLabel jLabelMei;
     private javax.swing.JLabel jLabelNome;
     private javax.swing.JLabel jLabelNumeroCelular;
     private javax.swing.JLabel jLabelRg;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextAreaDescricao;
-    private javax.swing.JTextArea jTextAreaDescricao1;
     private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField23;
@@ -1059,15 +602,151 @@ public class FormCadastro extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextFieldCnh;
-    private javax.swing.JTextField jTextFieldCurso;
     private javax.swing.JTextField jTextFieldEmail;
-    private javax.swing.JTextField jTextFieldGraduacao1;
-    private javax.swing.JTextField jTextFieldGraduacao2;
     private javax.swing.JTextField jTextFieldHabilidade;
-    private javax.swing.JTextField jTextFieldInstituicao;
     private javax.swing.JTextField jTextFieldMei;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldRg;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Inicializa o formulário.
+     */
+    private void inicializaFormulario() {
+        this.funcionario = new Funcionario();
+        this.formatajFormattedTextFields(); // Formata os campos de texto formatados
+        this.initializeComboBoxOptions(); // Inicializa as opções dos ComboBox
+        this.addActions(); // Adiciona ações aos botões
+        this.saveFuncionario(); // Configura a ação do botão salvar
+    }
+
+    /**
+     * Formata os campos de texto formatados.
+     */
+    private void formatajFormattedTextFields() {
+        MaskFormatterFilter.formatTextField(jFormattedTextFieldCpf, "###.###.###-##");
+        MaskFormatterFilter.formatTextField(jFormattedTextFieldDataNascimento, "##/##/####");
+        MaskFormatterFilter.formatTextField(jFormattedTextFieldCep, "#####-###");
+        MaskFormatterFilter.formatTextField(jFormattedTextFieldNumeroCelular, "(##) #####-####");
+    }
+
+    /**
+     * Inicializa as opções dos ComboBox.
+     */
+    private void initializeComboBoxOptions() {
+        var initializeComboBox = new InitializeFields();
+        initializeComboBox.addEnumValuesToComboBox(jComboBoxEstadoCivil, EstadoCivil.class);
+        initializeComboBox.addEnumValuesToComboBox(jComboBoxCor, Raca.class);
+        initializeComboBox.addEnumValuesToComboBox(jComboBoxGenero, Genero.class);
+    }
+
+    /**
+     * Adiciona ações aos botões.
+     */
+    private void addActions() {
+        ActionManager actionManager = new ActionManager(funcionario);
+        actionManager.addCurriculumButton(jButtonCurriculo);
+        actionManager.addWorkcardButton(jButtonCarteiraDeTrabalho);
+        actionManager.addSkillButton(jButtonHabilidade, jTextFieldHabilidade);
+        addNextActionToButton();
+    }
+
+    /**
+     * Define os valores do funcionário com base nos campos do formulário.
+     */
+    public void setValues() throws Exception {
+        // Obtém os valores dos campos do formulário
+        String nome = jTextFieldNome.getText();
+        String rg = jTextFieldRg.getText();
+        String cpf = CommonMethods.removeSpecialCharacters(jFormattedTextFieldCpf.getText());
+        LocalDate dataNascimento = CommonMethods.parseStringToLocalDate(jFormattedTextFieldDataNascimento.getText());
+        String cnh = jTextFieldCnh.getText();
+        String mei = jTextFieldMei.getText();
+        boolean status = jCheckBoxStatus.isSelected();
+        EstadoCivil estadoCivil = (EstadoCivil) jComboBoxEstadoCivil.getSelectedItem();
+        Raca raca = (Raca) jComboBoxCor.getSelectedItem();
+        Genero genero = (Genero) jComboBoxGenero.getSelectedItem();
+        String cep = CommonMethods.removeSpecialCharacters(jFormattedTextFieldCep.getText());
+        String numeroCelular = CommonMethods.removeSpecialCharacters(jFormattedTextFieldNumeroCelular.getText());
+        String email = jTextFieldEmail.getText();
+
+        // Define os valores do funcionário
+        this.funcionario.setNome(nome);
+        this.funcionario.setRg(rg);
+        this.funcionario.setCpf(cpf);
+        this.funcionario.setDataNascimento(dataNascimento);
+        this.funcionario.setCnh(cnh);
+        this.funcionario.setStatus(status);
+        this.funcionario.setEstadoCivil(estadoCivil);
+        this.funcionario.setMei(mei);
+        this.funcionario.setRaca(raca);
+        this.funcionario.setCep(cep);
+        this.funcionario.setnumeroCelular(numeroCelular);
+        this.funcionario.setEmail(email);
+        this.funcionario.setGenero(genero);
+    }
+
+    /**
+     * Limpa todos os campos de funcionario.
+     */
+    public void clearFieldsFuncionario() {
+        jTextFieldNome.setText("");
+        jTextFieldRg.setText("");
+        jFormattedTextFieldCpf.setText("");
+        jFormattedTextFieldDataNascimento.setText("");
+        jTextFieldCnh.setText("");
+        jTextFieldMei.setText("");
+        jCheckBoxStatus.setSelected(false);
+        jComboBoxEstadoCivil.setSelectedIndex(0);
+        jComboBoxCor.setSelectedIndex(0);
+        jComboBoxGenero.setSelectedIndex(0);
+        jFormattedTextFieldCep.setText("");
+        jFormattedTextFieldNumeroCelular.setText("");
+        jTextFieldEmail.setText("");
+    }
+
+    /**
+     * Configura a ação do botão salvar.
+     */
+    public void saveFuncionario() {
+        jButtonSalvar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    setValues(); // Define os valores do funcionário
+
+                    EntityManager em = JPAUtil.getEntityManager();
+                    Persistence persistence = new Persistence(em); // Corrigindo a declaração da variável
+
+                    em.getTransaction().begin();
+                    persistence.save(funcionario); // Salva o funcionário no banco de dados
+                    em.getTransaction().commit();
+                    em.close();
+
+                    funcionario = new Funcionario();
+
+                    clearFieldsFuncionario(); // Limpa os campos do formulário
+
+                    JOptionPane.showMessageDialog(null, "Funcionário salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Ocorreu um erro! " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+
+                }
+
+            }
+        });
+    }
+
+    public void addNextActionToButton() {
+        jButtonProximo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                var formEducation = new FormEscolaridade(frame, funcionario);
+                frame.add(formEducation);
+                frame.setVisible(true);
+            }
+        });
+    }
 }
