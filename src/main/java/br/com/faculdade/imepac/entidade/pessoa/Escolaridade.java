@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 public class Escolaridade {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -32,14 +33,14 @@ public class Escolaridade {
 
     @Override
     public String toString() {
-        return "ExperienciaEducacional{" +
-                "id=" + id +
-                ", instituicao='" + instituicao + '\'' +
-                ", curso='" + curso + '\'' +
-                ", graduacao=" + graduacao +
-                ", periodoInicio=" + periodoInicio +
-                ", periodoFim=" + periodoFim +
-                ", descricao='" + descricao + '\'' +
-                '}';
+        return "ExperienciaEducacional{"
+                + "id=" + id
+                + ", instituicao='" + instituicao + '\''
+                + ", curso='" + curso + '\''
+                + ", graduacao=" + graduacao
+                + ", periodoInicio=" + periodoInicio
+                + ", periodoFim=" + periodoFim
+                + ", descricao='" + descricao + '\''
+                + '}';
     }
 }

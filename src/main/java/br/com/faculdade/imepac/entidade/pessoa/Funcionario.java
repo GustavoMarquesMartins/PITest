@@ -81,7 +81,7 @@ public class Funcionario {
         this.experienciaProfissional.add(experienciaProfissional);
     }
 
-    public void adicionarEducacional(Escolaridade experienciaEducacional) {
+    public void adicionarEscolaridade(Escolaridade experienciaEducacional) {
         this.escolaridade.add(experienciaEducacional);
     }
 

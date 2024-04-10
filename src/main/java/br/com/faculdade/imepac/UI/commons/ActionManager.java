@@ -1,6 +1,7 @@
 package br.com.faculdade.imepac.UI.commons;
 
 import br.com.faculdade.imepac.dao.Persistence;
+import br.com.faculdade.imepac.entidade.pessoa.Escolaridade;
 import br.com.faculdade.imepac.entidade.pessoa.Funcionario;
 import br.com.faculdade.imepac.entidade.pessoa.Habilidade;
 
