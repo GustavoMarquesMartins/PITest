@@ -68,22 +68,13 @@ public class Funcionario {
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Habilidade> habilidade = new ArrayList<>();
 
-    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Escolaridade> escolaridade = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    private Escolaridade escolaridade;
 
-    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ExperienciaProfissional> experienciaProfissional = new ArrayList<>();
+    private boolean experienciaProfissional;
 
     @ManyToOne
     private Projeto projeto;
-
-    public void adicionarExperienciaProfissional(ExperienciaProfissional experienciaProfissional) {
-        this.experienciaProfissional.add(experienciaProfissional);
-    }
-
-    public void adicionarEscolaridade(Escolaridade experienciaEducacional) {
-        this.escolaridade.add(experienciaEducacional);
-    }
 
     public void adicionarHabilidade(Habilidade habilidade) {
         this.habilidade.add(habilidade);

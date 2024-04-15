@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ActionManager {
-    
+
     private Funcionario funcionario;
 
     /**
@@ -45,7 +45,7 @@ public class ActionManager {
             }
         });
     }
-    
+
     public void addSkillButton(JButton skillButton, JTextField jTextFieldSkill) {
         skillButton.addActionListener(new ActionListener() {
             @Override
@@ -53,9 +53,9 @@ public class ActionManager {
                 Habilidade skill = new Habilidade();
                 skill.setHabilidade(jTextFieldSkill.getText());
                 skill.setFuncionario(funcionario);
-                
+
                 jTextFieldSkill.setText("");
-                
+
                 funcionario.adicionarHabilidade(skill);
             }
         });
@@ -82,5 +82,5 @@ public class ActionManager {
             }
         });
     }
-   
+
 }
