@@ -2,6 +2,7 @@ package br.com.faculdade.imepac.UI.commons;
 
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  * Esta classe fornece métodos utilitários comuns para interações com

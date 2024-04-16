@@ -4,17 +4,52 @@
  */
 package br.com.faculdade.imepac.UI;
 
+import br.com.faculdade.imepac.UI.commons.ActionManager;
+import br.com.faculdade.imepac.UI.commons.CommonMethods;
+import br.com.faculdade.imepac.UI.commons.InitializeFields;
+import br.com.faculdade.imepac.UI.commons.MaskFormatterFilter;
+import br.com.faculdade.imepac.dao.Persistence;
+import br.com.faculdade.imepac.entidade.pessoa.DadosProfissao;
+import br.com.faculdade.imepac.entidade.pessoa.Escolaridade;
+import br.com.faculdade.imepac.entidade.pessoa.EstadoCivil;
+import br.com.faculdade.imepac.entidade.pessoa.Funcionario;
+import br.com.faculdade.imepac.entidade.pessoa.Genero;
+import br.com.faculdade.imepac.entidade.pessoa.PeriodoDia;
+import br.com.faculdade.imepac.entidade.pessoa.Raca;
+import br.com.faculdade.imepac.infraestrutura.JPAUtil;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.util.Locale;
+import javax.persistence.EntityManager;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
+
 /**
  *
  * @author gusta
  */
 public class FormDadosProfissao extends javax.swing.JPanel {
 
+    private Funcionario funcionario;
+    private JFrame frame;
+
     /**
      * Creates new form FormDadosProfissao
      */
-    public FormDadosProfissao() {
+    public FormDadosProfissao(Funcionario funcionario, JFrame frame) {
+        this.funcionario = funcionario;
+        this.frame = frame;
         initComponents();
+        inicializaFormulario();
     }
 
     /**
@@ -36,6 +71,7 @@ public class FormDadosProfissao extends javax.swing.JPanel {
         jLabelCargaHoaria = new javax.swing.JLabel();
         jCheckBoxAcolhido = new javax.swing.JCheckBox();
         jTextFieldCargo = new javax.swing.JTextField();
+        jButtonSalvar = new javax.swing.JButton();
 
         jLabelCadastroDeFuncionario1.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
         jLabelCadastroDeFuncionario1.setText("Dados profissão");
@@ -71,6 +107,15 @@ public class FormDadosProfissao extends javax.swing.JPanel {
             }
         });
 
+        jButtonSalvar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jButtonSalvar.setText("Salvar");
+        jButtonSalvar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,7 +127,7 @@ public class FormDadosProfissao extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelSalario)
                             .addComponent(jFormattedTextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(173, 173, 173)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSpinnerCargaHoraria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelCargaHoaria))
@@ -100,11 +145,14 @@ public class FormDadosProfissao extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jComboBoxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabelPeriodo))
-                                .addGap(0, 0, Short.MAX_VALUE))))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(176, 176, 176))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(101, 101, 101)
                 .addComponent(jLabelCadastroDeFuncionario1)
-                .addGap(0, 113, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,7 +182,9 @@ public class FormDadosProfissao extends javax.swing.JPanel {
                         .addComponent(jLabelCargo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -150,8 +200,13 @@ public class FormDadosProfissao extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldCargoActionPerformed
 
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSalvarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonSalvar;
     private javax.swing.JCheckBox jCheckBoxAcolhido;
     private javax.swing.JComboBox<String> jComboBoxPeriodo;
     private javax.swing.JFormattedTextField jFormattedTextFieldSalario;
@@ -163,4 +218,87 @@ public class FormDadosProfissao extends javax.swing.JPanel {
     private javax.swing.JSpinner jSpinnerCargaHoraria;
     private javax.swing.JTextField jTextFieldCargo;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * Inicializa o formulário.
+     */
+    private void inicializaFormulario() {
+        this.formatajFormattedTextFields(); // Formata os campos de texto formatados
+        this.initializeComboBoxOptions(); // Inicializa as opções dos ComboBox
+        this.saveFuncionario(); // Configura a ação do botão salvar
+    }
+
+    /**
+     * Formata os campos de texto formatados.
+     */
+    private void formatajFormattedTextFields() {
+        MaskFormatterFilter.formatTextField(jFormattedTextFieldSalario, "R$ #.###,##");
+
+        SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 8, 1);
+        jSpinnerCargaHoraria.setModel(model);
+    }
+
+    /**
+     * Inicializa as opções dos ComboBox.
+     */
+    private void initializeComboBoxOptions() {
+        var initializeComboBox = new InitializeFields();
+        initializeComboBox.addEnumValuesToComboBox(jComboBoxPeriodo, PeriodoDia.class);
+
+    }
+
+    /**
+     * Define os valores do funcionário com base nos campos do formulário.
+     */
+    public void setValues() throws Exception {
+        var salario = CommonMethods.removeSpecialCharacters(jFormattedTextFieldSalario.getText());
+        var cargo = jTextFieldCargo.getText();
+        var cargaHorario = jSpinnerCargaHoraria.getValue();
+        var acolhido = jCheckBoxAcolhido.isSelected();
+        PeriodoDia periodoDia = (PeriodoDia) jComboBoxPeriodo.getSelectedItem();
+
+        var dadosProfissao = new DadosProfissao();
+        dadosProfissao.setSalario(new BigDecimal(salario));
+        dadosProfissao.setCargo(cargo);
+        dadosProfissao.setCargaHoraria(Integer.parseInt(cargaHorario.toString()));
+        dadosProfissao.setAcolhido(acolhido);
+        dadosProfissao.setPeriodo(periodoDia);
+        dadosProfissao.setFuncionario(funcionario);
+        funcionario.setDadosProfissao(dadosProfissao);
+    }
+
+    /**
+     * Configura a ação do botão salvar.
+     */
+    public void saveFuncionario() {
+        jButtonSalvar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    setValues(); // Define os valores do funcionário
+
+                    EntityManager em = JPAUtil.getEntityManager();
+                    Persistence persistence = new Persistence(em); // Corrigindo a declaração da variável
+
+                    em.getTransaction().begin();
+                    persistence.save(funcionario); // Salva o funcionário no banco de dados
+                    em.getTransaction().commit();
+                    em.close();
+
+                    JOptionPane.showMessageDialog(null, "Funcionário salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                    var form = new FormCadastro(frame);
+                    frame.add(form);
+                    setVisible(false);
+                    frame.setVisible(true);
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Ocorreu um erro! " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+
+                }
+
+            }
+        });
+    }
 }

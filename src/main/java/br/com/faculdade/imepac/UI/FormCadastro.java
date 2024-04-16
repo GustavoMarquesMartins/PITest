@@ -118,7 +118,7 @@ public class FormCadastro extends javax.swing.JPanel {
         jFormattedTextFieldNumeroCelular = new javax.swing.JFormattedTextField();
         jButtonCurriculo = new javax.swing.JButton();
         jButtonCarteiraDeTrabalho = new javax.swing.JButton();
-        jButtonSalvar = new javax.swing.JButton();
+        jButtonProxima = new javax.swing.JButton();
         jButtonHabilidade = new javax.swing.JButton();
         jTextFieldHabilidade = new javax.swing.JTextField();
         jLabelCadastroDeFuncionario1 = new javax.swing.JLabel();
@@ -287,12 +287,12 @@ public class FormCadastro extends javax.swing.JPanel {
 
         jButtonCarteiraDeTrabalho.setText("Buscar");
 
-        jButtonSalvar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButtonSalvar.setText("Salvar");
-        jButtonSalvar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonProxima.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jButtonProxima.setText("Próxima");
+        jButtonProxima.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jButtonProxima.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSalvarActionPerformed(evt);
+                jButtonProximaActionPerformed(evt);
             }
         });
 
@@ -334,19 +334,24 @@ public class FormCadastro extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabelCep)
-                                            .addComponent(jFormattedTextFieldCep)
-                                            .addComponent(jLabelNumeroCelular)
-                                            .addComponent(jFormattedTextFieldNumeroCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabelRg)
-                                    .addComponent(jLabelCpf)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jTextFieldRg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                                        .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.Alignment.LEADING)))
-                                .addGap(29, 29, 29)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(149, 149, 149)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(jLabelCep)
+                                                    .addComponent(jFormattedTextFieldCep)
+                                                    .addComponent(jLabelNumeroCelular)
+                                                    .addComponent(jFormattedTextFieldNumeroCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(jLabelRg)
+                                            .addComponent(jLabelCpf)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(jTextFieldRg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                                                .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.Alignment.LEADING)))
+                                        .addGap(29, 29, 29))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(163, 163, 163)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelEmail)
                                     .addGroup(layout.createSequentialGroup()
@@ -381,7 +386,7 @@ public class FormCadastro extends javax.swing.JPanel {
                             .addComponent(jLabelCadastroDeFuncionario1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(149, 149, 149)
-                                .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jButtonProxima, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -501,7 +506,7 @@ public class FormCadastro extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldMei, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)))
-                .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonProxima, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -567,9 +572,9 @@ public class FormCadastro extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextFieldCepActionPerformed
 
-    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+    private void jButtonProximaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProximaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonSalvarActionPerformed
+    }//GEN-LAST:event_jButtonProximaActionPerformed
 
     private void jTextFieldHabilidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldHabilidadeActionPerformed
         // TODO add your handling code here:
@@ -588,7 +593,7 @@ public class FormCadastro extends javax.swing.JPanel {
     private javax.swing.JButton jButtonCarteiraDeTrabalho;
     private javax.swing.JButton jButtonCurriculo;
     private javax.swing.JButton jButtonHabilidade;
-    private javax.swing.JButton jButtonSalvar;
+    private javax.swing.JButton jButtonProxima;
     private javax.swing.JCheckBox jCheckBoxExperienciaProfissional;
     private javax.swing.JCheckBox jCheckBoxStatus;
     private javax.swing.JComboBox<String> jComboBoxCor;
@@ -734,52 +739,21 @@ public class FormCadastro extends javax.swing.JPanel {
     }
 
     /**
-     * Limpa todos os campos de funcionario.
-     */
-    public void clearFields() {
-        jTextFieldNome.setText("");
-        jTextFieldRg.setText("");
-        jFormattedTextFieldCpf.setText("");
-        jFormattedTextFieldDataNascimento.setText("");
-        jTextFieldCnh.setText("");
-        jTextFieldMei.setText("");
-        jCheckBoxStatus.setSelected(false);
-        jComboBoxEstadoCivil.setSelectedIndex(0);
-        jComboBoxCor.setSelectedIndex(0);
-        jComboBoxGenero.setSelectedIndex(0);
-        jFormattedTextFieldCep.setText("");
-        jFormattedTextFieldNumeroCelular.setText("");
-        jTextFieldEmail.setText("");
-        jComboBoxEscolaridade.setSelectedIndex(0);
-        jCheckBoxExperienciaProfissional.setSelected(false);
-
-    }
-
-    /**
      * Configura a ação do botão salvar.
      */
     public void saveFuncionario() {
-        jButtonSalvar.addActionListener(new ActionListener() {
+        jButtonProxima.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 try {
                     setValues(); // Define os valores do funcionário
 
-                    EntityManager em = JPAUtil.getEntityManager();
-                    Persistence persistence = new Persistence(em); // Corrigindo a declaração da variável
-
-                    em.getTransaction().begin();
-                    persistence.save(funcionario); // Salva o funcionário no banco de dados
-                    em.getTransaction().commit();
-                    em.close();
-
-                    funcionario = new Funcionario();
-
-                    clearFields(); // Limpa os campos do formulário
-
-                    JOptionPane.showMessageDialog(null, "Funcionário salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
+                    var form = new FormDadosProfissao(funcionario, frame);
+                    frame.add(form);
+                    setVisible(false);
+                    frame.setVisible(true);
+                    
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Ocorreu um erro! " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 
