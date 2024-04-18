@@ -29,6 +29,7 @@ br\com\faculdade\imepac\dao\Persistence.class
 br\com\faculdade\imepac\UI\commons\ActionManager$3.class
 br\com\faculdade\imepac\entidade\pessoa\PeriodoDia.class
 br\com\faculdade\imepac\entidade\pessoa\EstadoCivil.class
+br\com\faculdade\imepac\UI\FormCadastro$21.class
 br\com\faculdade\imepac\UI\FormCadastro$11.class
 br\com\faculdade\imepac\UI\FormDadosProfissao$3.class
 br\com\faculdade\imepac\UI\FormCadastro$14.class

@@ -9,9 +9,9 @@ import java.time.LocalDate;
 public enum Escolaridade {
 
     FUNDAMENTAL,
-    MÉDIO,
+    MEDIO,
     SUPERIOR,
-    PÓS_GRADUAÇÃO,
+    POS_GRADUACAO,
     MESTRADO,
     DOUTORADO;
 }

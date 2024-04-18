@@ -1,7 +1,10 @@
 package br.com.faculdade.imepac.UI.commons;
 
+import br.com.faculdade.imepac.entidade.pessoa.DadosProfissao;
+import br.com.faculdade.imepac.entidade.projeto.Projeto;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.List;
 import javax.swing.JComboBox;
 
 import lombok.Data;
@@ -33,6 +36,15 @@ public class InitializeFields {
         if (enumConstants != null) {
             for (Enum<?> enumConstant : enumConstants) {
                 comboBox.addItem(enumConstant);
+            }
+        }
+    }
+    
+    public void addEnumValuesToComBoxProjects(JComboBox comboBox, List<Projeto> dadosProfissao){
+        comboBox.removeAllItems();
+        if(dadosProfissao != null){
+            for(Projeto dp: dadosProfissao){
+                comboBox.addItem(dp);
             }
         }
     }

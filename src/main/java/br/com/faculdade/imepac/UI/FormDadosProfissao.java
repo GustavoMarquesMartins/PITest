@@ -233,7 +233,6 @@ public class FormDadosProfissao extends javax.swing.JPanel {
      */
     private void formatajFormattedTextFields() {
         MaskFormatterFilter.formatTextField(jFormattedTextFieldSalario, "R$ #.###,##");
-
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 8, 1);
         jSpinnerCargaHoraria.setModel(model);
     }
