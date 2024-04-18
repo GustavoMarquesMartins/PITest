@@ -721,7 +721,7 @@ public class FormCadastro extends javax.swing.JPanel {
         initializeComboBox.addEnumValuesToComBoxProjects(jComboBoxProjeto, listaProjeto);
         jComboBoxProjeto.setSelectedIndex(-1);
     }
-    
+
     /**
      * Adiciona ações aos botões.
      */
