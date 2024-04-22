@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
-@Entity(name = "dados_profissao")
+@Entity(name = "dados_profissoes")
 public class DadosProfissao {
 
     @Id
@@ -24,33 +24,32 @@ public class DadosProfissao {
 
     private boolean acolhido;
 
+    private boolean voluntario;
+
     @OneToOne(mappedBy = "dadosProfissao")
     private Funcionario funcionario;
 
     @Override
     public String toString() {
-        return "DadosProfissao{"
-                + "id=" + id
-                + ", periodo=" + periodo
-                + ", cargo='" + cargo + '\''
-                + ", salario=" + salario
-                + ", cargaHoraria=" + cargaHoraria
-                + ", acolhido=" + acolhido
-                + '}';
+        return "DadosProfissao{" + "id=" + id + ", periodo=" + periodo + ", cargo='" + cargo + '\'' + ", salario=" + salario + ", cargaHoraria=" + cargaHoraria + ", acolhido=" + acolhido + '}';
     }
 
     public void setCargo(String cargo) throws Exception {
-        if (cargo.length() < 0 || cargo == null) {
+        if (cargo.isEmpty() || cargo == null) {
             throw new Exception("Cargo é um campo obrigatório!");
         }
         this.cargo = cargo;
     }
 
-    public void setSalario(BigDecimal salario) throws Exception {
-        if (salario == null) {
+    public void setSalario(String salario) throws Exception {
+        if ((salario == null || salario.isEmpty()) && this.voluntario == false) {
             throw new Exception("Salário é um campo obrigatório!");
         }
-        this.salario = salario;
+        if (this.voluntario == true) {
+            this.salario = null;
+        } else {
+            this.salario = new BigDecimal(salario).divide(new BigDecimal(100));
+        }
     }
 
     public void setPeriodoCargaHoraria(Integer cargaHoraria) throws Exception {

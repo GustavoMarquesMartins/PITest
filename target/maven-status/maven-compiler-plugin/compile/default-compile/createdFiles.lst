@@ -6,9 +6,12 @@ br\com\faculdade\imepac\UI\FormDadosProfissao$5.class
 br\com\faculdade\imepac\entidade\pessoa\DadosProfissao.class
 br\com\faculdade\imepac\UI\FormCadastro$4.class
 br\com\faculdade\imepac\UI\FormCadastro$12.class
+br\com\faculdade\imepac\UI\PaginaInicial$3.class
+br\com\faculdade\imepac\UI\FormProjeto$2.class
 br\com\faculdade\imepac\UI\FormCadastro$7.class
 br\com\faculdade\imepac\UI\commons\CommonMethods.class
 br\com\faculdade\imepac\UI\FormCadastro$19.class
+br\com\faculdade\imepac\UI\PaginaInicial$2.class
 br\com\faculdade\imepac\data_utility\Mask.class
 br\com\faculdade\imepac\UI\FormCadastro$5.class
 br\com\faculdade\imepac\UI\FormDadosProfissao$4.class
@@ -22,8 +25,11 @@ br\com\faculdade\imepac\entidade\pessoa\Funcionario.class
 br\com\faculdade\imepac\UI\FormCadastro$1.class
 br\com\faculdade\imepac\UI\FormCadastro$13.class
 br\com\faculdade\imepac\UI\FormCadastro$10.class
+br\com\faculdade\imepac\UI\PaginaInicial.class
+br\com\faculdade\imepac\UI\FormProjeto.class
 br\com\faculdade\imepac\UI\FormCadastro$9.class
 br\com\faculdade\imepac\entidade\pessoa\Genero.class
+br\com\faculdade\imepac\UI\FormProjeto$1.class
 br\com\faculdade\imepac\UI\commons\MaskFormatterFilter.class
 br\com\faculdade\imepac\dao\Persistence.class
 br\com\faculdade\imepac\UI\commons\ActionManager$3.class
@@ -38,6 +44,7 @@ br\com\faculdade\imepac\UI\FormCadastro$15.class
 br\com\faculdade\imepac\entidade\pessoa\Escolaridade.class
 br\com\faculdade\imepac\employeemanagement\main.class
 br\com\faculdade\imepac\entidade\pessoa\Habilidade.class
+br\com\faculdade\imepac\UI\FormDadosProfissao$6.class
 br\com\faculdade\imepac\UI\FormDadosProfissao.class
 br\com\faculdade\imepac\data_utility\DataValidation.class
 br\com\faculdade\imepac\UI\FormCadastro$18.class
@@ -48,3 +55,4 @@ br\com\faculdade\imepac\UI\commons\InitializeFields.class
 br\com\faculdade\imepac\UI\FormCadastro$20.class
 br\com\faculdade\imepac\UI\commons\ActionManager$2.class
 br\com\faculdade\imepac\UI\FormCadastro$6.class
+br\com\faculdade\imepac\UI\PaginaInicial$1.class

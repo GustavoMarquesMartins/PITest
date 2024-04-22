@@ -32,7 +32,8 @@ public class DataValidation {
      * Valida um CEP verificando se ele possui exatamente 8 dígitos.
      *
      * @param cep O CEP a ser validado.
-     * @return true se o CEP for válido (possuir exatamente 8 dígitos), caso contrário, false.
+     * @return true se o CEP for válido (possuir exatamente 8 dígitos), caso
+     * contrário, false.
      */
     public static boolean validaCep(String cep) {
         boolean valido = Pattern.matches("^\\d{8}$", cep);
@@ -43,12 +44,13 @@ public class DataValidation {
     }
 
     /**
-     * Valida um número de celular verificando se ele possui exatamente 11 dígitos.
+     * Valida um número de celular verificando se ele possui exatamente 11
+     * dígitos.
      *
      * @param numeroCelular O número de celular a ser validado.
-     * @return true se o número de celular for válido (possuir exatamente 11 dígitos), caso contrário, false.
+     * @return true se o número de celular for válido (possuir exatamente 11
+     * dígitos), caso contrário, false.
      */
-
     public static boolean validaNumeroCelular(String numeroCelular) {
         boolean valido = Pattern.matches("^\\d{2}9\\d{8}$", numeroCelular);
         if (!valido) {
@@ -58,13 +60,23 @@ public class DataValidation {
     }
 
     /**
-     * Valida um endereço de e-mail verificando se está em um formato básico aceitável.
+     * Valida um endereço de e-mail verificando se está em um formato básico
+     * aceitável.
      *
      * @param email O endereço de e-mail a ser validado.
-     * @return true se o endereço de e-mail estiver em um formato básico aceitável, caso contrário, false.
+     * @return true se o endereço de e-mail estiver em um formato básico
+     * aceitável, caso contrário, false.
      */
     public static boolean validaEmail(String email) {
         boolean valido = Pattern.matches("^[a-zA-Z0-9]+@[a-zA-Z0-9]+(\\.com)$", email);
+        if (!valido) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean validaRg(String rg) {
+        boolean valido = rg.length() > 8;
         if (!valido) {
             return false;
         }

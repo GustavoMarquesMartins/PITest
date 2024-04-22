@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 public class Projeto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -35,7 +36,10 @@ public class Projeto {
      *
      * @param nome O nome a ser atribuído ao objeto.
      */
-    public void setNome(String nome) {
+    public void setNome(String nome) throws Exception {
+        if (nome == null || nome.isEmpty()) {
+            throw new Exception("Nome é um campo obrigatório.");
+        }
         this.nome = Mask.formataNome(nome);
     }
 
@@ -52,9 +56,9 @@ public class Projeto {
         }
         this.cep = Mask.mascaraCep(cep);
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return this.getNome();
     }
 }

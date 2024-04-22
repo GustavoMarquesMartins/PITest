@@ -33,6 +33,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
@@ -41,15 +42,14 @@ import javax.swing.text.MaskFormatter;
  * FormCadastro é uma classe que representa o formulário de cadastro de
  * funcionários.
  */
-public class FormCadastro extends javax.swing.JPanel {
+public class FormCadastro extends JPanel {
 
-    private JFrame frame;
     private Funcionario funcionario;
+    private JFrame frame;
 
     public FormCadastro(JFrame frame) {
         this.frame = frame;
         initComponents(); // Inicializa os componentes do formulário
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximiza o frame
         this.inicializaFormulario(); // Inicializa o formulário
     }
 
@@ -717,6 +717,7 @@ public class FormCadastro extends javax.swing.JPanel {
         em.getTransaction().begin();
         List<Projeto> listaProjeto = ps.getListEntity(Projeto.class);
         em.getTransaction().commit();
+        em.close();
 
         initializeComboBox.addEnumValuesToComBoxProjects(jComboBoxProjeto, listaProjeto);
         jComboBoxProjeto.setSelectedIndex(-1);
@@ -780,20 +781,13 @@ public class FormCadastro extends javax.swing.JPanel {
         jButtonProxima.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 try {
                     setValues(); // Define os valores do funcionário
-
-                    var form = new FormDadosProfissao(funcionario, frame);
-                    frame.add(form);
-                    setVisible(false);
-                    frame.setVisible(true);
+                    CommonMethods.goToNewPage(frame, new FormDadosProfissao(funcionario, frame));
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Ocorreu um erro! " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-
                 }
-
             }
         });
     }

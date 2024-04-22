@@ -17,6 +17,7 @@ import br.com.faculdade.imepac.entidade.pessoa.Genero;
 import br.com.faculdade.imepac.entidade.pessoa.PeriodoDia;
 import br.com.faculdade.imepac.entidade.pessoa.Raca;
 import br.com.faculdade.imepac.infraestrutura.JPAUtil;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
@@ -46,8 +47,8 @@ public class FormDadosProfissao extends javax.swing.JPanel {
      * Creates new form FormDadosProfissao
      */
     public FormDadosProfissao(Funcionario funcionario, JFrame frame) {
-        this.funcionario = funcionario;
         this.frame = frame;
+        this.funcionario = funcionario;
         initComponents();
         inicializaFormulario();
     }
@@ -69,9 +70,10 @@ public class FormDadosProfissao extends javax.swing.JPanel {
         jLabelSalario = new javax.swing.JLabel();
         jSpinnerCargaHoraria = new javax.swing.JSpinner();
         jLabelCargaHoaria = new javax.swing.JLabel();
-        jCheckBoxAcolhido = new javax.swing.JCheckBox();
+        jCheckBoxVoluntario = new javax.swing.JCheckBox();
         jTextFieldCargo = new javax.swing.JTextField();
         jButtonSalvar = new javax.swing.JButton();
+        jCheckBoxAcolhido1 = new javax.swing.JCheckBox();
 
         jLabelCadastroDeFuncionario1.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
         jLabelCadastroDeFuncionario1.setText("Dados profissão");
@@ -93,10 +95,10 @@ public class FormDadosProfissao extends javax.swing.JPanel {
 
         jLabelCargaHoaria.setText("Carga Horária");
 
-        jCheckBoxAcolhido.setText("Já foi acolhido");
-        jCheckBoxAcolhido.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxVoluntario.setText("Voluntário");
+        jCheckBoxVoluntario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxAcolhidoActionPerformed(evt);
+                jCheckBoxVoluntarioActionPerformed(evt);
             }
         });
 
@@ -116,6 +118,13 @@ public class FormDadosProfissao extends javax.swing.JPanel {
             }
         });
 
+        jCheckBoxAcolhido1.setText("Já foi acolhido");
+        jCheckBoxAcolhido1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxAcolhido1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -124,35 +133,40 @@ public class FormDadosProfissao extends javax.swing.JPanel {
                 .addGap(77, 77, 77)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelSalario)
-                            .addComponent(jFormattedTextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(173, 173, 173)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSpinnerCargaHoraria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelCargaHoaria))
-                        .addGap(179, 179, 179))
+                        .addComponent(jLabelCargo)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jComboBoxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelPeriodo))
+                            .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(176, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelCargo))
-                        .addGap(139, 139, 139)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jCheckBoxAcolhido)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBoxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelPeriodo))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(176, 176, 176))))
+                                    .addComponent(jLabelSalario)
+                                    .addComponent(jFormattedTextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(173, 173, 173)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jSpinnerCargaHoraria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelCargaHoaria)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextFieldCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(268, 268, 268)
+                                .addComponent(jCheckBoxVoluntario)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(101, 101, 101)
                 .addComponent(jLabelCadastroDeFuncionario1)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(359, 359, 359)
+                    .addComponent(jCheckBoxAcolhido1)
+                    .addContainerGap(138, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,22 +183,24 @@ public class FormDadosProfissao extends javax.swing.JPanel {
                         .addComponent(jLabelCargaHoaria)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSpinnerCargaHoraria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jCheckBoxAcolhido)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelPeriodo)
-                        .addGap(10, 10, 10)
-                        .addComponent(jComboBoxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabelCargo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
+                .addComponent(jLabelCargo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBoxVoluntario))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelPeriodo)
+                .addGap(10, 10, 10)
+                .addComponent(jComboBoxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(199, 199, 199)
+                    .addComponent(jCheckBoxAcolhido1)
+                    .addContainerGap(134, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -192,9 +208,9 @@ public class FormDadosProfissao extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jFormattedTextFieldSalarioActionPerformed
 
-    private void jCheckBoxAcolhidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxAcolhidoActionPerformed
+    private void jCheckBoxVoluntarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxVoluntarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBoxAcolhidoActionPerformed
+    }//GEN-LAST:event_jCheckBoxVoluntarioActionPerformed
 
     private void jTextFieldCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCargoActionPerformed
         // TODO add your handling code here:
@@ -204,10 +220,15 @@ public class FormDadosProfissao extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
+    private void jCheckBoxAcolhido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxAcolhido1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxAcolhido1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSalvar;
-    private javax.swing.JCheckBox jCheckBoxAcolhido;
+    private javax.swing.JCheckBox jCheckBoxAcolhido1;
+    private javax.swing.JCheckBox jCheckBoxVoluntario;
     private javax.swing.JComboBox<String> jComboBoxPeriodo;
     private javax.swing.JFormattedTextField jFormattedTextFieldSalario;
     private javax.swing.JLabel jLabelCadastroDeFuncionario1;
@@ -223,7 +244,7 @@ public class FormDadosProfissao extends javax.swing.JPanel {
      * Inicializa o formulário.
      */
     private void inicializaFormulario() {
-        this.formatajFormattedTextFields(); // Formata os campos de texto formatados
+        this.formataFields(); // Formata os campos de texto formatados
         this.initializeComboBoxOptions(); // Inicializa as opções dos ComboBox
         this.saveFuncionario(); // Configura a ação do botão salvar
     }
@@ -231,7 +252,7 @@ public class FormDadosProfissao extends javax.swing.JPanel {
     /**
      * Formata os campos de texto formatados.
      */
-    private void formatajFormattedTextFields() {
+    private void formataFields() {
         MaskFormatterFilter.formatTextField(jFormattedTextFieldSalario, "R$ #.###,##");
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 8, 1);
         jSpinnerCargaHoraria.setModel(model);
@@ -250,14 +271,17 @@ public class FormDadosProfissao extends javax.swing.JPanel {
      * Define os valores do funcionário com base nos campos do formulário.
      */
     public void setValues() throws Exception {
+        var voluntario = jCheckBoxVoluntario.isSelected();
         var salario = CommonMethods.removeSpecialCharacters(jFormattedTextFieldSalario.getText());
         var cargo = jTextFieldCargo.getText();
         var cargaHorario = jSpinnerCargaHoraria.getValue();
-        var acolhido = jCheckBoxAcolhido.isSelected();
+        var acolhido = jCheckBoxVoluntario.isSelected();
         PeriodoDia periodoDia = (PeriodoDia) jComboBoxPeriodo.getSelectedItem();
 
         var dadosProfissao = new DadosProfissao();
-        dadosProfissao.setSalario(new BigDecimal(salario));
+        dadosProfissao.setAcolhido(acolhido);
+        dadosProfissao.setVoluntario(voluntario);
+        dadosProfissao.setSalario(salario);
         dadosProfissao.setCargo(cargo);
         dadosProfissao.setCargaHoraria(Integer.parseInt(cargaHorario.toString()));
         dadosProfissao.setAcolhido(acolhido);
@@ -286,11 +310,7 @@ public class FormDadosProfissao extends javax.swing.JPanel {
                     em.close();
 
                     JOptionPane.showMessageDialog(null, "Funcionário salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
-                    var form = new FormCadastro(frame);
-                    frame.add(form);
-                    setVisible(false);
-                    frame.setVisible(true);
+                    CommonMethods.goToNewPage(frame, new FormCadastro(frame));
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Ocorreu um erro! " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
