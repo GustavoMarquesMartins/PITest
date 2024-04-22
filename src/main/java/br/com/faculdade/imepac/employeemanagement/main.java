@@ -1,7 +1,7 @@
 package br.com.faculdade.imepac.employeemanagement;
 
-import br.com.faculdade.imepac.UI.FormCadastro;
-import br.com.faculdade.imepac.UI.PaginaInicial;
+import br.com.faculdade.imepac.UI.cadastro.FormDadosFuncionario;
+import br.com.faculdade.imepac.UI.cadastro.PaginaInicial;
 import br.com.faculdade.imepac.dao.Persistence;
 import br.com.faculdade.imepac.entidade.pessoa.*;
 import br.com.faculdade.imepac.infraestrutura.JPAUtil;
@@ -26,9 +26,7 @@ public class main {
     public static void main(String[] args) {
         // Executa o aplicativo Swing na Event Dispatch Thread (EDT) para garantir a segurança da interface do usuário
         SwingUtilities.invokeLater(() -> {
-            // Cria um JFrame para a interface gráfica
-            var paginaInicial = new PaginaInicial();
-            paginaInicial.main(args);
+            PaginaInicial.main(args);
         });
     }
 }

@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.com.faculdade.imepac.UI;
+package br.com.faculdade.imepac.UI.cadastro;
 
 import br.com.faculdade.imepac.UI.commons.CommonMethods;
+import br.com.faculdade.imepac.UI.edicao.FormDadosFuncionarioEdicao;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 /**
  *
@@ -26,9 +28,6 @@ public class PaginaInicial extends JFrame {
 
     public PaginaInicial() {
         initComponents();
-        
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        addActions();
     }
 
     /**
@@ -43,16 +42,14 @@ public class PaginaInicial extends JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-        jButtonProjeto = new javax.swing.JButton();
-        jButtonCadastro = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuCadastroFuncionario = new javax.swing.JMenu();
+        jMenuItemCadastroFuncionario = new javax.swing.JMenuItem();
+        jMenuItemEdicaoFuncionario = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItemCadastroProjeto = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -66,47 +63,48 @@ public class PaginaInicial extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
 
-        jButtonProjeto.setText("Projeto");
-
-        jButtonCadastro.setText("Cadastrar");
-
         jMenuBar2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jMenuBar2.setMargin(new java.awt.Insets(2, 2, 2, 2));
 
-        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-principal-icone.png"))); // NOI18N
-        jMenu3.setText("Funcionário");
-        jMenu3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jMenuCadastroFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-principal-icone.png"))); // NOI18N
+        jMenuCadastroFuncionario.setText("Funcionário");
+        jMenuCadastroFuncionario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        jMenuItem1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-cadastro-icone.png"))); // NOI18N
-        jMenuItem1.setText("Cadastro");
-        jMenu3.add(jMenuItem1);
+        jMenuItemCadastroFuncionario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenuItemCadastroFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-cadastro-icone.png"))); // NOI18N
+        jMenuItemCadastroFuncionario.setText("Cadastro");
+        jMenuCadastroFuncionario.add(jMenuItemCadastroFuncionario);
 
-        jMenuItem2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-editar-icone.png"))); // NOI18N
-        jMenuItem2.setText("Editar");
-        jMenu3.add(jMenuItem2);
+        jMenuItemEdicaoFuncionario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenuItemEdicaoFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-editar-icone.png"))); // NOI18N
+        jMenuItemEdicaoFuncionario.setText("Editar");
+        jMenuItemEdicaoFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemEdicaoFuncionarioActionPerformed(evt);
+            }
+        });
+        jMenuCadastroFuncionario.add(jMenuItemEdicaoFuncionario);
 
         jMenuItem3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-listagem-icone.png"))); // NOI18N
         jMenuItem3.setText("Listagem");
-        jMenu3.add(jMenuItem3);
+        jMenuCadastroFuncionario.add(jMenuItem3);
 
         jMenuItem4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-deletar-icone.png"))); // NOI18N
         jMenuItem4.setText("Deletar");
-        jMenu3.add(jMenuItem4);
+        jMenuCadastroFuncionario.add(jMenuItem4);
 
-        jMenuBar2.add(jMenu3);
+        jMenuBar2.add(jMenuCadastroFuncionario);
 
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/casa-principal-icone.png"))); // NOI18N
         jMenu4.setText("Projeto");
         jMenu4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        jMenuItem5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-cadastro-icone.png"))); // NOI18N
-        jMenuItem5.setText("Cadastro");
-        jMenu4.add(jMenuItem5);
+        jMenuItemCadastroProjeto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenuItemCadastroProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-cadastro-icone.png"))); // NOI18N
+        jMenuItemCadastroProjeto.setText("Cadastro");
+        jMenu4.add(jMenuItemCadastroProjeto);
 
         jMenuItem6.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-editar-icone.png"))); // NOI18N
@@ -131,31 +129,25 @@ public class PaginaInicial extends JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jButtonProjeto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonCadastro)
-                .addContainerGap(717, Short.MAX_VALUE))
+            .addGap(0, 929, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(101, 101, 101)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonProjeto)
-                    .addComponent(jButtonCadastro))
-                .addContainerGap(493, Short.MAX_VALUE))
+            .addGap(0, 617, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jMenuItemEdicaoFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEdicaoFuncionarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemEdicaoFuncionarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -182,43 +174,59 @@ public class PaginaInicial extends JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PaginaInicial().setVisible(true);
+                var paginaInicial = new PaginaInicial();
+                paginaInicial.addActions();
+
+                paginaInicial.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+                // Adicione seus componentes aqui...
+                // Torna o JFrame visível
+                paginaInicial.setVisible(true);
+
+                // Configura o JFrame para abrir maximizado
+                paginaInicial.setExtendedState(JFrame.MAXIMIZED_BOTH);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonCadastro;
-    private javax.swing.JButton jButtonProjeto;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenu jMenuCadastroFuncionario;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItemCadastroFuncionario;
+    private javax.swing.JMenuItem jMenuItemCadastroProjeto;
+    private javax.swing.JMenuItem jMenuItemEdicaoFuncionario;
     // End of variables declaration//GEN-END:variables
 
     public void addActions() {
-        jButtonCadastro.addActionListener(new ActionListener() {
+        jMenuItemCadastroFuncionario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CommonMethods.goToNewPage(currentFrame, new FormCadastro(currentFrame));
+                CommonMethods.goToNewPage(currentFrame, new FormDadosFuncionario(currentFrame));
             }
         });
 
-        jButtonProjeto.addActionListener(new ActionListener() {
+        jMenuItemEdicaoFuncionario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CommonMethods.goToNewPage(currentFrame, new FormDadosFuncionarioEdicao(currentFrame, 1l));
+            }
+        });
+
+        jMenuItemCadastroProjeto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CommonMethods.goToNewPage(currentFrame, new FormProjeto(currentFrame));
             }
         });
     }
+
 }

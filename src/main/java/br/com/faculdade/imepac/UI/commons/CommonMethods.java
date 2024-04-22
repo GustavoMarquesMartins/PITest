@@ -1,6 +1,6 @@
 package br.com.faculdade.imepac.UI.commons;
 
-import br.com.faculdade.imepac.UI.FormCadastro;
+import br.com.faculdade.imepac.UI.cadastro.FormDadosFuncionario;
 import java.awt.BorderLayout;
 import java.lang.reflect.Constructor;
 import java.time.LocalDate;

@@ -51,7 +51,6 @@ public class Funcionario {
     private EstadoCivil estadoCivil;
 
     @NotNull
-
     @Enumerated(EnumType.STRING)
     private Raca raca;
 
