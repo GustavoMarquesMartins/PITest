@@ -3,6 +3,7 @@ package br.com.faculdade.imepac.entidade.pessoa;
 import br.com.faculdade.imepac.data_utility.DataValidation;
 import br.com.faculdade.imepac.entidade.projeto.Projeto;
 import br.com.faculdade.imepac.data_utility.Mask;
+import java.text.SimpleDateFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +94,7 @@ public class Funcionario {
     @NotNull
     private Projeto projeto;
 
-    public void adicionarHabilidade(Habilidade habilidade) {
+    public void adicionarHabilidade(Habilidade habilidade) {     
         this.habilidade.add(habilidade);
     }
 

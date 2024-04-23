@@ -17,6 +17,7 @@ import br.com.faculdade.imepac.entidade.pessoa.Raca;
 import br.com.faculdade.imepac.entidade.pessoa.EstadoCivil;
 import br.com.faculdade.imepac.entidade.pessoa.Funcionario;
 import br.com.faculdade.imepac.entidade.pessoa.Genero;
+import br.com.faculdade.imepac.entidade.pessoa.Habilidade;
 import br.com.faculdade.imepac.entidade.projeto.Projeto;
 import br.com.faculdade.imepac.infraestrutura.JPAUtil;
 import com.google.protobuf.TextFormat;
@@ -24,6 +25,7 @@ import com.google.protobuf.TextFormat.ParseException;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,20 +53,13 @@ public class FormDadosFuncionarioEdicao extends JPanel {
     private JFrame frame;
 
     public FormDadosFuncionarioEdicao(JFrame frame, Long id) {
+        this.frame = frame;
         EntityManager em = JPAUtil.getEntityManager();
         Persistence ps = new Persistence(em);
-        
-        em.getTransaction().begin();
-        this.funcionario = ps.getEntity(Funcionario.class, id);
-        em.getTransaction().commit();
-        em.close();
-        
-        System.out.println(funcionario);
-        
-        this.setOldValues();
-        
-        this.frame = frame;
-        initComponents(); // Inicializa os componentes do formulário
+
+        this.funcionario = ps.getEntity(Funcionario.class, 1l);
+
+        initComponents(); // Inicializa os componentes do formulário 
         this.inicializaFormulario(); // Inicializa o formulário
     }
 
@@ -143,6 +138,7 @@ public class FormDadosFuncionarioEdicao extends JPanel {
         jCheckBoxExperienciaProfissional = new javax.swing.JCheckBox();
         jComboBoxProjeto = new javax.swing.JComboBox<>();
         jLabelCepProjeto = new javax.swing.JLabel();
+        jButtonClearSkills = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
@@ -350,6 +346,8 @@ public class FormDadosFuncionarioEdicao extends JPanel {
 
         jLabelCepProjeto.setText("Projeto");
 
+        jButtonClearSkills.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/trash.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -377,8 +375,12 @@ public class FormDadosFuncionarioEdicao extends JPanel {
                                         .addGap(18, 18, 18)
                                         .addComponent(jCheckBoxExperienciaProfissional))
                                     .addComponent(jLabelHabilidade)
-                                    .addComponent(jTextFieldHabilidade, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButtonHabilidade)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldHabilidade, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButtonHabilidade))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonClearSkills))))
                             .addComponent(jLabelCpf)
                             .addComponent(jLabelRg)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -472,18 +474,8 @@ public class FormDadosFuncionarioEdicao extends JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jComboBoxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jComboBoxEscolaridade, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(26, 26, 26)
-                                        .addComponent(jLabelRg))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(96, 96, 96)
-                                        .addComponent(jLabelCpf)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(24, 24, 24)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -515,7 +507,17 @@ public class FormDadosFuncionarioEdicao extends JPanel {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(jLabelNumeroCelular)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jFormattedTextFieldNumeroCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(jFormattedTextFieldNumeroCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(26, 26, 26)
+                                        .addComponent(jLabelRg))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(96, 96, 96)
+                                        .addComponent(jLabelCpf)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -525,9 +527,9 @@ public class FormDadosFuncionarioEdicao extends JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabelHabilidade)
                                 .addGap(0, 0, 0)
-                                .addComponent(jTextFieldHabilidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonHabilidade))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldHabilidade, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonClearSkills)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -537,8 +539,11 @@ public class FormDadosFuncionarioEdicao extends JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabelCnh)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldCnh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextFieldCnh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonHabilidade))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
                 .addComponent(jButtonProxima, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -628,6 +633,7 @@ public class FormDadosFuncionarioEdicao extends JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCarteiraDeTrabalho;
+    private javax.swing.JButton jButtonClearSkills;
     private javax.swing.JButton jButtonCurriculo;
     private javax.swing.JButton jButtonHabilidade;
     private javax.swing.JButton jButtonProxima;
@@ -703,14 +709,15 @@ public class FormDadosFuncionarioEdicao extends JPanel {
         // Obtém os valores dos campos do formulário
         jTextFieldNome.setText(funcionario.getNome());
         jTextFieldRg.setText(funcionario.getRg());
-        jFormattedTextFieldCpf.setText(funcionario.getCpf());
-        jFormattedTextFieldDataNascimento.setText(String.valueOf(funcionario.getDataNascimento()));
         jTextFieldCnh.setText(funcionario.getCnh());
         jTextFieldCnh.setText(funcionario.getCnh());
-        jFormattedTextFieldCep.setText(funcionario.getCep());
         jTextFieldEmail.setText(funcionario.getEmail());
         jTextFieldMei.setText(funcionario.getMei());
-        jFormattedTextFieldNumeroCelular.setText(funcionario.getNumeroCelular());
+        jFormattedTextFieldCep.setValue(funcionario.getCep());
+        jFormattedTextFieldNumeroCelular.setValue(funcionario.getNumeroCelular());
+        jFormattedTextFieldCpf.setValue(funcionario.getCpf());
+        jFormattedTextFieldDataNascimento.setValue(CommonMethods.removeSpecialCharacters(
+                CommonMethods.dataFormatter(funcionario.getDataNascimento())));
 
         jCheckBoxExperienciaProfissional.setSelected(funcionario.isExperienciaProfissional());
         jCheckBoxStatus.setSelected(funcionario.isStatus());
@@ -726,10 +733,10 @@ public class FormDadosFuncionarioEdicao extends JPanel {
      * Inicializa o formulário.
      */
     private void inicializaFormulario() {
-        this.funcionario = new Funcionario();
         this.formatajFormattedTextFields(); // Formata os campos de texto formatados
         this.initializeComboBoxOptions(); // Inicializa as opções dos ComboBox
         this.addActions(); // Adiciona ações aos botões
+        this.setOldValues();
         this.saveFuncionario(); // Configura a ação do botão salvar
 
     }
@@ -774,6 +781,7 @@ public class FormDadosFuncionarioEdicao extends JPanel {
         actionManager.addCurriculumButton(jButtonCurriculo);
         actionManager.addWorkcardButton(jButtonCarteiraDeTrabalho);
         actionManager.addSkillButton(jButtonHabilidade, jTextFieldHabilidade);
+        addSkillCleaningFunction();
     }
 
     /**
@@ -826,11 +834,22 @@ public class FormDadosFuncionarioEdicao extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     setNewValues(); // Define os valores do funcionário
-                    CommonMethods.goToNewPage(frame, new FormDadosProfissao(funcionario, frame));
+                    CommonMethods.goToNewPage(frame, new FormDadosProfissaoEdicao(funcionario, frame));
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Ocorreu um erro! " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+    }
+
+    public void addSkillCleaningFunction() {
+        jButtonClearSkills.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Habilidade> habilidades = funcionario.getHabilidade();
+                habilidades.clear();
+                    JOptionPane.showMessageDialog(null, "Lista de habilidades excluida!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }

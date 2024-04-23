@@ -82,4 +82,5 @@ public class Persistence {
         var JPQL = "SELECT c FROM " + tableName + " c";
         return em.createQuery(JPQL, entityClass).getResultList();
     }
+
 }

@@ -4,9 +4,12 @@ import br.com.faculdade.imepac.dao.Persistence;
 import br.com.faculdade.imepac.entidade.pessoa.Escolaridade;
 import br.com.faculdade.imepac.entidade.pessoa.Funcionario;
 import br.com.faculdade.imepac.entidade.pessoa.Habilidade;
+import br.com.faculdade.imepac.infraestrutura.JPAUtil;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTextArea;
@@ -14,6 +17,7 @@ import javax.swing.JTextField;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.Hibernate;
 
 /**
  * Esta classe fornece métodos para gerenciar ações de botões em interfaces de
@@ -53,9 +57,7 @@ public class ActionManager {
                 Habilidade skill = new Habilidade();
                 skill.setHabilidade(jTextFieldSkill.getText());
                 skill.setFuncionario(funcionario);
-
                 jTextFieldSkill.setText("");
-
                 funcionario.adicionarHabilidade(skill);
             }
         });

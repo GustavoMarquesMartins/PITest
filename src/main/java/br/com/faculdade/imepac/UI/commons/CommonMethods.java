@@ -4,6 +4,7 @@ import br.com.faculdade.imepac.UI.cadastro.FormDadosFuncionario;
 import java.awt.BorderLayout;
 import java.lang.reflect.Constructor;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -105,5 +106,13 @@ public class CommonMethods {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static String dataFormatter(LocalDate data) {
+        // Criar um formatador de data para o padrão brasileiro (dd/MM/yyyy)
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        // Formatar a data
+        return data.format(formatador);
     }
 }

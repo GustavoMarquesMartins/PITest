@@ -16,6 +16,7 @@ import br.com.faculdade.imepac.entidade.pessoa.Raca;
 import br.com.faculdade.imepac.entidade.pessoa.EstadoCivil;
 import br.com.faculdade.imepac.entidade.pessoa.Funcionario;
 import br.com.faculdade.imepac.entidade.pessoa.Genero;
+import br.com.faculdade.imepac.entidade.pessoa.Habilidade;
 import br.com.faculdade.imepac.entidade.projeto.Projeto;
 import br.com.faculdade.imepac.infraestrutura.JPAUtil;
 import com.google.protobuf.TextFormat;
@@ -130,6 +131,7 @@ public class FormDadosFuncionario extends JPanel {
         jCheckBoxExperienciaProfissional = new javax.swing.JCheckBox();
         jComboBoxProjeto = new javax.swing.JComboBox<>();
         jLabelCepProjeto = new javax.swing.JLabel();
+        jButtonClearSkills = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
@@ -337,6 +339,8 @@ public class FormDadosFuncionario extends JPanel {
 
         jLabelCepProjeto.setText("Projeto");
 
+        jButtonClearSkills.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/trash.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -364,8 +368,12 @@ public class FormDadosFuncionario extends JPanel {
                                         .addGap(18, 18, 18)
                                         .addComponent(jCheckBoxExperienciaProfissional))
                                     .addComponent(jLabelHabilidade)
-                                    .addComponent(jTextFieldHabilidade, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButtonHabilidade)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldHabilidade, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButtonHabilidade))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonClearSkills))))
                             .addComponent(jLabelCpf)
                             .addComponent(jLabelRg)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -512,9 +520,12 @@ public class FormDadosFuncionario extends JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabelHabilidade)
                                 .addGap(0, 0, 0)
-                                .addComponent(jTextFieldHabilidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonHabilidade))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jTextFieldHabilidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButtonHabilidade))
+                                    .addComponent(jButtonClearSkills)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -615,6 +626,7 @@ public class FormDadosFuncionario extends JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCarteiraDeTrabalho;
+    private javax.swing.JButton jButtonClearSkills;
     private javax.swing.JButton jButtonCurriculo;
     private javax.swing.JButton jButtonHabilidade;
     private javax.swing.JButton jButtonProxima;
@@ -734,6 +746,7 @@ public class FormDadosFuncionario extends JPanel {
         actionManager.addCurriculumButton(jButtonCurriculo);
         actionManager.addWorkcardButton(jButtonCarteiraDeTrabalho);
         actionManager.addSkillButton(jButtonHabilidade, jTextFieldHabilidade);
+        addSkillCleaningFunction();
     }
 
     /**
@@ -791,6 +804,17 @@ public class FormDadosFuncionario extends JPanel {
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Ocorreu um erro! " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+    }
+
+    public void addSkillCleaningFunction() {
+        jButtonClearSkills.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                var lista = funcionario.getHabilidade();
+                lista.clear();
+                JOptionPane.showMessageDialog(null, "Lista de habilidades excluida!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }

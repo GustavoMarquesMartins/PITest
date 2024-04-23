@@ -157,8 +157,14 @@
                                       <Component id="jCheckBoxExperienciaProfissional" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jLabelHabilidade" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextFieldHabilidade" min="-2" pref="247" max="-2" attributes="0"/>
-                                  <Component id="jButtonHabilidade" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jTextFieldHabilidade" alignment="0" min="-2" pref="247" max="-2" attributes="0"/>
+                                          <Component id="jButtonHabilidade" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jButtonClearSkills" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                           <Component id="jLabelCpf" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -356,9 +362,14 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jLabelHabilidade" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="jTextFieldHabilidade" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jButtonHabilidade" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="jTextFieldHabilidade" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="jButtonHabilidade" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jButtonClearSkills" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -662,6 +673,13 @@
     <Component class="javax.swing.JLabel" name="jLabelCepProjeto">
       <Properties>
         <Property name="text" type="java.lang.String" value="Projeto"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonClearSkills">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Icons/trash.png"/>
+        </Property>
       </Properties>
     </Component>
   </SubComponents>
