@@ -18,8 +18,11 @@ import br.com.faculdade.imepac.entidade.pessoa.PeriodoDia;
 import br.com.faculdade.imepac.entidade.pessoa.Raca;
 import br.com.faculdade.imepac.infraestrutura.JPAUtil;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -237,6 +240,7 @@ public class FormDadosProfissao extends javax.swing.JPanel {
         this.formataFields(); // Formata os campos de texto formatados
         this.initializeComboBoxOptions(); // Inicializa as opções dos ComboBox
         this.saveFuncionario(); // Configura a ação do botão salvar
+        this.addActions(); // Verifica se o campo voluntário esta selecionado caso esteja ele bloqueia interação com o salário
     }
 
     /**
@@ -309,5 +313,25 @@ public class FormDadosProfissao extends javax.swing.JPanel {
 
             }
         });
+    }
+
+    public void blockInteraction() {
+        jCheckBoxVoluntario.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    jFormattedTextFieldSalario.setEditable(false);
+                    jFormattedTextFieldSalario.setDisabledTextColor(Color.GRAY);
+                    jFormattedTextFieldSalario.setBackground(Color.LIGHT_GRAY);
+                } else {
+                    jFormattedTextFieldSalario.setEditable(true);
+                    jFormattedTextFieldSalario.setDisabledTextColor(null);
+                    jFormattedTextFieldSalario.setBackground(null);
+                }
+            }
+        });
+    }
+
+    private void addActions() {
+        blockInteraction();
     }
 }

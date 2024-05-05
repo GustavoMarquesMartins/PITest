@@ -57,7 +57,7 @@ public class FormDadosFuncionarioEdicao extends JPanel {
         EntityManager em = JPAUtil.getEntityManager();
         Persistence ps = new Persistence(em);
 
-        this.funcionario = ps.getEntity(Funcionario.class, 1l);
+        this.funcionario = ps.getEntity(Funcionario.class, id);
 
         initComponents(); // Inicializa os componentes do formulário 
         this.inicializaFormulario(); // Inicializa o formulário
@@ -302,7 +302,7 @@ public class FormDadosFuncionarioEdicao extends JPanel {
         jButtonCarteiraDeTrabalho.setText("Buscar");
 
         jButtonProxima.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButtonProxima.setText("Próxima");
+        jButtonProxima.setText(" Aplicar alteração");
         jButtonProxima.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButtonProxima.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -541,9 +541,8 @@ public class FormDadosFuncionarioEdicao extends JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jTextFieldCnh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButtonHabilidade))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                                    .addComponent(jButtonHabilidade))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jButtonProxima, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -737,7 +736,7 @@ public class FormDadosFuncionarioEdicao extends JPanel {
         this.initializeComboBoxOptions(); // Inicializa as opções dos ComboBox
         this.addActions(); // Adiciona ações aos botões
         this.setOldValues();
-        this.saveFuncionario(); // Configura a ação do botão salvar
+        this.updateEmployee(); // Configura a ação do botão salvar
 
     }
 
@@ -828,7 +827,7 @@ public class FormDadosFuncionarioEdicao extends JPanel {
     /**
      * Configura a ação do botão salvar.
      */
-    public void saveFuncionario() {
+    public void updateEmployee() {
         jButtonProxima.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -849,7 +848,7 @@ public class FormDadosFuncionarioEdicao extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 List<Habilidade> habilidades = funcionario.getHabilidade();
                 habilidades.clear();
-                    JOptionPane.showMessageDialog(null, "Lista de habilidades excluida!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Lista de habilidades excluida!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }

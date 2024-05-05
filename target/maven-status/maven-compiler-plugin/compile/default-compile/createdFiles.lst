@@ -28,6 +28,7 @@ br\com\faculdade\imepac\UI\edicao\FormDadosFuncionarioEdicao$3.class
 br\com\faculdade\imepac\entidade\pessoa\Genero.class
 br\com\faculdade\imepac\UI\commons\MaskFormatterFilter.class
 br\com\faculdade\imepac\UI\commons\ActionManager$3.class
+br\com\faculdade\imepac\UI\edicao\FormProjetoEdicao$1.class
 br\com\faculdade\imepac\UI\edicao\FormDadosFuncionarioEdicao$11.class
 br\com\faculdade\imepac\UI\cadastro\FormDadosProfissao$6.class
 br\com\faculdade\imepac\UI\cadastro\PaginaInicial$2.class
@@ -35,10 +36,13 @@ br\com\faculdade\imepac\entidade\pessoa\Escolaridade.class
 br\com\faculdade\imepac\entidade\pessoa\Habilidade.class
 br\com\faculdade\imepac\UI\cadastro\FormDadosFuncionario$4.class
 br\com\faculdade\imepac\UI\edicao\FormDadosFuncionarioEdicao$18.class
+br\com\faculdade\imepac\UI\edicao\FormDadosProfissaoEdicao$7.class
 br\com\faculdade\imepac\infraestrutura\JPAUtil.class
 br\com\faculdade\imepac\UI\cadastro\PaginaInicial$1.class
+br\com\faculdade\imepac\UI\edicao\FormProjetoEdicao$2.class
 br\com\faculdade\imepac\UI\cadastro\FormDadosFuncionario$14.class
 br\com\faculdade\imepac\UI\edicao\FormDadosFuncionarioEdicao$4.class
+br\com\faculdade\imepac\UI\cadastro\FormDadosProfissao$7.class
 br\com\faculdade\imepac\UI\edicao\FormDadosProfissaoEdicao$1.class
 br\com\faculdade\imepac\UI\commons\ActionManager$2.class
 br\com\faculdade\imepac\UI\edicao\FormDadosFuncionarioEdicao$12.class
@@ -61,6 +65,7 @@ br\com\faculdade\imepac\entidade\pessoa\ExperienciaProfissional.class
 br\com\faculdade\imepac\UI\cadastro\FormDadosProfissao$5.class
 br\com\faculdade\imepac\UI\cadastro\FormDadosFuncionario.class
 br\com\faculdade\imepac\UI\edicao\FormDadosFuncionarioEdicao$17.class
+br\com\faculdade\imepac\UI\cadastro\PaginaInicial$6.class
 br\com\faculdade\imepac\UI\edicao\FormDadosFuncionarioEdicao$22.class
 br\com\faculdade\imepac\UI\cadastro\FormProjeto$2.class
 br\com\faculdade\imepac\UI\cadastro\FormDadosFuncionario$12.class
@@ -89,3 +94,4 @@ br\com\faculdade\imepac\UI\cadastro\FormDadosFuncionario$22.class
 br\com\faculdade\imepac\UI\edicao\FormDadosFuncionarioEdicao$1.class
 br\com\faculdade\imepac\UI\cadastro\FormDadosFuncionario$1.class
 br\com\faculdade\imepac\UI\cadastro\FormDadosFuncionario$17.class
+br\com\faculdade\imepac\UI\edicao\FormProjetoEdicao.class

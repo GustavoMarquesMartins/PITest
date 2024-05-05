@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package br.com.faculdade.imepac.UI.edicao;
 
 import br.com.faculdade.imepac.UI.cadastro.*;
@@ -19,8 +15,11 @@ import br.com.faculdade.imepac.entidade.pessoa.PeriodoDia;
 import br.com.faculdade.imepac.entidade.pessoa.Raca;
 import br.com.faculdade.imepac.infraestrutura.JPAUtil;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -111,7 +110,7 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
         });
 
         jButtonSalvar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButtonSalvar.setText("Salvar");
+        jButtonSalvar.setText(" Aplicar alteração");
         jButtonSalvar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,44 +130,41 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(77, 77, 77)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelCargo)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelSalario)
-                                    .addComponent(jFormattedTextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(84, 84, 84)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSpinnerCargaHoraria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelCargaHoaria)
-                                    .addComponent(jCheckBoxAcolhido))))
-                        .addGap(18, 18, 18)
-                        .addComponent(jCheckBoxVoluntario)
-                        .addContainerGap(161, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelCargo)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabelSalario)
+                                            .addComponent(jFormattedTextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(84, 84, 84)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jSpinnerCargaHoraria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabelCargaHoaria)
+                                            .addComponent(jCheckBoxAcolhido))))
+                                .addGap(18, 18, 18)
+                                .addComponent(jCheckBoxVoluntario))
                             .addComponent(jComboBoxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelPeriodo))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(162, 162, 162)
-                .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jLabelCadastroDeFuncionario1)
-                .addContainerGap(47, Short.MAX_VALUE))
+                            .addComponent(jLabelPeriodo)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(193, 193, 193)
+                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(jLabelCadastroDeFuncionario1)))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(68, 68, 68)
                 .addComponent(jLabelCadastroDeFuncionario1)
-                .addGap(44, 44, 44)
+                .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelSalario)
@@ -189,9 +185,9 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
                 .addComponent(jLabelPeriodo)
                 .addGap(4, 4, 4)
                 .addComponent(jComboBoxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(49, 49, 49))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -238,7 +234,8 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
         this.formataFields(); // Formata os campos de texto formatados
         this.initializeComboBoxOptions(); // Inicializa as opções dos ComboBox
         setOldValues();
-        this.saveFuncionario(); // Configura a ação do botão salvar
+        addActions(); // Verifica se o campo voluntário esta selecionado caso esteja ele bloqueia interação com o salário
+        this.updateProfessionData();// Configura a ação do botão salvar
     }
 
     /**
@@ -301,14 +298,14 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
     /**
      * Configura a ação do botão salvar.
      */
-    public void saveFuncionario() {
+    public void updateProfessionData() {
         jButtonSalvar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 try {
                     setNewValues(); // Define os valores do funcionárioa 
-         
+
                     EntityManager em = JPAUtil.getEntityManager();
                     Persistence persistence = new Persistence(em); // Corrigindo a declaração da variável
 
@@ -317,7 +314,7 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
                     em.getTransaction().commit();
                     em.close();
 
-                    JOptionPane.showMessageDialog(null, "Funcionário salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Funcionário atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                     closePage();
 
                 } catch (Exception ex) {
@@ -331,5 +328,25 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
 
     public void closePage() {
         this.setVisible(false);
+    }
+
+    public void blockInteraction() {
+        jCheckBoxVoluntario.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    jFormattedTextFieldSalario.setEditable(false);
+                    jFormattedTextFieldSalario.setDisabledTextColor(Color.GRAY);
+                    jFormattedTextFieldSalario.setBackground(Color.LIGHT_GRAY);
+                } else {
+                    jFormattedTextFieldSalario.setEditable(true);
+                    jFormattedTextFieldSalario.setDisabledTextColor(null);
+                    jFormattedTextFieldSalario.setBackground(null);
+                }
+            }
+        });
+    }
+
+    private void addActions() {
+        blockInteraction();
     }
 }

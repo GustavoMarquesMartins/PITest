@@ -6,6 +6,7 @@ package br.com.faculdade.imepac.UI.cadastro;
 
 import br.com.faculdade.imepac.UI.commons.CommonMethods;
 import br.com.faculdade.imepac.UI.edicao.FormDadosFuncionarioEdicao;
+import br.com.faculdade.imepac.UI.edicao.FormProjetoEdicao;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,14 +44,14 @@ public class PaginaInicial extends JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenuBar2 = new javax.swing.JMenuBar();
-        jMenuCadastroFuncionario = new javax.swing.JMenu();
+        jMenuGerenciamentoFuncionario = new javax.swing.JMenu();
         jMenuItemCadastroFuncionario = new javax.swing.JMenuItem();
         jMenuItemEdicaoFuncionario = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        jMenuGerenciamentoProjeto = new javax.swing.JMenu();
         jMenuItemCadastroProjeto = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItemEdicaoProjeto = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
 
@@ -66,14 +67,14 @@ public class PaginaInicial extends JFrame {
         jMenuBar2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jMenuBar2.setMargin(new java.awt.Insets(2, 2, 2, 2));
 
-        jMenuCadastroFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-principal-icone.png"))); // NOI18N
-        jMenuCadastroFuncionario.setText("Funcionário");
-        jMenuCadastroFuncionario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jMenuGerenciamentoFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-principal-icone.png"))); // NOI18N
+        jMenuGerenciamentoFuncionario.setText("Funcionário");
+        jMenuGerenciamentoFuncionario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         jMenuItemCadastroFuncionario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItemCadastroFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-cadastro-icone.png"))); // NOI18N
         jMenuItemCadastroFuncionario.setText("Cadastro");
-        jMenuCadastroFuncionario.add(jMenuItemCadastroFuncionario);
+        jMenuGerenciamentoFuncionario.add(jMenuItemCadastroFuncionario);
 
         jMenuItemEdicaoFuncionario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItemEdicaoFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-editar-icone.png"))); // NOI18N
@@ -83,45 +84,45 @@ public class PaginaInicial extends JFrame {
                 jMenuItemEdicaoFuncionarioActionPerformed(evt);
             }
         });
-        jMenuCadastroFuncionario.add(jMenuItemEdicaoFuncionario);
+        jMenuGerenciamentoFuncionario.add(jMenuItemEdicaoFuncionario);
 
         jMenuItem3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-listagem-icone.png"))); // NOI18N
         jMenuItem3.setText("Listagem");
-        jMenuCadastroFuncionario.add(jMenuItem3);
+        jMenuGerenciamentoFuncionario.add(jMenuItem3);
 
         jMenuItem4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-deletar-icone.png"))); // NOI18N
         jMenuItem4.setText("Deletar");
-        jMenuCadastroFuncionario.add(jMenuItem4);
+        jMenuGerenciamentoFuncionario.add(jMenuItem4);
 
-        jMenuBar2.add(jMenuCadastroFuncionario);
+        jMenuBar2.add(jMenuGerenciamentoFuncionario);
 
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/casa-principal-icone.png"))); // NOI18N
-        jMenu4.setText("Projeto");
-        jMenu4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jMenuGerenciamentoProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/casa-principal-icone.png"))); // NOI18N
+        jMenuGerenciamentoProjeto.setText("Projeto");
+        jMenuGerenciamentoProjeto.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         jMenuItemCadastroProjeto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItemCadastroProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-cadastro-icone.png"))); // NOI18N
         jMenuItemCadastroProjeto.setText("Cadastro");
-        jMenu4.add(jMenuItemCadastroProjeto);
+        jMenuGerenciamentoProjeto.add(jMenuItemCadastroProjeto);
 
-        jMenuItem6.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-editar-icone.png"))); // NOI18N
-        jMenuItem6.setText("Editar");
-        jMenu4.add(jMenuItem6);
+        jMenuItemEdicaoProjeto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenuItemEdicaoProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-editar-icone.png"))); // NOI18N
+        jMenuItemEdicaoProjeto.setText("Editar");
+        jMenuGerenciamentoProjeto.add(jMenuItemEdicaoProjeto);
 
         jMenuItem7.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-listagem-icone.png"))); // NOI18N
         jMenuItem7.setText("Listagem");
-        jMenu4.add(jMenuItem7);
+        jMenuGerenciamentoProjeto.add(jMenuItem7);
 
         jMenuItem8.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-deletar-icone.png"))); // NOI18N
         jMenuItem8.setText("Deletar");
-        jMenu4.add(jMenuItem8);
+        jMenuGerenciamentoProjeto.add(jMenuItem8);
 
-        jMenuBar2.add(jMenu4);
+        jMenuBar2.add(jMenuGerenciamentoProjeto);
 
         setJMenuBar(jMenuBar2);
 
@@ -192,18 +193,18 @@ public class PaginaInicial extends JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenu jMenuCadastroFuncionario;
+    private javax.swing.JMenu jMenuGerenciamentoFuncionario;
+    private javax.swing.JMenu jMenuGerenciamentoProjeto;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItemCadastroFuncionario;
     private javax.swing.JMenuItem jMenuItemCadastroProjeto;
     private javax.swing.JMenuItem jMenuItemEdicaoFuncionario;
+    private javax.swing.JMenuItem jMenuItemEdicaoProjeto;
     // End of variables declaration//GEN-END:variables
 
     public void addActions() {
@@ -227,6 +228,14 @@ public class PaginaInicial extends JFrame {
                 CommonMethods.goToNewPage(currentFrame, new FormProjeto(currentFrame));
             }
         });
+
+        jMenuItemEdicaoProjeto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CommonMethods.goToNewPage(currentFrame, new FormProjetoEdicao(currentFrame, 2l));
+            }
+        });
+
     }
 
 }

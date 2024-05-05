@@ -54,7 +54,7 @@ public class Projeto {
         if (!valido) {
             throw new Exception("CEP inválido!");
         }
-        this.cep = Mask.mascaraCep(cep);
+        this.cep = cep;
     }
 
     @Override
