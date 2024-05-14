@@ -4,42 +4,28 @@
  */
 package br.com.faculdade.imepac.UI.cadastro;
 
-import br.com.faculdade.imepac.UI.cadastro.FormDadosProfissao;
-import br.com.caelum.stella.type.Estado;
 import br.com.faculdade.imepac.UI.commons.ActionManager;
 import br.com.faculdade.imepac.UI.commons.CommonMethods;
 import br.com.faculdade.imepac.UI.commons.InitializeFields;
 import br.com.faculdade.imepac.UI.commons.MaskFormatterFilter;
-import br.com.faculdade.imepac.dao.Persistence;
+import br.com.faculdade.imepac.infraestrutura.Persistence;
 import br.com.faculdade.imepac.entidade.pessoa.Escolaridade;
 import br.com.faculdade.imepac.entidade.pessoa.Raca;
 import br.com.faculdade.imepac.entidade.pessoa.EstadoCivil;
 import br.com.faculdade.imepac.entidade.pessoa.Funcionario;
 import br.com.faculdade.imepac.entidade.pessoa.Genero;
-import br.com.faculdade.imepac.entidade.pessoa.Habilidade;
 import br.com.faculdade.imepac.entidade.projeto.Projeto;
+import br.com.faculdade.imepac.entidade.relacionamento.Relacionamento;
 import br.com.faculdade.imepac.infraestrutura.JPAUtil;
-import com.google.protobuf.TextFormat;
-import com.google.protobuf.TextFormat.ParseException;
-import java.awt.BorderLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
 
 /**
  * FormCadastro é uma classe que representa o formulário de cadastro de
@@ -49,6 +35,8 @@ public class FormDadosFuncionario extends JPanel {
 
     private Funcionario funcionario;
     private JFrame frame;
+    private Relacionamento relacionamento = new Relacionamento();
+    private Projeto projeto;
 
     public FormDadosFuncionario(JFrame frame) {
         this.frame = frame;
@@ -702,7 +690,7 @@ public class FormDadosFuncionario extends JPanel {
         this.formatajFormattedTextFields(); // Formata os campos de texto formatados
         this.initializeComboBoxOptions(); // Inicializa as opções dos ComboBox
         this.addActions(); // Adiciona ações aos botões
-        this.saveFuncionario(); // Configura a ação do botão salvar
+        this.definesEmployeeData(); // Configura a ação do botão salvar
 
     }
 
@@ -753,6 +741,7 @@ public class FormDadosFuncionario extends JPanel {
      * Define os valores do funcionário com base nos campos do formulário.
      */
     public void setValues() throws Exception {
+
         // Obtém os valores dos campos do formulário
         String nome = jTextFieldNome.getText();
         String rg = jTextFieldRg.getText();
@@ -769,7 +758,7 @@ public class FormDadosFuncionario extends JPanel {
         String numeroCelular = CommonMethods.removeSpecialCharacters(jFormattedTextFieldNumeroCelular.getText());
         String email = jTextFieldEmail.getText();
         boolean experienciaProfissional = jCheckBoxExperienciaProfissional.isSelected();
-        Projeto projeto = (Projeto) jComboBoxProjeto.getSelectedItem();
+        this.projeto = (Projeto) jComboBoxProjeto.getSelectedItem();
 
         // Define os valores do funcionário
         this.funcionario.setNome(nome);
@@ -787,22 +776,23 @@ public class FormDadosFuncionario extends JPanel {
         this.funcionario.setGenero(genero);
         this.funcionario.setExperienciaProfissional(experienciaProfissional);
         funcionario.setEscolaridade(escolaridade);
-        funcionario.setProjeto(projeto);
     }
 
     /**
      * Configura a ação do botão salvar.
      */
-    public void saveFuncionario() {
+    public void definesEmployeeData() {
         jButtonProxima.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     setValues(); // Define os valores do funcionário
-                    CommonMethods.goToNewPage(frame, new FormDadosProfissao(funcionario, frame));
+
+                    CommonMethods.goToNewPage(frame, new FormDadosProfissao(funcionario, projeto, frame));
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Ocorreu um erro! " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    System.out.println(ex.getMessage());
                 }
             }
         });

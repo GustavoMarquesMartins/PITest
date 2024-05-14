@@ -1,38 +1,26 @@
 package br.com.faculdade.imepac.UI.edicao;
 
-import br.com.faculdade.imepac.UI.cadastro.*;
-import br.com.faculdade.imepac.UI.commons.ActionManager;
 import br.com.faculdade.imepac.UI.commons.CommonMethods;
 import br.com.faculdade.imepac.UI.commons.InitializeFields;
 import br.com.faculdade.imepac.UI.commons.MaskFormatterFilter;
-import br.com.faculdade.imepac.dao.Persistence;
+import br.com.faculdade.imepac.infraestrutura.Persistence;
 import br.com.faculdade.imepac.entidade.pessoa.DadosProfissao;
-import br.com.faculdade.imepac.entidade.pessoa.Escolaridade;
-import br.com.faculdade.imepac.entidade.pessoa.EstadoCivil;
 import br.com.faculdade.imepac.entidade.pessoa.Funcionario;
-import br.com.faculdade.imepac.entidade.pessoa.Genero;
 import br.com.faculdade.imepac.entidade.pessoa.PeriodoDia;
-import br.com.faculdade.imepac.entidade.pessoa.Raca;
+import br.com.faculdade.imepac.entidade.projeto.Projeto;
+import br.com.faculdade.imepac.entidade.relacionamento.Relacionamento;
 import br.com.faculdade.imepac.infraestrutura.JPAUtil;
-import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.math.BigDecimal;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.time.LocalDate;
-import java.util.Locale;
 import javax.persistence.EntityManager;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
-import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -42,11 +30,13 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
 
     private Funcionario funcionario;
     private JFrame frame;
+    private Projeto projeto;
 
     /**
      * Creates new form FormDadosProfissao
      */
-    public FormDadosProfissaoEdicao(Funcionario funcionario, JFrame frame) {
+    public FormDadosProfissaoEdicao(Funcionario funcionario, JFrame frame, Projeto projeto) {
+        this.projeto = projeto;
         this.frame = frame;
         this.funcionario = funcionario;
         initComponents();
@@ -311,6 +301,14 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
 
                     em.getTransaction().begin();
                     persistence.updateEntity(funcionario); // Salva o funcionário no banco de dados
+                    
+                    var relacionamento = new Relacionamento();
+                    relacionamento.setDataInicio(LocalDate.now());
+                    relacionamento.setFuncionario(funcionario);
+                    relacionamento.setProjeto(projeto);
+
+                    persistence.save(relacionamento);
+
                     em.getTransaction().commit();
                     em.close();
 

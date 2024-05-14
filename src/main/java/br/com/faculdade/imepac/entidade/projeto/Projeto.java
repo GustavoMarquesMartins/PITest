@@ -2,11 +2,14 @@ package br.com.faculdade.imepac.entidade.projeto;
 
 import br.com.faculdade.imepac.data_utility.DataValidation;
 import br.com.faculdade.imepac.data_utility.Mask;
+import br.com.faculdade.imepac.entidade.relacionamento.Relacionamento;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "projetos")
 @NoArgsConstructor
@@ -30,6 +33,9 @@ public class Projeto {
     private String publicoAlvo;
 
     private String justificativa;
+
+    @OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL)
+    private Set<Relacionamento> relacionamentos = new HashSet<>();
 
     /**
      * Atribui um nome formatado ao objeto.

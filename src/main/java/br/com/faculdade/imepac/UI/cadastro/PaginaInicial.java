@@ -7,6 +7,7 @@ package br.com.faculdade.imepac.UI.cadastro;
 import br.com.faculdade.imepac.UI.commons.CommonMethods;
 import br.com.faculdade.imepac.UI.edicao.FormDadosFuncionarioEdicao;
 import br.com.faculdade.imepac.UI.edicao.FormProjetoEdicao;
+import br.com.faculdade.imepac.UI.listagem.ListagemFuncionarios;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,7 +48,7 @@ public class PaginaInicial extends JFrame {
         jMenuGerenciamentoFuncionario = new javax.swing.JMenu();
         jMenuItemCadastroFuncionario = new javax.swing.JMenuItem();
         jMenuItemEdicaoFuncionario = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItemFuncionarioListagem = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuGerenciamentoProjeto = new javax.swing.JMenu();
         jMenuItemCadastroProjeto = new javax.swing.JMenuItem();
@@ -86,10 +87,10 @@ public class PaginaInicial extends JFrame {
         });
         jMenuGerenciamentoFuncionario.add(jMenuItemEdicaoFuncionario);
 
-        jMenuItem3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-listagem-icone.png"))); // NOI18N
-        jMenuItem3.setText("Listagem");
-        jMenuGerenciamentoFuncionario.add(jMenuItem3);
+        jMenuItemFuncionarioListagem.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenuItemFuncionarioListagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-listagem-icone.png"))); // NOI18N
+        jMenuItemFuncionarioListagem.setText("Listagem");
+        jMenuGerenciamentoFuncionario.add(jMenuItemFuncionarioListagem);
 
         jMenuItem4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-deletar-icone.png"))); // NOI18N
@@ -197,7 +198,6 @@ public class PaginaInicial extends JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenu jMenuGerenciamentoFuncionario;
     private javax.swing.JMenu jMenuGerenciamentoProjeto;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
@@ -205,6 +205,7 @@ public class PaginaInicial extends JFrame {
     private javax.swing.JMenuItem jMenuItemCadastroProjeto;
     private javax.swing.JMenuItem jMenuItemEdicaoFuncionario;
     private javax.swing.JMenuItem jMenuItemEdicaoProjeto;
+    private javax.swing.JMenuItem jMenuItemFuncionarioListagem;
     // End of variables declaration//GEN-END:variables
 
     public void addActions() {
@@ -235,7 +236,13 @@ public class PaginaInicial extends JFrame {
                 CommonMethods.goToNewPage(currentFrame, new FormProjetoEdicao(currentFrame, 2l));
             }
         });
+        
+        jMenuItemFuncionarioListagem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CommonMethods.goToNewPage(currentFrame, new ListagemFuncionarios(currentFrame));
+            }
+        });
 
     }
-
 }

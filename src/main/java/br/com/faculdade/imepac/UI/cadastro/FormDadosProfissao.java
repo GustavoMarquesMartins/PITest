@@ -4,38 +4,27 @@
  */
 package br.com.faculdade.imepac.UI.cadastro;
 
-import br.com.faculdade.imepac.UI.commons.ActionManager;
 import br.com.faculdade.imepac.UI.commons.CommonMethods;
 import br.com.faculdade.imepac.UI.commons.InitializeFields;
 import br.com.faculdade.imepac.UI.commons.MaskFormatterFilter;
-import br.com.faculdade.imepac.dao.Persistence;
+import br.com.faculdade.imepac.infraestrutura.Persistence;
 import br.com.faculdade.imepac.entidade.pessoa.DadosProfissao;
-import br.com.faculdade.imepac.entidade.pessoa.Escolaridade;
-import br.com.faculdade.imepac.entidade.pessoa.EstadoCivil;
 import br.com.faculdade.imepac.entidade.pessoa.Funcionario;
-import br.com.faculdade.imepac.entidade.pessoa.Genero;
 import br.com.faculdade.imepac.entidade.pessoa.PeriodoDia;
-import br.com.faculdade.imepac.entidade.pessoa.Raca;
+import br.com.faculdade.imepac.entidade.projeto.Projeto;
+import br.com.faculdade.imepac.entidade.relacionamento.Relacionamento;
 import br.com.faculdade.imepac.infraestrutura.JPAUtil;
-import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.math.BigDecimal;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.time.LocalDate;
-import java.util.Locale;
 import javax.persistence.EntityManager;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
-import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -45,13 +34,16 @@ public class FormDadosProfissao extends javax.swing.JPanel {
 
     private Funcionario funcionario;
     private JFrame frame;
+    private Projeto projeto;
+    private Relacionamento relacionamento = new Relacionamento();
 
     /**
      * Creates new form FormDadosProfissao
      */
-    public FormDadosProfissao(Funcionario funcionario, JFrame frame) {
+    public FormDadosProfissao(Funcionario funcionario, Projeto projeto, JFrame frame) {
         this.frame = frame;
         this.funcionario = funcionario;
+        this.projeto = projeto;
         initComponents();
         inicializaFormulario();
     }
@@ -265,6 +257,10 @@ public class FormDadosProfissao extends javax.swing.JPanel {
      * Define os valores do funcionário com base nos campos do formulário.
      */
     public void setValues() throws Exception {
+        EntityManager em = JPAUtil.getEntityManager();
+        Persistence ps = new Persistence(em);
+        em.getTransaction().begin();
+
         var voluntario = jCheckBoxVoluntario.isSelected();
         var salario = CommonMethods.removeSpecialCharacters(jFormattedTextFieldSalario.getText());
         var cargo = jTextFieldCargo.getText();
@@ -282,6 +278,15 @@ public class FormDadosProfissao extends javax.swing.JPanel {
         dadosProfissao.setPeriodo(periodoDia);
         dadosProfissao.setFuncionario(funcionario);
         funcionario.setDadosProfissao(dadosProfissao);
+
+        funcionario.getRelacionamentos().add(relacionamento);
+
+        this.relacionamento.setProjeto(ps.getEntity(Projeto.class, projeto.getId()));
+        this.relacionamento.setFuncionario(funcionario);
+        this.relacionamento.setDataInicio(LocalDate.now());
+
+        em.close();
+
     }
 
     /**
@@ -299,6 +304,11 @@ public class FormDadosProfissao extends javax.swing.JPanel {
                     Persistence persistence = new Persistence(em); // Corrigindo a declaração da variável
 
                     em.getTransaction().begin();
+
+                    System.out.println(relacionamento.getFuncionario());
+                    System.out.println(relacionamento.getProjeto());
+                    System.out.println(relacionamento.getDataInicio());
+                    persistence.save(relacionamento);
                     persistence.save(funcionario); // Salva o funcionário no banco de dados
                     em.getTransaction().commit();
                     em.close();

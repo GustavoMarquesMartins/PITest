@@ -1,15 +1,7 @@
 package br.com.faculdade.imepac.employeemanagement;
 
-import br.com.faculdade.imepac.UI.cadastro.FormDadosFuncionario;
 import br.com.faculdade.imepac.UI.cadastro.PaginaInicial;
-import br.com.faculdade.imepac.dao.Persistence;
-import br.com.faculdade.imepac.entidade.pessoa.*;
-import br.com.faculdade.imepac.infraestrutura.JPAUtil;
 
-import javax.persistence.EntityManager;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 /**

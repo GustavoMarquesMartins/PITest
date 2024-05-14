@@ -6,11 +6,7 @@ package br.com.faculdade.imepac.UI.cadastro;
 
 import br.com.faculdade.imepac.UI.commons.CommonMethods;
 import br.com.faculdade.imepac.UI.commons.MaskFormatterFilter;
-import br.com.faculdade.imepac.dao.Persistence;
-import br.com.faculdade.imepac.entidade.pessoa.Escolaridade;
-import br.com.faculdade.imepac.entidade.pessoa.EstadoCivil;
-import br.com.faculdade.imepac.entidade.pessoa.Genero;
-import br.com.faculdade.imepac.entidade.pessoa.Raca;
+import br.com.faculdade.imepac.infraestrutura.Persistence;
 import br.com.faculdade.imepac.entidade.projeto.Projeto;
 import br.com.faculdade.imepac.infraestrutura.JPAUtil;
 import java.awt.event.ActionEvent;
@@ -51,11 +47,10 @@ public class FormProjeto extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jTextFieldNome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldCep = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldServico = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jFormattedTextFieldDataCriacao = new javax.swing.JFormattedTextField();
+        jFormattedTextFieldCep = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jTextFieldPublicoAlvo = new javax.swing.JTextField();
@@ -66,6 +61,7 @@ public class FormProjeto extends javax.swing.JPanel {
         jButtonSalvar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextAreaDescricao2 = new javax.swing.JTextArea();
+        jFormattedTextFieldDataCriacao = new javax.swing.JFormattedTextField();
 
         jLabel1.setText("Nome");
 
@@ -111,24 +107,23 @@ public class FormProjeto extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextFieldNome)
-                                .addGap(92, 92, 92))
+                                .addComponent(jFormattedTextFieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jFormattedTextFieldDataCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldNome)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel3)
                                     .addComponent(jTextFieldServico, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextFieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel2))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jFormattedTextFieldDataCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(jLabel4)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(64, 64, 64)))
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(88, 88, 88)
+                                        .addComponent(jLabel5)))
+                                .addGap(87, 87, 87)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel7)
                             .addComponent(jLabel6)
@@ -158,12 +153,12 @@ public class FormProjeto extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jFormattedTextFieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jFormattedTextFieldDataCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
@@ -190,6 +185,7 @@ public class FormProjeto extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSalvar;
+    private javax.swing.JFormattedTextField jFormattedTextFieldCep;
     private javax.swing.JFormattedTextField jFormattedTextFieldDataCriacao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -203,7 +199,6 @@ public class FormProjeto extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextAreaDescricao2;
     private javax.swing.JTextArea jTextAreaJustificativa;
-    private javax.swing.JTextField jTextFieldCep;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldPublicoAlvo;
     private javax.swing.JTextField jTextFieldServico;
@@ -212,7 +207,7 @@ public class FormProjeto extends javax.swing.JPanel {
     public void setValues() throws Exception {
         // Obtém os valores dos campos do formulário
         String nome = jTextFieldNome.getText();
-        String cep = jTextFieldCep.getText();
+        String cep = CommonMethods.removeSpecialCharacters(jFormattedTextFieldCep.getText());
         String servico = jTextFieldServico.getText();
         LocalDate dataCriacao = CommonMethods.parseStringToLocalDate(jFormattedTextFieldDataCriacao.getText());
         String publicoAlvo = jTextFieldPublicoAlvo.getText();
@@ -233,6 +228,7 @@ public class FormProjeto extends javax.swing.JPanel {
      */
     private void formatajFormattedTextFields() {
         MaskFormatterFilter.formatTextField(jFormattedTextFieldDataCriacao, "##/##/####");
+        MaskFormatterFilter.formatTextField(jFormattedTextFieldCep, "#####-###");
     }
 
     public void inicializaFormulario() {

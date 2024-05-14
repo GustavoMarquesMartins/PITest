@@ -1,4 +1,4 @@
-package br.com.faculdade.imepac.dao;
+package br.com.faculdade.imepac.infraestrutura;
 
 import br.com.faculdade.imepac.infraestrutura.JPAUtil;
 import lombok.NoArgsConstructor;

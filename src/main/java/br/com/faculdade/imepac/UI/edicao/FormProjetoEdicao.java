@@ -6,8 +6,7 @@ package br.com.faculdade.imepac.UI.edicao;
 
 import br.com.faculdade.imepac.UI.commons.CommonMethods;
 import br.com.faculdade.imepac.UI.commons.MaskFormatterFilter;
-import br.com.faculdade.imepac.dao.Persistence;
-import br.com.faculdade.imepac.entidade.pessoa.Funcionario;
+import br.com.faculdade.imepac.infraestrutura.Persistence;
 import br.com.faculdade.imepac.entidade.projeto.Projeto;
 import br.com.faculdade.imepac.infraestrutura.JPAUtil;
 import java.awt.event.ActionEvent;

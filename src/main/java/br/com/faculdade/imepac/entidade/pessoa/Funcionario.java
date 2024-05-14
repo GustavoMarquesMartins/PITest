@@ -1,9 +1,9 @@
 package br.com.faculdade.imepac.entidade.pessoa;
 
 import br.com.faculdade.imepac.data_utility.DataValidation;
-import br.com.faculdade.imepac.entidade.projeto.Projeto;
 import br.com.faculdade.imepac.data_utility.Mask;
-import java.text.SimpleDateFormat;
+import br.com.faculdade.imepac.entidade.relacionamento.Relacionamento;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,9 +11,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "funcionarios")
 @Data
@@ -28,11 +29,9 @@ public class Funcionario {
     private String nome;
 
     @NotBlank
-    @Column(unique = true)
     private String rg;
 
     @NotBlank
-    @Column(unique = true)
     private String cpf;
 
     @NotNull
@@ -90,13 +89,12 @@ public class Funcionario {
     @NotNull
     private boolean experienciaProfissional;
 
-    @ManyToOne
-    @NotNull
-    private Projeto projeto;
-
-    public void adicionarHabilidade(Habilidade habilidade) {     
+    public void adicionarHabilidade(Habilidade habilidade) {
         this.habilidade.add(habilidade);
     }
+
+    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL)
+    private Set<Relacionamento> relacionamentos = new HashSet<>();
 
     /**
      * Atribui um nome formatado ao objeto.
@@ -180,12 +178,5 @@ public class Funcionario {
             throw new Exception("MEI inválido");
         }
         this.mei = mei;
-    }
-
-    public void setProjeto(Projeto projeto) throws Exception {
-        if (projeto == null) {
-            throw new Exception("É necessário que o funcionário seja associado a um projeto");
-        }
-        this.projeto = projeto;
     }
 }
