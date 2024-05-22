@@ -1,5 +1,8 @@
 package br.com.faculdade.imepac.infraestrutura;
 
+import br.com.faculdade.imepac.entidade.pessoa.Funcionario;
+import br.com.faculdade.imepac.entidade.projeto.Projeto;
+import br.com.faculdade.imepac.entidade.relacionamento.Relacionamento;
 import br.com.faculdade.imepac.infraestrutura.JPAUtil;
 import lombok.NoArgsConstructor;
 
@@ -7,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.xml.bind.JAXB;
 import java.util.List;
+import javax.persistence.TypedQuery;
 
 /**
  * Classe responsável por fornecer métodos genéricos para operações de
@@ -83,4 +87,41 @@ public class Persistence {
         return em.createQuery(JPQL, entityClass).getResultList();
     }
 
+    public List<Funcionario> getListFuncionarios(String campoBusca, boolean arquivado) {
+        String JPQL = "SELECT c FROM funcionarios c WHERE (c.cpf = :campoBusca OR c.nome = :campoBusca) AND c.arquivado = :arquivado";
+        TypedQuery<Funcionario> query = em.createQuery(JPQL, Funcionario.class);
+        query.setParameter("campoBusca", campoBusca);
+        query.setParameter("arquivado", arquivado);
+        return query.getResultList();
+    }
+
+    public List<Projeto> getListProjetos(String campoBusca, boolean arquivado) {
+        String JPQL = "SELECT c FROM projetos c WHERE (c.cep = :campoBusca OR c.nome = :campoBusca) AND c.arquivado = :arquivado";
+        TypedQuery<Projeto> query = em.createQuery(JPQL, Projeto.class);
+        query.setParameter("campoBusca", campoBusca);
+        query.setParameter("arquivado", arquivado);
+        return query.getResultList();
+    }
+
+    public List<Relacionamento> buscarRelacionamentosPorFuncionarioId(Long funcionarioId) {
+        String JPQL = "SELECT r FROM relacionamentos r WHERE r.funcionario.id = :funcionarioId";
+
+        TypedQuery<Relacionamento> query = em.createQuery(JPQL, Relacionamento.class);
+        query.setParameter("funcionarioId", funcionarioId);
+
+        List<Relacionamento> resultados = query.getResultList();
+
+        return resultados;
+    }
+    
+  public List<Relacionamento> buscarRelacionamentosPorProjetoId(Long projetoId) {
+        String JPQL = "SELECT r FROM relacionamentos r WHERE r.projeto.id = :projetoId";
+
+        TypedQuery<Relacionamento> query = em.createQuery(JPQL, Relacionamento.class);
+        query.setParameter("projetoId", projetoId);
+        
+        List<Relacionamento> resultados = query.getResultList();
+
+        return resultados;
+    }
 }

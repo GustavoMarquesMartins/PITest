@@ -43,8 +43,7 @@ public class Funcionario {
     @NotBlank
     private String mei;
 
-    @NotNull
-    private boolean status;
+    private boolean arquivado = false;
 
     @NotNull
     @Column(name = "estado_civil")
@@ -93,8 +92,8 @@ public class Funcionario {
         this.habilidade.add(habilidade);
     }
 
-    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL)
-    private Set<Relacionamento> relacionamentos = new HashSet<>();
+    @OneToMany(mappedBy = "funcionario")
+    private List<Relacionamento> relacionamentos = new ArrayList<>();
 
     /**
      * Atribui um nome formatado ao objeto.

@@ -305,9 +305,6 @@ public class FormDadosProfissao extends javax.swing.JPanel {
 
                     em.getTransaction().begin();
 
-                    System.out.println(relacionamento.getFuncionario());
-                    System.out.println(relacionamento.getProjeto());
-                    System.out.println(relacionamento.getDataInicio());
                     persistence.save(relacionamento);
                     persistence.save(funcionario); // Salva o funcionário no banco de dados
                     em.getTransaction().commit();

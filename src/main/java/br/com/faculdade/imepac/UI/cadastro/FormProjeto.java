@@ -62,6 +62,7 @@ public class FormProjeto extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextAreaDescricao2 = new javax.swing.JTextArea();
         jFormattedTextFieldDataCriacao = new javax.swing.JFormattedTextField();
+        jCheckBoxStatus = new javax.swing.JCheckBox();
 
         jLabel1.setText("Nome");
 
@@ -97,6 +98,13 @@ public class FormProjeto extends javax.swing.JPanel {
         jTextAreaDescricao2.setRows(5);
         jScrollPane3.setViewportView(jTextAreaDescricao2);
 
+        jCheckBoxStatus.setText("Ativo");
+        jCheckBoxStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxStatusActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,7 +136,8 @@ public class FormProjeto extends javax.swing.JPanel {
                             .addComponent(jLabel7)
                             .addComponent(jLabel6)
                             .addComponent(jScrollPane1)
-                            .addComponent(jTextFieldPublicoAlvo, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextFieldPublicoAlvo, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCheckBoxStatus)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(64, 64, 64)
                         .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -150,7 +159,7 @@ public class FormProjeto extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTextFieldPublicoAlvo)
                     .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,7 +178,9 @@ public class FormProjeto extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCheckBoxStatus)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -182,9 +193,14 @@ public class FormProjeto extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
+    private void jCheckBoxStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxStatusActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSalvar;
+    private javax.swing.JCheckBox jCheckBoxStatus;
     private javax.swing.JFormattedTextField jFormattedTextFieldCep;
     private javax.swing.JFormattedTextField jFormattedTextFieldDataCriacao;
     private javax.swing.JLabel jLabel1;
@@ -213,6 +229,7 @@ public class FormProjeto extends javax.swing.JPanel {
         String publicoAlvo = jTextFieldPublicoAlvo.getText();
         String justificativa = jTextAreaJustificativa.getText();
         String descricao = jTextAreaJustificativa.getText();
+        boolean arquivado = jCheckBoxStatus.isSelected();
 
         projeto.setNome(nome);
         projeto.setCep(cep);
@@ -221,6 +238,7 @@ public class FormProjeto extends javax.swing.JPanel {
         projeto.setPublicoAlvo(publicoAlvo);
         projeto.setJustificativa(justificativa);
         projeto.setDescricao(descricao);
+        projeto.setArquivado(arquivado);
     }
 
     /**

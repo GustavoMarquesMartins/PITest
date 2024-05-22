@@ -10,6 +10,7 @@ import br.com.faculdade.imepac.UI.commons.CommonMethods;
 import br.com.faculdade.imepac.UI.edicao.FormDadosFuncionarioEdicao;
 import br.com.faculdade.imepac.UI.edicao.FormProjetoEdicao;
 import br.com.faculdade.imepac.UI.visualizar.VisualizarDadosFuncionario;
+import br.com.faculdade.imepac.UI.visualizar.VisualizarDadosProjeto;
 import br.com.faculdade.imepac.entidade.pessoa.Funcionario;
 import br.com.faculdade.imepac.entidade.projeto.Projeto;
 import br.com.faculdade.imepac.entidade.relacionamento.Relacionamento;
@@ -21,7 +22,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
@@ -40,16 +40,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author gusta
  */
-public class ListagemFuncionarios extends javax.swing.JPanel {
+public class ListagemProjetos extends javax.swing.JPanel {
 
-    private Funcionario funcionarioSelecionado;
+    private Projeto projetoSelecionado;
     private JFrame frame;
-    private List<Funcionario> listaFuncionarios;
+    private List<Projeto> listaProjetos;
 
     /**
      * Creates new form ListagemFuncionarios
      */
-    public ListagemFuncionarios(JFrame frame) {
+    public ListagemProjetos(JFrame frame) {
         this.frame = frame;
         initComponents();
         inicializeTable();
@@ -66,20 +66,53 @@ public class ListagemFuncionarios extends javax.swing.JPanel {
     private void initComponents() {
 
         jPasswordField1 = new javax.swing.JPasswordField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableFuncionarios = new javax.swing.JTable();
+        jButtonVerDadosFuncionario = new javax.swing.JButton();
         jButtonArquivar = new javax.swing.JButton();
         jButtonEdicao = new javax.swing.JButton();
-        jButtonVerProjetos = new javax.swing.JButton();
+        jButtonVerFuncionarios = new javax.swing.JButton();
         jButtonBuscar = new javax.swing.JButton();
         jTextFieldCampoBusca = new javax.swing.JTextField();
         jButtonLimparFiltro = new javax.swing.JButton();
         jCheckBoxStatus = new javax.swing.JCheckBox();
-        jButtonVerDadosFuncionario = new javax.swing.JButton();
+        jButtonVerDadosProjeto = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableProjetos = new javax.swing.JTable();
 
         jPasswordField1.setText("jPasswordField1");
 
-        jTableFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
+        jButtonVerDadosFuncionario.setBackground(new java.awt.Color(0, 204, 204));
+        jButtonVerDadosFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/olho.png"))); // NOI18N
+        jButtonVerDadosFuncionario.setText("Visualizar");
+
+        jButtonArquivar.setBackground(new java.awt.Color(204, 0, 0));
+        jButtonArquivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-deletar-icone.png"))); // NOI18N
+        jButtonArquivar.setText("Arquivar");
+
+        jButtonEdicao.setBackground(new java.awt.Color(0, 102, 255));
+        jButtonEdicao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icone-editar.png"))); // NOI18N
+        jButtonEdicao.setText("Editar");
+
+        jButtonVerFuncionarios.setBackground(new java.awt.Color(0, 102, 51));
+        jButtonVerFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/lupa.png"))); // NOI18N
+        jButtonVerFuncionarios.setText("Funcionarios");
+
+        jButtonBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/lupa (1).png"))); // NOI18N
+
+        jTextFieldCampoBusca.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldCampoBusca.setForeground(new java.awt.Color(0, 0, 0));
+
+        jButtonLimparFiltro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/filtro.png"))); // NOI18N
+        jButtonLimparFiltro.setText("Limpar");
+
+        jCheckBoxStatus.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jCheckBoxStatus.setText("Arquivados");
+        jCheckBoxStatus.setToolTipText("");
+
+        jButtonVerDadosProjeto.setBackground(new java.awt.Color(0, 204, 204));
+        jButtonVerDadosProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/olho.png"))); // NOI18N
+        jButtonVerDadosProjeto.setText("Visualizar");
+
+        jTableProjetos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -116,38 +149,10 @@ public class ListagemFuncionarios extends javax.swing.JPanel {
                 "CPF", "Nome"
             }
         ));
-        jTableFuncionarios.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
-        jTableFuncionarios.setColumnSelectionAllowed(true);
-        jTableFuncionarios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane1.setViewportView(jTableFuncionarios);
-
-        jButtonArquivar.setBackground(new java.awt.Color(204, 0, 0));
-        jButtonArquivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/funcionario-deletar-icone.png"))); // NOI18N
-        jButtonArquivar.setText("Arquivar");
-
-        jButtonEdicao.setBackground(new java.awt.Color(0, 102, 255));
-        jButtonEdicao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icone-editar.png"))); // NOI18N
-        jButtonEdicao.setText("Editar");
-
-        jButtonVerProjetos.setBackground(new java.awt.Color(0, 102, 51));
-        jButtonVerProjetos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/lupa.png"))); // NOI18N
-        jButtonVerProjetos.setText("Projetos");
-
-        jButtonBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/lupa (1).png"))); // NOI18N
-
-        jTextFieldCampoBusca.setBackground(new java.awt.Color(255, 255, 255));
-        jTextFieldCampoBusca.setForeground(new java.awt.Color(0, 0, 0));
-
-        jButtonLimparFiltro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/filtro.png"))); // NOI18N
-        jButtonLimparFiltro.setText("Limpar");
-
-        jCheckBoxStatus.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jCheckBoxStatus.setText("Arquivados");
-        jCheckBoxStatus.setToolTipText("");
-
-        jButtonVerDadosFuncionario.setBackground(new java.awt.Color(0, 204, 204));
-        jButtonVerDadosFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/olho.png"))); // NOI18N
-        jButtonVerDadosFuncionario.setText("Visualizar");
+        jTableProjetos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        jTableProjetos.setColumnSelectionAllowed(true);
+        jTableProjetos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane1.setViewportView(jTableProjetos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -156,15 +161,15 @@ public class ListagemFuncionarios extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButtonEdicao)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonVerProjetos)
+                                .addComponent(jButtonVerFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonVerDadosFuncionario)
+                                .addComponent(jButtonVerDadosProjeto)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonArquivar))
                             .addGroup(layout.createSequentialGroup()
@@ -175,29 +180,30 @@ public class ListagemFuncionarios extends javax.swing.JPanel {
                                 .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldCampoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 296, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextFieldCampoBusca))
+                    .addComponent(jTextFieldCampoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonLimparFiltro)
                     .addComponent(jCheckBoxStatus))
-                .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonVerProjetos, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonVerDadosFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonArquivar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonVerDadosProjeto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonVerFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonArquivar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(56, 56, 56))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -208,18 +214,19 @@ public class ListagemFuncionarios extends javax.swing.JPanel {
     private javax.swing.JButton jButtonEdicao;
     private javax.swing.JButton jButtonLimparFiltro;
     private javax.swing.JButton jButtonVerDadosFuncionario;
-    private javax.swing.JButton jButtonVerProjetos;
+    private javax.swing.JButton jButtonVerDadosProjeto;
+    private javax.swing.JButton jButtonVerFuncionarios;
     private javax.swing.JCheckBox jCheckBoxStatus;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableFuncionarios;
+    private javax.swing.JTable jTableProjetos;
     private javax.swing.JTextField jTextFieldCampoBusca;
     // End of variables declaration//GEN-END:variables
 
     public void inicializeTable() {
         DefaultTableModel modelo = new DefaultTableModel();
 
-        modelo.addColumn("CPF");
+        modelo.addColumn("CEP");
         modelo.addColumn("Nome");
         modelo.addColumn("Status");
 
@@ -227,30 +234,29 @@ public class ListagemFuncionarios extends javax.swing.JPanel {
         Persistence ps = new Persistence(em);
 
         em.getTransaction().begin();
-        listaFuncionarios = ps.getListEntity(Funcionario.class);
-        em.close();
+        this.listaProjetos = ps.getListEntity(Projeto.class);
 
-        for (Funcionario funcionario : listaFuncionarios) {
-            modelo.addRow(new Object[]{funcionario.getCpf(), funcionario.getNome(), funcionario.isArquivado()});
+        for (Projeto projeto : listaProjetos) {
+            modelo.addRow(new Object[]{projeto.getCep(), projeto.getNome(), projeto.isArquivado()});
         }
 
         // Atribua o modelo de tabela à tabela
-        jTableFuncionarios.setModel(modelo);
+        jTableProjetos.setModel(modelo);
 
         // Permita seleção única de linha na tabela
-        jTableFuncionarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTableProjetos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         // Adicione um ouvinte de seleção à tabela
-        jTableFuncionarios.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        jTableProjetos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
-                    int selectedRow = jTableFuncionarios.getSelectedRow();
+                    int selectedRow = jTableProjetos.getSelectedRow();
                     if (selectedRow != -1) { // Verifique se alguma linha está selecionada
                         // Recupere os dados da linha selecionada
-                        int rowIndex = jTableFuncionarios.convertRowIndexToModel(selectedRow);
+                        int rowIndex = jTableProjetos.convertRowIndexToModel(selectedRow);
                         // Supondo que 'listaFuncionarios' esteja disponível neste contexto
-                        funcionarioSelecionado = listaFuncionarios.get(rowIndex);
+                        projetoSelecionado = listaProjetos.get(rowIndex);
                         // Faça algo com o funcionarioSelecionado
                     }
                 }
@@ -263,7 +269,68 @@ public class ListagemFuncionarios extends javax.swing.JPanel {
         jButtonEdicao.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CommonMethods.goToNewPage(frame, new FormDadosFuncionarioEdicao(frame, funcionarioSelecionado.getId()));
+                CommonMethods.goToNewPage(frame, new FormProjetoEdicao(frame, projetoSelecionado.getId()));
+            }
+        });
+
+        jButtonArquivar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+
+                    if (projetoSelecionado.isArquivado()) {
+                        projetoSelecionado.setArquivado(false);
+                    } else {
+                        projetoSelecionado.setArquivado(true);
+                    }
+
+                    EntityManager em = JPAUtil.getEntityManager();
+                    Persistence ps = new Persistence(em);
+
+                    em.getTransaction().begin();
+                    ps.updateEntity(projetoSelecionado);
+                    em.getTransaction().commit();
+                    em.close();
+                    JOptionPane.showMessageDialog(null, "Status alterado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    CommonMethods.goToNewPage(frame, new ListagemProjetos(frame));
+                } catch (Exception erro) {
+                    JOptionPane.showMessageDialog(null, "Ocorreu um erro! " + erro.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        jButtonVerFuncionarios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                DefaultTableModel modelo = new DefaultTableModel();
+
+                modelo.addColumn("CPF");
+                modelo.addColumn("Nome");
+
+                EntityManager em = JPAUtil.getEntityManager();
+                Persistence ps = new Persistence(em);
+
+                em.getTransaction().begin();
+
+                var listaRelacionamento = ps.buscarRelacionamentosPorProjetoId(projetoSelecionado.getId());
+
+                em.close();
+
+                for (Relacionamento relacionamento : listaRelacionamento) {
+                    modelo.addRow(new Object[]{relacionamento.getFuncionario().getCpf(),
+                        relacionamento.getFuncionario().getNome()});
+                }
+
+                JTable table = new JTable(modelo);
+                JScrollPane scrollPane = new JScrollPane(table);
+
+                JFrame frame = new JFrame("Funcionário relacionados ao projeto");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setSize(500, 300);
+                frame.add(scrollPane);
+                frame.setVisible(true);
+
             }
         });
 
@@ -275,10 +342,36 @@ public class ListagemFuncionarios extends javax.swing.JPanel {
             }
         });
 
-        jButtonVerDadosFuncionario.addActionListener(new ActionListener() {
+        jButtonVerDadosProjeto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CommonMethods.goToNewPage(frame, new VisualizarDadosFuncionario(frame, funcionarioSelecionado.getId()));
+                CommonMethods.goToNewPage(frame, new VisualizarDadosProjeto(frame, projetoSelecionado.getId()));
+            }
+        });
+
+        jCheckBoxStatus.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                DefaultTableModel modelo = new DefaultTableModel();
+
+                modelo.addColumn("CEP");
+                modelo.addColumn("Nome");
+                modelo.addColumn("Status");
+
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    for (Projeto projeto : listaProjetos) {
+                        if (projeto.isArquivado() == false) {
+                            modelo.addRow(new Object[]{projeto.getCep(), projeto.getNome(), projeto.isArquivado()});
+                        }
+                    }
+                }
+                if (e.getStateChange() != ItemEvent.SELECTED) {
+                    for (Projeto projeto : listaProjetos) {
+                        if (projeto.isArquivado() == true) {
+                            modelo.addRow(new Object[]{projeto.getCep(), projeto.getNome()});
+                        }
+                    }
+                }
+                jTableProjetos.setModel(modelo);
             }
         });
 
@@ -293,114 +386,21 @@ public class ListagemFuncionarios extends javax.swing.JPanel {
                 var status = jCheckBoxStatus.isSelected();
 
                 em.getTransaction().begin();
-                listaFuncionarios = ps.getListFuncionarios(valorBusca, !status);
-                em.close();
+                listaProjetos = ps.getListProjetos(valorBusca, !status);
 
-                DefaultTableModel modelo = new DefaultTableModel();
-
-                modelo.addColumn("Nome");
-                modelo.addColumn("CPF");
-                modelo.addColumn("Status");
-
-                for (Funcionario funcionario : listaFuncionarios) {
-                    modelo.addRow(new Object[]{funcionario.getNome(), funcionario.getCpf(), funcionario.isArquivado()});
-                }
-
-                jTableFuncionarios.setModel(modelo);
-
-            }
-        });
-
-        jButtonArquivar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-
-                    if (funcionarioSelecionado.isArquivado()) {
-                        funcionarioSelecionado.setArquivado(false);
-                    } else {
-                        funcionarioSelecionado.setArquivado(true);
-                    }
-
-                    EntityManager em = JPAUtil.getEntityManager();
-                    Persistence ps = new Persistence(em);
-
-                    em.getTransaction().begin();
-                    ps.updateEntity(funcionarioSelecionado);
-                    em.getTransaction().commit();
-                    em.close();
-                    JOptionPane.showMessageDialog(null, "Status alterado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                    CommonMethods.goToNewPage(frame, new ListagemFuncionarios(frame));
-                } catch (Exception erro) {
-                    JOptionPane.showMessageDialog(null, "Ocorreu um erro! " + erro.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-
-        jButtonVerProjetos.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                DefaultTableModel modelo = new DefaultTableModel();
-
-                modelo.addColumn("CEP");
-                modelo.addColumn("Nome");
-                modelo.addColumn("Data-Início");
-                modelo.addColumn("Data-Termino");
-
-                EntityManager em = JPAUtil.getEntityManager();
-                Persistence ps = new Persistence(em);
-
-                em.getTransaction().begin();
-                var listaProjetos = ps.buscarRelacionamentosPorFuncionarioId(funcionarioSelecionado.getId());
-                em.close();
-
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-                for (Relacionamento relacionamento : listaProjetos) {
-                    modelo.addRow(new Object[]{relacionamento.getProjeto().getCep(),
-                        relacionamento.getProjeto().getNome(),
-                        relacionamento.getDataInicio().format(formatter),
-                        relacionamento.getDataTermino() != null ? relacionamento.getDataTermino().format(formatter) : "Vazio"
-                    });
-                }
-
-                JTable table = new JTable(modelo);
-                JScrollPane scrollPane = new JScrollPane(table);
-
-                JFrame frame = new JFrame("Projetos relacionados ao Funcionário");
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                frame.setSize(500, 300);
-                frame.add(scrollPane);
-                frame.setVisible(true);
-
-            }
-        });
-
-        jCheckBoxStatus.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
                 DefaultTableModel modelo = new DefaultTableModel();
 
                 modelo.addColumn("CPF");
                 modelo.addColumn("Nome");
-                modelo.addColumn("Status");
 
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    for (Funcionario funcionario : listaFuncionarios) {
-                        if (funcionario.isArquivado() == false) {
-                            modelo.addRow(new Object[]{funcionario.getCep(), funcionario.getNome(), funcionario.isArquivado()});
-                        }
-                    }
+                for (Projeto projeto : listaProjetos) {
+                    modelo.addRow(new Object[]{projeto.getCep(),
+                        projeto.getNome()});
                 }
-                if (e.getStateChange() != ItemEvent.SELECTED) {
-                    for (Funcionario funcionario : listaFuncionarios) {
-                        if (funcionario.isArquivado() == true) {
-                            modelo.addRow(new Object[]{funcionario.getCpf(), funcionario.getNome(), funcionario.isArquivado()});
-                        }
-                    }
-                }
-                jTableFuncionarios.setModel(modelo);
+
+                jTableProjetos.setModel(modelo);
             }
         });
+
     }
 }

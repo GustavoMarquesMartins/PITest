@@ -20,7 +20,7 @@ public class Relacionamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    
     @ManyToOne
     @JoinColumn(name = "id_funcionario")
     private Funcionario funcionario;

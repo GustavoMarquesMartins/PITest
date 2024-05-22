@@ -30,13 +30,13 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
 
     private Funcionario funcionario;
     private JFrame frame;
-    private Projeto projeto;
+    private Relacionamento relacionamento;
 
     /**
      * Creates new form FormDadosProfissao
      */
-    public FormDadosProfissaoEdicao(Funcionario funcionario, JFrame frame, Projeto projeto) {
-        this.projeto = projeto;
+    public FormDadosProfissaoEdicao(Funcionario funcionario, JFrame frame, Relacionamento relacionamento) {
+        this.relacionamento = relacionamento;
         this.frame = frame;
         this.funcionario = funcionario;
         initComponents();
@@ -300,14 +300,27 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
                     Persistence persistence = new Persistence(em); // Corrigindo a declaração da variável
 
                     em.getTransaction().begin();
-                    persistence.updateEntity(funcionario); // Salva o funcionário no banco de dados
-                    
-                    var relacionamento = new Relacionamento();
-                    relacionamento.setDataInicio(LocalDate.now());
-                    relacionamento.setFuncionario(funcionario);
-                    relacionamento.setProjeto(projeto);
 
-                    persistence.save(relacionamento);
+                    if (relacionamento != null) {
+
+                        if (funcionario.getRelacionamentos().size() != 0) {
+                            var relacionamentos = funcionario.getRelacionamentos();
+                            var relacionamentoAntigo = relacionamentos.get(relacionamentos.size() - 1);
+
+                            relacionamentoAntigo.setDataTermino(LocalDate.now());
+                            
+                            var projeto = persistence.getEntity(Projeto.class, relacionamentoAntigo.getProjeto().getId());
+                            projeto.getRelacionamentos().add(relacionamento);
+                            persistence.updateEntity(projeto);
+                            
+                            persistence.updateEntity(relacionamentoAntigo);
+                        }
+
+                        persistence.save(relacionamento);
+                        funcionario.getRelacionamentos().add(relacionamento);
+                    }
+
+                    persistence.updateEntity(funcionario); // Salva o funcionário no banco de dados
 
                     em.getTransaction().commit();
                     em.close();

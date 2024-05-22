@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity(name = "projetos")
@@ -34,8 +36,10 @@ public class Projeto {
 
     private String justificativa;
 
-    @OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL)
-    private Set<Relacionamento> relacionamentos = new HashSet<>();
+    private boolean arquivado = false;
+
+    @OneToMany(mappedBy = "projeto")
+    private List<Relacionamento> relacionamentos = new ArrayList<>();
 
     /**
      * Atribui um nome formatado ao objeto.

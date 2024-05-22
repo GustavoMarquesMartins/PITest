@@ -524,7 +524,7 @@ public class FormDadosFuncionario extends JPanel {
                                 .addComponent(jLabelCnh)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldCnh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
                 .addComponent(jButtonProxima, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -579,10 +579,6 @@ public class FormDadosFuncionario extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextFieldDataNascimentoActionPerformed
 
-    private void jCheckBoxStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxStatusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBoxStatusActionPerformed
-
     private void jComboBoxEstadoCivilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEstadoCivilActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxEstadoCivilActionPerformed
@@ -610,6 +606,10 @@ public class FormDadosFuncionario extends JPanel {
     private void jComboBoxProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProjetoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxProjetoActionPerformed
+
+    private void jCheckBoxStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxStatusActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -766,7 +766,7 @@ public class FormDadosFuncionario extends JPanel {
         this.funcionario.setCpf(cpf);
         this.funcionario.setDataNascimento(dataNascimento);
         this.funcionario.setCnh(cnh);
-        this.funcionario.setStatus(status);
+        this.funcionario.setArquivado(status);
         this.funcionario.setEstadoCivil(estadoCivil);
         this.funcionario.setMei(mei);
         this.funcionario.setRaca(raca);

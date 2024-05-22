@@ -21,6 +21,7 @@ import br.com.faculdade.imepac.infraestrutura.JPAUtil;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -34,18 +35,19 @@ import javax.swing.JPanel;
  * funcionários.
  */
 public class FormDadosFuncionarioEdicao extends JPanel {
-
+    
     private Funcionario funcionario;
     private JFrame frame;
     private Projeto projeto;
-
+    private Relacionamento relacionamento;
+    
     public FormDadosFuncionarioEdicao(JFrame frame, Long id) {
         this.frame = frame;
         EntityManager em = JPAUtil.getEntityManager();
         Persistence ps = new Persistence(em);
-
+        
         this.funcionario = ps.getEntity(Funcionario.class, id);
-
+        
         initComponents(); // Inicializa os componentes do formulário 
         this.inicializaFormulario(); // Inicializa o formulário
 
@@ -532,7 +534,7 @@ public class FormDadosFuncionarioEdicao extends JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jTextFieldCnh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButtonHabilidade))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
                 .addComponent(jButtonProxima, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -587,10 +589,6 @@ public class FormDadosFuncionarioEdicao extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextFieldDataNascimentoActionPerformed
 
-    private void jCheckBoxStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxStatusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBoxStatusActionPerformed
-
     private void jComboBoxEstadoCivilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEstadoCivilActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxEstadoCivilActionPerformed
@@ -618,6 +616,10 @@ public class FormDadosFuncionarioEdicao extends JPanel {
     private void jComboBoxProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProjetoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxProjetoActionPerformed
+
+    private void jCheckBoxStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxStatusActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -707,27 +709,49 @@ public class FormDadosFuncionarioEdicao extends JPanel {
         jFormattedTextFieldCpf.setValue(funcionario.getCpf());
         jFormattedTextFieldDataNascimento.setValue(CommonMethods.removeSpecialCharacters(
                 CommonMethods.dataFormatter(funcionario.getDataNascimento())));
-
+        
         jCheckBoxExperienciaProfissional.setSelected(funcionario.isExperienciaProfissional());
-        jCheckBoxStatus.setSelected(funcionario.isStatus());
-
+        
+        jCheckBoxStatus.setSelected(funcionario.isArquivado());
+        
         jComboBoxCor.setSelectedItem(funcionario.getRaca());
         jComboBoxGenero.setSelectedItem(funcionario.getGenero());
         jComboBoxEstadoCivil.setSelectedItem(funcionario.getEstadoCivil());
         jComboBoxEscolaridade.setSelectedItem(funcionario.getEscolaridade());
-
+        
         EntityManager em = JPAUtil.getEntityManager();
         Persistence ps = new Persistence(em);
-
+        
         em.getTransaction().begin();
         List<Projeto> listaProjeto = ps.getListEntity(Projeto.class);
         em.getTransaction().commit();
         em.close();
-
+        
         var initializeComboBox = new InitializeFields();
-
         initializeComboBox.addEnumValuesToComBoxProjects(jComboBoxProjeto, listaProjeto);
-        jComboBoxProjeto.setSelectedIndex(-1);
+        
+        int index = 0;
+        int indexEsperado = 0;
+        
+        if (funcionario.getRelacionamentos().size() != 0) {
+            
+            var relacionamentos = funcionario.getRelacionamentos();
+            var relacionamentoAntigo = relacionamentos.get(relacionamentos.size() - 1);
+            
+            for (Projeto projeto : listaProjeto) {
+                index = index + 1;
+                if (projeto.getId() == relacionamentoAntigo.getProjeto().getId()) {
+                    indexEsperado = index;
+                }
+            }
+        }
+        if (indexEsperado != 0) {
+            jComboBoxProjeto.setSelectedItem(listaProjeto.get(indexEsperado - 1));
+            
+        } else {
+            jComboBoxProjeto.setSelectedIndex(-1);
+        }
+        
     }
 
     /**
@@ -761,15 +785,6 @@ public class FormDadosFuncionarioEdicao extends JPanel {
         initializeComboBox.addEnumValuesToComboBox(jComboBoxCor, Raca.class);
         initializeComboBox.addEnumValuesToComboBox(jComboBoxGenero, Genero.class);
         initializeComboBox.addEnumValuesToComboBox(jComboBoxEscolaridade, Escolaridade.class);
-
-        EntityManager em = JPAUtil.getEntityManager();
-        Persistence ps = new Persistence(em);
-
-        em.getTransaction().begin();
-        List<Projeto> listaProjeto = ps.getListEntity(Projeto.class);
-        em.getTransaction().commit();
-        em.close();
-
     }
 
     /**
@@ -794,7 +809,6 @@ public class FormDadosFuncionarioEdicao extends JPanel {
         LocalDate dataNascimento = CommonMethods.parseStringToLocalDate(jFormattedTextFieldDataNascimento.getText());
         String cnh = jTextFieldCnh.getText();
         String mei = jTextFieldMei.getText();
-        boolean status = jCheckBoxStatus.isSelected();
         EstadoCivil estadoCivil = (EstadoCivil) jComboBoxEstadoCivil.getSelectedItem();
         Raca raca = (Raca) jComboBoxCor.getSelectedItem();
         Escolaridade escolaridade = (Escolaridade) jComboBoxEscolaridade.getSelectedItem();
@@ -803,7 +817,8 @@ public class FormDadosFuncionarioEdicao extends JPanel {
         String numeroCelular = CommonMethods.removeSpecialCharacters(jFormattedTextFieldNumeroCelular.getText());
         String email = jTextFieldEmail.getText();
         boolean experienciaProfissional = jCheckBoxExperienciaProfissional.isSelected();
-
+        boolean arquivado = jCheckBoxStatus.isSelected();
+        
         this.projeto = (Projeto) jComboBoxProjeto.getSelectedItem();
 
         // Define os valores do funcionário
@@ -812,7 +827,6 @@ public class FormDadosFuncionarioEdicao extends JPanel {
         this.funcionario.setCpf(cpf);
         this.funcionario.setDataNascimento(dataNascimento);
         this.funcionario.setCnh(cnh);
-        this.funcionario.setStatus(status);
         this.funcionario.setEstadoCivil(estadoCivil);
         this.funcionario.setMei(mei);
         this.funcionario.setRaca(raca);
@@ -822,6 +836,25 @@ public class FormDadosFuncionarioEdicao extends JPanel {
         this.funcionario.setGenero(genero);
         this.funcionario.setExperienciaProfissional(experienciaProfissional);
         funcionario.setEscolaridade(escolaridade);
+        funcionario.setArquivado(arquivado);
+        
+        if (funcionario.getRelacionamentos().size() != 0) {
+            var relacionamentos = funcionario.getRelacionamentos();
+            var ultimoRelacionamento = relacionamentos.get(relacionamentos.size() - 1);
+            
+            if (this.projeto.getId() != ultimoRelacionamento.getProjeto().getId()) {
+                
+                this.relacionamento = new Relacionamento();
+                relacionamento.setFuncionario(funcionario);
+                relacionamento.setProjeto(projeto);
+                relacionamento.setDataInicio(LocalDate.now());
+            }
+        } else {
+            this.relacionamento = new Relacionamento();
+            relacionamento.setFuncionario(funcionario);
+            relacionamento.setProjeto(projeto);
+            relacionamento.setDataInicio(LocalDate.now());
+        }
     }
 
     /**
@@ -833,16 +866,14 @@ public class FormDadosFuncionarioEdicao extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     setNewValues(); // Define os valores do funcionário
-                    CommonMethods.goToNewPage(frame, new FormDadosProfissaoEdicao(funcionario, frame, projeto));
-                    EntityManager em = JPAUtil.getEntityManager();
-                    Persistence ps = new Persistence(em);
+                    CommonMethods.goToNewPage(frame, new FormDadosProfissaoEdicao(funcionario, frame, relacionamento));
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Ocorreu um erro! " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
     }
-
+    
     public void addSkillCleaningFunction() {
         jButtonClearSkills.addActionListener(new ActionListener() {
             @Override

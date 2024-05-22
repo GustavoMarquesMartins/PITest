@@ -66,6 +66,7 @@ public class FormProjetoEdicao extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jFormattedTextFieldDataCriacao = new javax.swing.JFormattedTextField();
         jFormattedTextFieldCep = new javax.swing.JFormattedTextField();
+        jCheckBoxStatus = new javax.swing.JCheckBox();
 
         jLabel5.setText("Data criação");
 
@@ -100,6 +101,13 @@ public class FormProjetoEdicao extends javax.swing.JPanel {
         jLabel3.setText("Serviço");
 
         jLabel4.setText("Descrição");
+
+        jCheckBoxStatus.setText("Ativo");
+        jCheckBoxStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxStatusActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -139,7 +147,8 @@ public class FormProjetoEdicao extends javax.swing.JPanel {
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel6)
                                     .addComponent(jScrollPane1)
-                                    .addComponent(jTextFieldPublicoAlvo, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jTextFieldPublicoAlvo, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCheckBoxStatus)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(193, 193, 193)
                         .addComponent(jButtonAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -171,18 +180,21 @@ public class FormProjetoEdicao extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4))
+                        .addComponent(jTextFieldServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCheckBoxStatus))
                 .addGap(32, 32, 32)
                 .addComponent(jButtonAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -190,9 +202,14 @@ public class FormProjetoEdicao extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAtualizarActionPerformed
 
+    private void jCheckBoxStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxStatusActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAtualizar;
+    private javax.swing.JCheckBox jCheckBoxStatus;
     private javax.swing.JFormattedTextField jFormattedTextFieldCep;
     private javax.swing.JFormattedTextField jFormattedTextFieldDataCriacao;
     private javax.swing.JLabel jLabel1;
@@ -223,6 +240,8 @@ public class FormProjetoEdicao extends javax.swing.JPanel {
 
         jFormattedTextFieldDataCriacao.setValue(CommonMethods.removeSpecialCharacters(
                 CommonMethods.dataFormatter(this.projeto.getDataCriacao())));
+        
+        jCheckBoxStatus.setSelected(this.projeto.isArquivado());
 
     }
 
@@ -235,6 +254,7 @@ public class FormProjetoEdicao extends javax.swing.JPanel {
         String publicoAlvo = jTextFieldPublicoAlvo.getText();
         String justificativa = jTextAreaJustificativa.getText();
         String descricao = jTextAreaJustificativa.getText();
+        boolean arquivado = jCheckBoxStatus.isSelected();
 
         this.projeto.setNome(nome);
         this.projeto.setCep(CommonMethods.removeSpecialCharacters(cep));
@@ -243,6 +263,7 @@ public class FormProjetoEdicao extends javax.swing.JPanel {
         this.projeto.setPublicoAlvo(publicoAlvo);
         this.projeto.setJustificativa(justificativa);
         this.projeto.setDescricao(descricao);
+        this.projeto.setArquivado(arquivado);
     }
 
     private void inicializaFormulario() {
