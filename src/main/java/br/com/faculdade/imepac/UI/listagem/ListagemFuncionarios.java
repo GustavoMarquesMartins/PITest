@@ -278,7 +278,19 @@ public class ListagemFuncionarios extends javax.swing.JPanel {
         jButtonVerDadosFuncionario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CommonMethods.goToNewPage(frame, new VisualizarDadosFuncionario(frame, funcionarioSelecionado.getId()));
+
+                JScrollPane scrollPane = new JScrollPane(new VisualizarDadosFuncionario(frame, funcionarioSelecionado.getId()));
+
+                scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+                frame.getContentPane().removeAll();
+
+                // Adiciona o JScrollPane ao frame
+                frame.add(scrollPane, BorderLayout.CENTER);
+
+                // Torna o frame visível
+                frame.setVisible(true);
             }
         });
 

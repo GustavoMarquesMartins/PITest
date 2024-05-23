@@ -62,8 +62,8 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
         jLabelCargaHoaria = new javax.swing.JLabel();
         jCheckBoxVoluntario = new javax.swing.JCheckBox();
         jTextFieldCargo = new javax.swing.JTextField();
-        jButtonSalvar = new javax.swing.JButton();
         jCheckBoxAcolhido = new javax.swing.JCheckBox();
+        jButtonSalvar = new javax.swing.JButton();
 
         jLabelCadastroDeFuncionario1.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
         jLabelCadastroDeFuncionario1.setText("Edição Dados profissão");
@@ -99,19 +99,20 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
             }
         });
 
-        jButtonSalvar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButtonSalvar.setText(" Aplicar alteração");
-        jButtonSalvar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSalvarActionPerformed(evt);
-            }
-        });
-
         jCheckBoxAcolhido.setText("Já foi acolhido");
         jCheckBoxAcolhido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxAcolhidoActionPerformed(evt);
+            }
+        });
+
+        jButtonSalvar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jButtonSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/salvar.png"))); // NOI18N
+        jButtonSalvar.setText("Salvar");
+        jButtonSalvar.setBorder(null);
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarActionPerformed(evt);
             }
         });
 
@@ -140,10 +141,8 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(jCheckBoxVoluntario))
                             .addComponent(jComboBoxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelPeriodo)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(193, 193, 193)
-                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelPeriodo)
+                            .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(76, 76, 76)
                         .addComponent(jLabelCadastroDeFuncionario1)))
@@ -175,9 +174,9 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
                 .addComponent(jLabelPeriodo)
                 .addGap(4, 4, 4)
                 .addComponent(jComboBoxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(52, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -193,13 +192,13 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldCargoActionPerformed
 
-    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonSalvarActionPerformed
-
     private void jCheckBoxAcolhidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxAcolhidoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxAcolhidoActionPerformed
+
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSalvarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

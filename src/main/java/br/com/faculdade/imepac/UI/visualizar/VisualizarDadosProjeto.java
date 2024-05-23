@@ -435,8 +435,8 @@ public class VisualizarDadosProjeto extends JPanel {
         jLabelDescricao.setText(projeto.getDescricao());
         jCheckBoxStatus.setSelected(projeto.isArquivado());
         jCheckBoxStatus.setEnabled(false);
-        
-         // Cria um objeto DateTimeFormatter com o padrão desejado
+
+        // Cria um objeto DateTimeFormatter com o padrão desejado
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         // Formata a data
@@ -461,8 +461,10 @@ public class VisualizarDadosProjeto extends JPanel {
                     modelo.addColumn("Cpf");
 
                     for (Relacionamento relacionamento : projeto.getRelacionamentos()) {
-                        modelo.addRow(new Object[]{relacionamento.getFuncionario().getNome(),
-                            relacionamento.getFuncionario().getCpf()});
+                        if (relacionamento.getDataTermino() == null) {
+                            modelo.addRow(new Object[]{relacionamento.getFuncionario().getNome(),
+                                relacionamento.getFuncionario().getCpf()});
+                        }
                     }
 
                     JTable table = new JTable(modelo);
@@ -473,7 +475,7 @@ public class VisualizarDadosProjeto extends JPanel {
                     frame.setSize(500, 300);
                     frame.add(scrollPane);
                     frame.setVisible(true);
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Sem funcionários relacionados");
                 }
             }
