@@ -318,8 +318,10 @@ public class ListagemProjetos extends javax.swing.JPanel {
                 em.close();
 
                 for (Relacionamento relacionamento : listaRelacionamento) {
-                    modelo.addRow(new Object[]{relacionamento.getFuncionario().getCpf(),
-                        relacionamento.getFuncionario().getNome()});
+                    if (relacionamento.getDataTermino() == null) {
+                        modelo.addRow(new Object[]{relacionamento.getFuncionario().getCpf(),
+                            relacionamento.getFuncionario().getNome()});
+                    }
                 }
 
                 JTable table = new JTable(modelo);
