@@ -75,8 +75,7 @@ public class Funcionario {
     private String pathCarteiraDeTrabalho;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "dado_profissao_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
     private DadosProfissao dadosProfissao;
 
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)

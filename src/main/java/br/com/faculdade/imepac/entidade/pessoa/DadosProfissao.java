@@ -26,7 +26,8 @@ public class DadosProfissao {
 
     private boolean voluntario;
 
-    @OneToOne(mappedBy = "dadosProfissao")
+    @OneToOne
+    @JoinColumn(name = "funcionario_id")
     private Funcionario funcionario;
 
     @Override
