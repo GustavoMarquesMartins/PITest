@@ -37,7 +37,7 @@ public class Persistence {
      * @param <T> O tipo da entidade.
      */
     public <T> void save(T entity) {
-        em.persist(entity);
+       em.persist(entity);
     }
 
     /**

@@ -292,11 +292,10 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                EntityManager em = JPAUtil.getEntityManager();
+                Persistence persistence = new Persistence(em); // Corrigindo a declaração da variável
                 try {
                     setNewValues(); // Define os valores do funcionárioa 
-
-                    EntityManager em = JPAUtil.getEntityManager();
-                    Persistence persistence = new Persistence(em); // Corrigindo a declaração da variável
 
                     em.getTransaction().begin();
 
@@ -307,16 +306,18 @@ public class FormDadosProfissaoEdicao extends javax.swing.JPanel {
                             var relacionamentoAntigo = relacionamentos.get(relacionamentos.size() - 1);
 
                             relacionamentoAntigo.setDataTermino(LocalDate.now());
-                            
+
                             var projeto = persistence.getEntity(Projeto.class, relacionamentoAntigo.getProjeto().getId());
                             projeto.getRelacionamentos().add(relacionamento);
                             persistence.updateEntity(projeto);
-                            
+
                             persistence.updateEntity(relacionamentoAntigo);
                         }
 
                         persistence.save(relacionamento);
-                        funcionario.getRelacionamentos().add(relacionamento);
+                        var relacionamentos = persistence.getListEntity(Relacionamento.class);
+                        var ultimoRelacionamento = relacionamentos.get(relacionamentos.size() - 1);
+                        funcionario.getRelacionamentos().add(ultimoRelacionamento);
                     }
 
                     persistence.updateEntity(funcionario); // Salva o funcionário no banco de dados
